@@ -1,0 +1,26 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 1080">
+    <rect fill="#152238" width="640" height="1080"/>
+    <defs>
+        <linearGradient id="orange" x1="0" x2="0" y1="1" y2="0" gradientTransform="rotate(122,0.5,0.5)">
+            <stop offset="0" stop-color="#F6D365"/>
+            <stop offset="1" stop-color="#FFA17F"/>
+        </linearGradient>
+        <linearGradient id="blue" x1="0" x2="0" y1="0" y2="1" gradientTransform="rotate(242,0.5,0.5)">
+            <stop offset="0" stop-color="#2193B0"/>
+            <stop offset="1" stop-color="#6DD5ED"/>
+        </linearGradient>
+    </defs>
+    <g fill="#FFF" fill-opacity="0">
+        <g stroke="url(#orange)">
+            <path d="M 417 935 A 50 50 0 0 1 517 935 L 467 935 Z" stroke-width="9.6"/>
+            <path d="M200 666 L225 706 L200 746 L175 706 Z" stroke-width="6.4"/>
+            <path d="M268, 303 L293.0, 259.7 L343.0, 259.7 L368, 303 L343.0, 346.3 L293.0, 346.3z" stroke-width="4.3"/>
+            <circle cx="541" cy="979" r="40" stroke-width="5.0"/>
+        </g>
+        <g stroke="url(#blue)">
+            <circle cx="200" cy="84" r="40" stroke-width="6.8"/>
+            <path d="M375, 340 L400.0, 296.7 L450.0, 296.7 L475, 340 L450.0, 383.3 L400.0, 383.3z" stroke-width="8.7"/>
+            <path d="M384 369 L409 409 L384 449 L359 409 Z" stroke-width="9.4"/>
+        </g>
+    </g>
+</svg>

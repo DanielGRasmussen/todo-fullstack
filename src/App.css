@@ -1,0 +1,42 @@
+body {
+	background-color: #152238;
+	background-attachment: fixed;
+	background-size: cover;
+}
+
+/* Background by screen size */
+@media only screen and (max-width: 640px) {
+	body {
+		background-image: url("/public/assets/background640.svg"); /* original background (public/original.svg) by SVGBackgrounds.com */
+	}
+}
+@media only screen and (min-width: 641px) and (max-width: 1024px) {
+	body {
+		background-image: url("/public/assets/background1024.svg"); /* original background (public/original.svg) by SVGBackgrounds.com */
+	}
+}
+@media only screen and (min-width: 1025px) and (max-width: 1440px) {
+	body {
+		background-image: url("/public/assets/background1440.svg"); /* original background (public/original.svg) by SVGBackgrounds.com */
+	}
+}
+@media only screen and (min-width: 1441px) {
+	body {
+		background-image: url("/public/assets/background2000.svg"); /* original background (public/original.svg) by SVGBackgrounds.com */
+	}
+}
+
+main {
+	width: 80%;
+	min-width: 800px;
+	background: white;
+	margin: 0 auto;
+	border-radius: 20px;
+}
+
+@media only screen and (max-width: 800px) {
+	main {
+		width: 100%;
+		min-width: 100%;
+	}
+}

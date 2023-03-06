@@ -1,0 +1,28 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1080">
+    <rect fill="#152238" width="1024" height="1080"/>
+    <defs>
+        <linearGradient id="orange" x1="0" x2="0" y1="1" y2="0" gradientTransform="rotate(122,0.5,0.5)">
+            <stop offset="0" stop-color="#F6D365"/>
+            <stop offset="1" stop-color="#FFA17F"/>
+        </linearGradient>
+        <linearGradient id="blue" x1="0" x2="0" y1="0" y2="1" gradientTransform="rotate(242,0.5,0.5)">
+            <stop offset="0" stop-color="#2193B0"/>
+            <stop offset="1" stop-color="#6DD5ED"/>
+        </linearGradient>
+    </defs>
+    <g fill="#FFF" fill-opacity="0">
+        <g stroke="url(#orange)">
+            <circle cx="250" cy="475" r="40" stroke-width="8.5"/>
+            <path d="M 520 614 A 50 50 0 0 1 620 614 L 570 614 Z" stroke-width="7.3"/>
+            <circle cx="396" cy="48" r="40" stroke-width="9.8"/>
+            <rect x="475" y="1005" width="100" height="100" stroke-width="9.7"/>
+        </g>
+        <g stroke="url(#blue)">
+            <path d="M634, 220 L659.0, 176.7 L709.0, 176.7 L734, 220 L709.0, 263.3 L659.0, 263.3z" stroke-width="6.9"/>
+            <path d="M 906 583 A 50 50 0 0 1 1006 583 L 956 583 Z" stroke-width="4.6"/>
+            <path d="M904 878 L929 918 L904 958 L879 918 Z" stroke-width="5.5"/>
+            <path d="M-5, 184 L20.0, 140.7 L70.0, 140.7 L95, 184 L70.0, 227.3 L20.0, 227.3z" stroke-width="5.3"/>
+            <path d="M724 623 L749 663 L724 703 L699 663 Z" stroke-width="4.6"/>
+        </g>
+    </g>
+</svg>

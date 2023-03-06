@@ -1,0 +1,35 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2000 1080">
+    <rect fill="#152238" width="2000" height="1080"/>
+    <defs>
+        <linearGradient id="orange" x1="0" x2="0" y1="1" y2="0" gradientTransform="rotate(122,0.5,0.5)">
+            <stop offset="0" stop-color="#F6D365"/>
+            <stop offset="1" stop-color="#FFA17F"/>
+        </linearGradient>
+        <linearGradient id="blue" x1="0" x2="0" y1="0" y2="1" gradientTransform="rotate(242,0.5,0.5)">
+            <stop offset="0" stop-color="#2193B0"/>
+            <stop offset="1" stop-color="#6DD5ED"/>
+        </linearGradient>
+    </defs>
+    <g fill-opacity="0">
+        <g stroke="url(#orange)">
+            <path d="M199 -40 L242.3 40 L155.7 40 Z" stroke-width="4.8"/>
+            <circle cx="1941" cy="43" r="40" stroke-width="8.3"/>
+            <path d="M1157, 579 L1182.0, 535.7 L1232.0, 535.7 L1257, 579 L1232.0, 622.3 L1182.0, 622.3z" stroke-width="4.4"/>
+            <rect x="952" y="25" width="100" height="100" stroke-width="8.9"/>
+            <path d="M1490, 827 L1515.0, 783.7 L1565.0, 783.7 L1590, 827 L1565.0, 870.3 L1515.0, 870.3z" stroke-width="8.7"/>
+            <path d="M 1014 402 A 50 50 0 0 1 1114 402 L 1064 402 Z" stroke-width="7.6"/>
+            <path d="M1391 834 L1434.3 914 L1347.7 914 Z" stroke-width="4.0"/>
+            <rect x="1686" y="606" width="100" height="100" stroke-width="7.8"/>
+            <rect x="508" y="402" width="100" height="100" stroke-width="9.8"/>
+            <path d="M 195 559 A 50 50 0 0 1 295 559 L 245 559 Z" stroke-width="9.8"/>
+            <path d="M1672 409 L1715.3 489 L1628.7 489 Z" stroke-width="4.0"/>
+        </g>
+        <g stroke="url(#blue)">
+            <path d="M19 388 L44 428 L19 468 L-6 428 Z" stroke-width="6.3"/>
+            <path d="M160 734 L203.3 814 L116.7 814 Z" stroke-width="5.9"/>
+            <path d="M 992 878 A 50 50 0 0 1 1092 878 L 1042 878 Z" stroke-width="9.7"/>
+            <path d="M115 383 L140 423 L115 463 L90 423 Z" stroke-width="9.9"/>
+            <path d="M740 168 L765 208 L740 248 L715 208 Z" stroke-width="8.9"/>
+        </g>
+    </g>
+</svg>

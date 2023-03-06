@@ -34,9 +34,41 @@ main {
 	border-radius: 20px;
 }
 
+main * {
+	padding: 5px;
+}
+
 @media only screen and (max-width: 800px) {
 	main {
 		width: 100%;
 		min-width: 100%;
 	}
+}
+
+h1 {
+	text-align: center;
+}
+
+.todo-item {
+	border-radius: 10px;
+	border: 1px solid black;
+	position: relative;
+}
+
+.todo-item .goal-date {
+	position: absolute;
+	top: 3px;
+	right: 5px;
+	font-size: 14px;
+	color: #999;
+}
+
+.todo-item h3 {
+	position: absolute;
+	top: 0;
+	margin: 0;
+}
+
+.todo-item.complete {
+	border-left: green 15px solid;
 }

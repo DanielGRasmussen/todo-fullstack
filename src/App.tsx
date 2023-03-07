@@ -1,13 +1,21 @@
 import "./App.css";
 
-/* API Schema
- * Collection 1 - Users: (id, username) 2 fields
- * Collection 2 - To-Do: (userId, id, created, proposedStartDate, actualStartDate, proposedEndDate, actualEndDate, title, description, type, subTasks, priority, status, lastUpdated) 14 fields
- * Collection 3 - Shopping List (name, inventoryId, quantityNeeded) 3 fields
- * Collection 4 - Inventory: (name, id, description / tags, quantity, minimumQuantity, lastUpdated) 6 fields
- * */
+interface ITodoData {
+	created: string;
+	proposedStartDate: string;
+	actualStartDate: string;
+	proposedEndDate: string;
+	actualEndDate: string;
+	title: string;
+	description: string;
+	type: string;
+	subTasks: string[];
+	priority: string;
+	status: string;
+	lastUpdated: string;
+}
 
-function todo_item({
+function todoElement({
 	// TODO remove unneeded
 	created,
 	proposedStartDate,
@@ -21,7 +29,7 @@ function todo_item({
 	priority,
 	status,
 	lastUpdated
-}) {
+}: ITodoData) {
 	return (
 		<div className={`todo-item ${status} ${type}`}>
 			<h3>{title}</h3>
@@ -42,7 +50,7 @@ function todo_item({
 }
 
 function App() {
-	const todoItem = {
+	const TodoData: ITodoData = {
 		created: new Date("01 March 2023 19:30 UTC").toISOString(),
 		proposedStartDate: new Date("03 March 2023 19:00 UTC").toISOString(),
 		actualStartDate: new Date("03 March 2023 19:05 UTC").toISOString(),
@@ -56,16 +64,33 @@ function App() {
 		status: "complete",
 		lastUpdated: new Date("03 March 2023 19:25 UTC").toISOString()
 	};
+
 	return (
-		<main>
-			<h1>To-Do</h1>
-			{todo_item(todoItem)}
-			{todo_item(todoItem)}
-			{todo_item(todoItem)}
-			{todo_item(todoItem)}
-			{todo_item(todoItem)}
-			{todo_item(todoItem)}
-		</main>
+		<body>
+			<header></header>
+			<main>
+				<h1>To-Do</h1>
+				<div id="menu">
+					<button id="list-button" className="selected">
+						<img src={"assets/list.svg"} alt={"List icon"} />
+						{/* https://iconscout.com/icon/list-format-1440385 */}
+					</button>
+					<button id="grid-button">
+						<img src={"assets/grid.svg"} alt={"Grid icon"} />
+						{/* https://iconscout.com/icon/grid-1440091 */}
+					</button>
+				</div>
+				<div id={"todos"} className={"list"}>
+					{todoElement(TodoData)}
+					{todoElement(TodoData)}
+					{todoElement(TodoData)}
+					{todoElement(TodoData)}
+					{todoElement(TodoData)}
+					{todoElement(TodoData)}
+				</div>
+			</main>
+			<footer></footer>
+		</body>
 	);
 }
 

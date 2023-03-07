@@ -2,6 +2,15 @@ body {
 	background-color: #152238;
 	background-attachment: fixed;
 	background-size: cover;
+	margin: 0;
+	padding: 0;
+	height: 100vh; /* To make the page take up the entire height */
+	display: flex;
+	flex-direction: column;
+}
+
+header, footer {
+	height: 50px;
 }
 
 /* Background by screen size */
@@ -29,9 +38,12 @@ body {
 main {
 	width: 80%;
 	min-width: 800px;
+	max-width: 1100px;
 	background: white;
 	margin: 0 auto;
 	border-radius: 20px;
+	padding-bottom: 5px;
+	flex-grow: 1; /* Take up the remaining space */
 }
 
 main * {
@@ -47,15 +59,60 @@ main * {
 
 h1 {
 	text-align: center;
+	margin-bottom: 0;
 }
 
-.todo-item {
-	border-radius: 10px;
-	border: 1px solid black;
+/* Buttons */
+#menu {
+	width: 150px;
+	text-align: center;
+	margin: 0 auto;
+	padding: 10px 0 10px 0;
+}
+
+#menu button.selected {
+	cursor: auto;
+	background: lightgray;
+}
+
+#menu button {
+	padding: 10px;
+	width: 70px;
+	text-align: center;
+	font-size: 16pt;
+	cursor: pointer;
+	height: 60px;
 	position: relative;
 }
 
-.todo-item .goal-date {
+#menu button img {
+	margin-top: -5px;
+}
+
+#grid-button {
+	border-top-right-radius: 10px;
+	border-bottom-right-radius: 10px;
+	margin-left: -3.5px;
+}
+
+#list-button {
+	border-top-left-radius: 10px;
+	border-bottom-left-radius: 10px;
+	margin-right: -3px;
+	padding-right: 15px;
+}
+
+/* To-do Items */
+.list .todo-item {
+	border-radius: 10px;
+	border: 1px solid black;
+	position: relative;
+	margin: 0 auto 10px auto;
+	box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+	width: 90%;
+}
+
+.list .todo-item .goal-date {
 	position: absolute;
 	top: 3px;
 	right: 5px;
@@ -63,12 +120,12 @@ h1 {
 	color: #999;
 }
 
-.todo-item h3 {
+.list .todo-item h3 {
 	position: absolute;
 	top: 0;
 	margin: 0;
 }
 
-.todo-item.complete {
+.list .todo-item.complete {
 	border-left: green 15px solid;
 }

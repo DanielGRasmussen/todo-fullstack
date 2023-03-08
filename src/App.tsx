@@ -17,25 +17,19 @@ interface ITodoData {
 }
 
 function todoElement({
-	// TODO remove unneeded
-	created,
-	proposedStartDate,
-	actualStartDate,
 	proposedEndDate,
-	actualEndDate,
 	title,
 	description,
 	type,
-	subTasks,
 	priority,
-	status,
-	lastUpdated
+	status
 }: ITodoData) {
 	return (
-		<div className={`todo-item ${status} ${type}`}>
+		<li className={`todo-item ${status} ${type}`}>
 			<h3>{title}</h3>
-			<div className={"goal-date"}>
-				Goal:{" "}
+			<p className="priority">Priority: {priority}</p>
+			<p className="completion-date">
+				Completion date:{" "}
 				{new Date(proposedEndDate).toLocaleString("en-US", {
 					month: "numeric",
 					day: "numeric",
@@ -44,10 +38,27 @@ function todoElement({
 					minute: "numeric",
 					hour12: true
 				})}
-			</div>
-			<p>{description}</p>
-		</div>
+			</p>
+			<p className="description">{description}</p>
+		</li>
 	);
+}
+
+function setTodoStyle(todoStyle: string): void {
+	// Either "grid" or "list" should probably use an enum or boolean "isList" parameter.
+	const todos = document.querySelector("#todos");
+	if (!todos) {
+		return;
+	}
+	// Gets the list style that this isn't.
+	const other = todoStyle === "grid" ? "list" : "grid";
+	todos.classList.remove(other);
+	todos.classList.add(todoStyle);
+
+	const selected = document.getElementById(`${todoStyle}-button`);
+	const deselected = document.getElementById(`${other}-button`);
+	selected.classList.add("selected");
+	deselected.classList.remove("selected");
 }
 
 function App() {
@@ -66,29 +77,44 @@ function App() {
 		lastUpdated: new Date("03 March 2023 19:25 UTC").toISOString()
 	};
 
+	document.title = "Main | To Do List";
+
 	return (
 		<body>
 			<header></header>
 			<main>
 				<h1>To-Do</h1>
 				<div id="menu">
-					<button id="list-button" className="selected">
-						<img src={"assets/list.svg"} alt={"List icon"} />
-						{/* https://iconscout.com/icon/list-format-1440385 */}
-					</button>
-					<button id="grid-button">
-						<img src={"assets/grid.svg"} alt={"Grid icon"} />
+					<button
+						id="grid-button"
+						className="selected"
+						onClick={() => setTodoStyle("grid")}
+					>
+						<img
+							src={process.env.PUBLIC_URL + "/assets/grid.svg"}
+							alt="Grid icon"
+						/>
 						{/* https://iconscout.com/icon/grid-1440091 */}
 					</button>
+					<button
+						id="list-button"
+						onClick={() => setTodoStyle("list")}
+					>
+						<img
+							src={process.env.PUBLIC_URL + "/assets/list.svg"}
+							alt="List icon"
+						/>
+						{/* https://iconscout.com/icon/list-format-1440385 */}
+					</button>
 				</div>
-				<div id={"todos"} className={"list"}>
+				<ul id="todos" className="grid">
 					{todoElement(TodoData)}
 					{todoElement(TodoData)}
 					{todoElement(TodoData)}
 					{todoElement(TodoData)}
 					{todoElement(TodoData)}
 					{todoElement(TodoData)}
-				</div>
+				</ul>
 			</main>
 			<footer></footer>
 		</body>

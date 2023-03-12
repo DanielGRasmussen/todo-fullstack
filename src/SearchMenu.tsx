@@ -86,6 +86,7 @@ function SearchMenu(
 		() => "select_" + Math.random().toFixed(5).slice(2)
 	);
 
+	// Makes react-select thinner
 	const selectStyles = {
 		control: (provided, state) => ({
 			...provided,
@@ -101,9 +102,6 @@ function SearchMenu(
 			...provided,
 			height: "30px",
 			padding: "0 6px"
-		}),
-		input: (provided) => ({
-			...provided
 		}),
 		indicatorSeparator: () => ({
 			display: "none"

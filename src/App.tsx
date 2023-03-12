@@ -1,4 +1,4 @@
-import "./App.css";
+import "./styles.css";
 import React from "react";
 import TodoList from "./TodoList";
 

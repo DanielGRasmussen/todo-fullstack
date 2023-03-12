@@ -29,14 +29,17 @@ function TodoElement({ todo }: TodoElementProps): JSX.Element {
 			<p className="priority">Priority: {todo.priority}</p>
 			<p className="completion-date">
 				Completion date:{" "}
-				{new Date(todo.proposedEndDate).toLocaleString("en-US", {
-					month: "numeric",
-					day: "numeric",
-					year: "numeric",
-					hour: "numeric",
-					minute: "numeric",
-					hour12: true
-				})}
+				{
+					new Date(todo.proposedEndDate).toLocaleString("en-US", {
+						month: "numeric",
+						day: "numeric",
+						year: "numeric",
+						hour: "numeric",
+						minute: "numeric",
+						hour12: true
+					})
+					// Convert ISO to date
+				}
 			</p>
 			<p className="description">{todo.description}</p>
 		</li>

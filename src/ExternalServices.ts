@@ -3,6 +3,7 @@ import { ITodoData } from "./TodoList";
 export async function getToDoList(): Promise<ITodoData[]> {
 	const todos: ITodoData[] = [
 		{
+			id: "1",
 			created: new Date("01 March 2023 19:30 UTC").toISOString(),
 			proposedStartDate: new Date(
 				"03 March 2023 19:00 UTC"
@@ -19,6 +20,7 @@ export async function getToDoList(): Promise<ITodoData[]> {
 			lastUpdated: new Date("03 March 2023 19:25 UTC").toISOString()
 		},
 		{
+			id: "2",
 			created: new Date("01 March 2023 19:30 UTC").toISOString(),
 			proposedStartDate: new Date(
 				"03 March 2023 20:00 UTC"
@@ -35,13 +37,14 @@ export async function getToDoList(): Promise<ITodoData[]> {
 			lastUpdated: new Date("03 March 2023 21:25 UTC").toISOString()
 		},
 		{
+			id: "3",
 			created: new Date("01 March 2023 19:30 UTC").toISOString(),
 			proposedStartDate: new Date(
 				"04 March 2023 10:00 UTC"
 			).toISOString(),
-			actualStartDate: new Date("04 March 2023 10:05 UTC").toISOString(),
+			actualStartDate: "",
 			proposedEndDate: new Date("04 March 2023 11:30 UTC").toISOString(),
-			actualEndDate: new Date("04 March 2023 11:25 UTC").toISOString(),
+			actualEndDate: "",
 			title: "Workout",
 			description: "Go for a run",
 			type: "Health",
@@ -51,13 +54,14 @@ export async function getToDoList(): Promise<ITodoData[]> {
 			lastUpdated: new Date("04 March 2023 11:25 UTC").toISOString()
 		},
 		{
+			id: "4",
 			created: new Date("01 March 2023 19:30 UTC").toISOString(),
 			proposedStartDate: new Date(
 				"04 March 2023 12:00 UTC"
 			).toISOString(),
-			actualStartDate: new Date("04 March 2023 12:05 UTC").toISOString(),
+			actualStartDate: "",
 			proposedEndDate: new Date("04 March 2023 13:30 UTC").toISOString(),
-			actualEndDate: new Date("04 March 2023 13:25 UTC").toISOString(),
+			actualEndDate: "",
 			title: "Study",
 			description: "Read a chapter from a book",
 			type: "Learning",
@@ -67,13 +71,14 @@ export async function getToDoList(): Promise<ITodoData[]> {
 			lastUpdated: new Date("04 March 2023 13:25 UTC").toISOString()
 		},
 		{
+			id: "5",
 			created: new Date("05 March 2023 09:15 UTC").toISOString(),
 			proposedStartDate: new Date(
 				"06 March 2023 08:00 UTC"
 			).toISOString(),
 			actualStartDate: new Date("06 March 2023 08:10 UTC").toISOString(),
 			proposedEndDate: new Date("06 March 2023 10:00 UTC").toISOString(),
-			actualEndDate: new Date("06 March 2023 09:45 UTC").toISOString(),
+			actualEndDate: "",
 			title: "Go for a run",
 			description: "Run 5 miles at the park",
 			type: "Exercise",
@@ -83,11 +88,12 @@ export async function getToDoList(): Promise<ITodoData[]> {
 			lastUpdated: new Date("06 March 2023 09:45 UTC").toISOString()
 		},
 		{
+			id: "6",
 			created: new Date("07 March 2023 14:30 UTC").toISOString(),
 			proposedStartDate: new Date(
 				"08 March 2023 10:00 UTC"
 			).toISOString(),
-			actualStartDate: "",
+			actualStartDate: new Date("08 March 2023 7:30 UTC").toISOString(),
 			proposedEndDate: new Date("08 March 2023 11:30 UTC").toISOString(),
 			actualEndDate: "",
 			title: "Finish project report",
@@ -99,10 +105,11 @@ export async function getToDoList(): Promise<ITodoData[]> {
 				"Proofread"
 			],
 			priority: "2",
-			status: "pending",
+			status: "in-progress",
 			lastUpdated: new Date("08 March 2023 11:30 UTC").toISOString()
 		},
 		{
+			id: "7",
 			created: new Date("10 March 2023 16:45 UTC").toISOString(),
 			proposedStartDate: new Date(
 				"11 March 2023 14:00 UTC"
@@ -119,15 +126,16 @@ export async function getToDoList(): Promise<ITodoData[]> {
 				"Tell her about yours"
 			],
 			priority: "4",
-			status: "pending",
+			status: "incomplete",
 			lastUpdated: new Date("11 March 2023 16:00 UTC").toISOString()
 		},
 		{
+			id: "8",
 			created: new Date("12 March 2023 08:00 UTC").toISOString(),
 			proposedStartDate: new Date(
 				"12 March 2023 10:00 UTC"
 			).toISOString(),
-			actualStartDate: "",
+			actualStartDate: new Date("12 March 2023 10:00 UTC").toISOString(),
 			proposedEndDate: new Date("12 March 2023 11:30 UTC").toISOString(),
 			actualEndDate: "",
 			title: "Grocery shopping",
@@ -135,7 +143,7 @@ export async function getToDoList(): Promise<ITodoData[]> {
 			type: "Chores",
 			subTasks: ["Make a list", "Go to the store", "Check off items"],
 			priority: "5",
-			status: "pending",
+			status: "in-progress",
 			lastUpdated: new Date("12 March 2023 11:30 UTC").toISOString()
 		}
 	];

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    enable-background="new 0 0 50 150"
+    viewBox="0 0 50 150"
+>
+<g transform="scale(1,-1) translate(0,-149)">
+	<line
+        y2="24.964"
+        x1="23.871"
+        x2="23.871"
+        stroke="#000"
+        stroke-miterlimit="10"
+        y1="149"
+        stroke-width="6"
+    />
+    <polygon points="42.292 25.87 3.969 25.87 24.885 1.917" />
+</g>
+</svg>

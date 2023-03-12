@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { getToDoList } from "./ExternalServices";
+import searchMenu from "./SearchMenu";
 
 export interface ITodoData {
+	id: string;
 	created: string;
 	proposedStartDate: string;
 	actualStartDate: string;
@@ -20,7 +22,7 @@ interface TodoElementProps {
 	todo: ITodoData;
 }
 
-function TodoElement({ todo }: TodoElementProps) {
+function TodoElement({ todo }: TodoElementProps): JSX.Element {
 	return (
 		<li className={`todo-item ${todo.status} ${todo.type}`}>
 			<h3>{todo.title}</h3>
@@ -41,23 +43,77 @@ function TodoElement({ todo }: TodoElementProps) {
 	);
 }
 
-function TodoList() {
+function TodoList(): JSX.Element {
+	// Gives the to-do list with sorting options
+	const sortingOptions: { value: string; label: string }[] = [
+		{ value: "title", label: "Title" },
+		{ value: "priority", label: "Priority" },
+		{ value: "status", label: "Status" },
+		{ value: "type", label: "Type" },
+		{ value: "created", label: "Creation date" },
+		{ value: "proposedStartDate", label: "Planned start date" },
+		{ value: "actualStartDate", label: "Start date" },
+		{ value: "proposedEndDate", label: "Planned end date" },
+		{ value: "actualEndDate", label: "End date" },
+		{ value: "lastUpdated", label: "Last updated" }
+	];
+
+	// Create the elements for the search and functions to update them
 	const [todoList, setTodoList] = useState<ITodoData[]>([]);
+	const [searchQuery, setSearchQuery] = useState("");
+	const [selectedSortingOption, setSelectedSortingOption] = useState(
+		sortingOptions[0]
+	);
+	const [sortOrder, setSortOrder] = useState(false);
 
 	useEffect(() => {
 		const fetchTodoList = async () => {
-			const fetchedList = await getToDoList();
+			const fetchedList: ITodoData[] = await getToDoList();
 			setTodoList(fetchedList);
 		};
 		fetchTodoList();
 	}, []);
 
+	const filteredTodoList: ITodoData[] = todoList.filter((todo) =>
+		todo.title.toLowerCase().includes(searchQuery.toLowerCase())
+	);
+
+	const sortedTodoList: ITodoData[] = filteredTodoList.sort((a, b) => {
+		const aValue: string = a[selectedSortingOption.value];
+		const bValue: string = b[selectedSortingOption.value];
+		if (aValue < bValue) {
+			return -1;
+		}
+		if (aValue > bValue) {
+			return 1;
+		}
+		return 0;
+	});
+
+	if (sortOrder) {
+		sortedTodoList.reverse();
+	}
+
+	const handleSortOrderChange = (newSortOrder): void => {
+		setSortOrder(newSortOrder);
+	};
+
 	return (
-		<ul id="todos" className="grid">
-			{todoList.map((todo) => (
-				<TodoElement key={todo.created} todo={todo} />
-			))}
-		</ul>
+		<div>
+			{searchMenu(
+				searchQuery,
+				setSearchQuery,
+				sortingOptions,
+				selectedSortingOption,
+				setSelectedSortingOption,
+				handleSortOrderChange
+			)}
+			<ul id="todos" className="grid">
+				{sortedTodoList.map((todo) => (
+					<TodoElement key={todo.id} todo={todo} />
+				))}
+			</ul>
+		</div>
 	);
 }
 

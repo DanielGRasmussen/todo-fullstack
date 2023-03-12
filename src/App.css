@@ -1,4 +1,4 @@
-body {
+#root {
 	background-color: #152238;
 	background-attachment: fixed;
 	background-size: cover;
@@ -16,22 +16,22 @@ footer {
 
 /* Background by screen size */
 @media only screen and (max-width: 640px) {
-	body {
+	#root {
 		background-image: url("/public/assets/background640.svg"); /* original background (public/original.svg) by SVGBackgrounds.com */
 	}
 }
 @media only screen and (min-width: 641px) and (max-width: 1024px) {
-	body {
+	#root {
 		background-image: url("/public/assets/background1024.svg"); /* original background (public/original.svg) by SVGBackgrounds.com */
 	}
 }
 @media only screen and (min-width: 1025px) and (max-width: 1440px) {
-	body {
+	#root {
 		background-image: url("/public/assets/background1440.svg"); /* original background (public/original.svg) by SVGBackgrounds.com */
 	}
 }
 @media only screen and (min-width: 1441px) {
-	body {
+	#root {
 		background-image: url("/public/assets/background2000.svg"); /* original background (public/original.svg) by SVGBackgrounds.com */
 	}
 }
@@ -63,44 +63,87 @@ h1 {
 	margin-bottom: 0;
 }
 
-/* Buttons */
+/* Menu */
 #menu {
-	width: 150px;
-	text-align: center;
-	margin: 0 auto;
-	padding: 10px 0 10px 0;
+	display: flex;
+	justify-content: center;
 }
 
-#menu button.selected {
-	cursor: auto;
-	background: lightgray;
-}
-
-#menu button {
-	padding: 10px;
-	width: 70px;
-	text-align: center;
-	font-size: 16pt;
-	cursor: pointer;
-	height: 60px;
+#sort-direction {
+	width: 30px;
+	height: 30px;
+	border: 1px solid #ccc;
+	background-color: #f2f2f2;
+	border-radius: 4px;
 	position: relative;
+	cursor: pointer;
+	margin-top: 8px;
 }
 
-#menu button img {
-	margin-top: -5px;
+#sort-direction img {
+	position: absolute;
+	width: 26px;
+	height: 26px;
+	top: 2px;
+	left: 2px;
+	object-fit: contain;
+	object-position: center 2px; /* adjust vertical positioning */
 }
 
-#list-button {
-	border-top-right-radius: 10px;
-	border-bottom-right-radius: 10px;
-	margin-left: -3.5px;
+#sort-direction:hover {
+	outline-color: #999;
+	background-color: #e8e8e8;
 }
 
-#grid-button {
-	border-top-left-radius: 10px;
-	border-bottom-left-radius: 10px;
-	margin-right: -3px;
-	padding-right: 15px;
+/* Slowly rotate upside down */
+@keyframes upside-down {
+	from {
+		transform: rotate(0);
+	}
+	to {
+		transform: rotate(180deg);
+	}
+}
+
+/* Slowly rotate downside-up */
+@keyframes downside-up {
+	from {
+		transform: rotate(180deg);
+	}
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+/* React-select animations */
+@keyframes fadeIn {
+	0% {
+		opacity: 0;
+		transform: translateY(2rem);
+	}
+	100% {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+@keyframes fadeOut {
+	0% {
+		opacity: 1;
+		transform: translateY(0);
+	}
+	100% {
+		opacity: 0;
+		transform: translateY(2rem);
+	}
+}
+
+.react-select-menu {
+	animation: fadeIn 0.2s ease-in-out;
+}
+
+.react-select-menu-close {
+	animation: fadeOut 0.3s ease-in-out;
 }
 
 /* To-do Items Displays */

@@ -8,7 +8,6 @@ function App() {
 	return (
 		<main>
 			<h1>To-Do</h1>
-			<div id="menu"></div>
 			<TodoList />
 		</main>
 	);

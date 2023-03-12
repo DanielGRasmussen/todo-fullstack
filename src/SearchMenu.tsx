@@ -61,20 +61,9 @@ function SearchMenu(
 	setSelectedSortingOption,
 	handleSortOrderChange
 ): JSX.Element {
-	const [isMenuOpen, setIsMenuOpen] = useState(true);
-
-	const openMenuHandler = async () => {
-		await setIsMenuOpen(true);
-	};
-
-	const closeMenuHandler = () => {
-		const menu = document.querySelector(`#menu .react-select-menu`);
-		menu.classList.add("react-select-menu-close");
-
-		setTimeout(() => {
-			setIsMenuOpen(false);
-		}, 300);
-	};
+	const [uniqueId] = React.useState(
+		() => "select_" + Math.random().toFixed(5).slice(2)
+	);
 
 	const selectStyles = {
 		control: (provided, state) => ({
@@ -121,7 +110,7 @@ function SearchMenu(
 				placeholder="Search..."
 			/>
 			<Select
-				className="custom-select"
+				id={uniqueId}
 				options={sortingOptions}
 				value={selectedSortingOption}
 				onChange={(option) => setSelectedSortingOption(option)}
@@ -129,15 +118,30 @@ function SearchMenu(
 				components={{
 					Menu: (props) => (
 						<components.Menu
-							{...props}
 							children=""
-							className="react-select-menu"
+							{...props}
+							className="select-menu"
 						/>
 					)
 				}}
-				menuIsOpen={isMenuOpen}
-				onMenuOpen={openMenuHandler}
-				onMenuClose={closeMenuHandler}
+				onMenuClose={() => {
+					// Can't just do event handlers with class toggle and timeout
+					// Menu reappears for a split second and animation goes ultra-fast if you do.
+					const menu = document.querySelector(
+						`#${uniqueId} .select-menu`
+					);
+					const container: HTMLElement = menu?.parentElement;
+					const clonedMenu = menu?.cloneNode(true) as HTMLElement;
+
+					if (!clonedMenu) return;
+
+					clonedMenu.classList.add("select-menu-close");
+					clonedMenu.addEventListener("animationend", () => {
+						container?.removeChild(clonedMenu);
+					});
+
+					container?.appendChild(clonedMenu!);
+				}}
 			/>
 			<SortButton onClick={handleSortOrderChange} />
 		</form>

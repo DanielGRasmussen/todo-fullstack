@@ -117,32 +117,32 @@ h1 {
 
 /* React-select animations */
 @keyframes fadeIn {
-	0% {
+	from {
 		opacity: 0;
 		transform: translateY(2rem);
 	}
-	100% {
+	to {
 		opacity: 1;
 		transform: translateY(0);
 	}
 }
 
 @keyframes fadeOut {
-	0% {
+	from {
 		opacity: 1;
 		transform: translateY(0);
 	}
-	100% {
+	to {
 		opacity: 0;
 		transform: translateY(2rem);
 	}
 }
 
-.react-select-menu {
+.select-menu {
 	animation: fadeIn 0.2s ease-in-out;
 }
 
-.react-select-menu-close {
+.select-menu-close {
 	animation: fadeOut 0.3s ease-in-out;
 }
 

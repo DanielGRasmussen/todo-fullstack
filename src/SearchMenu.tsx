@@ -140,7 +140,7 @@ function SearchMenu(
 						container?.removeChild(clonedMenu);
 					});
 
-					container?.appendChild(clonedMenu!);
+					container?.appendChild(clonedMenu);
 				}}
 			/>
 			<SortButton onClick={handleSortOrderChange} />

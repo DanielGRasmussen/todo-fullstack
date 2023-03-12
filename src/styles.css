@@ -81,13 +81,13 @@ header nav a {
 }
 
 header nav li a.active {
-	background: #1e7898;
+	background: #145369;
 	border-radius: 10px;
 	cursor: auto;
 }
 
 header nav a:hover {
-	background: #145369;
+	background: #152238;
 	border-radius: 10px;
 }
 

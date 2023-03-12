@@ -64,9 +64,12 @@ header nav ul {
 	margin: 0;
 	display: flex;
 	padding: 0 40px;
+	justify-content: space-between;
 }
 
-header nav li {
+header nav ul li {
+	width: 100%;
+	text-align: center;
 }
 
 header nav a {
@@ -74,10 +77,18 @@ header nav a {
 	text-decoration: none;
 	text-transform: capitalize;
 	padding: 10px 20px;
+	margin: 0 auto;
+}
+
+header nav li a.active {
+	background: #1e7898;
+	border-radius: 10px;
+	cursor: auto;
 }
 
 header nav a:hover {
-	color: lightgrey;
+	background: #145369;
+	border-radius: 10px;
 }
 
 /* Main */

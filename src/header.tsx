@@ -21,7 +21,9 @@ function Header() {
 			<nav>
 				<ul>
 					<li>
-						<a href="#">All</a>
+						<a href="#" className="active">
+							All
+						</a>
 					</li>
 					<li>
 						<a href="#">General</a>

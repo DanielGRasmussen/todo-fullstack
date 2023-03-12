@@ -47,10 +47,6 @@ main {
 	flex-grow: 1; /* Take up the remaining space */
 }
 
-main * {
-	padding: 5px;
-}
-
 @media only screen and (max-width: 800px) {
 	main {
 		width: 100%;
@@ -69,6 +65,39 @@ h1 {
 	justify-content: center;
 }
 
+#search-bar {
+	width: 250px;
+	height: 46px;
+	font-size: 12pt;
+	border: 1px solid #9e9e9e;
+	border-radius: 4px;
+	padding-left: 5px;
+}
+
+@media screen and (max-width: 500px) {
+	#menu {
+		flex-wrap: wrap;
+		align-items: center;
+	}
+
+	/* The class name of the react-select control changes when the dropdown menu is up */
+	.css-b62m3t-container {
+		width: 245px;
+		margin-left: 10px;
+		padding: 0;
+		margin-top: 5px;
+	}
+
+	.css-b62m3t-container > div {
+		width: 225px;
+	}
+
+	#sort-direction {
+		margin-bottom: 3px;
+	}
+}
+
+
 #sort-direction {
 	width: 30px;
 	height: 30px;
@@ -78,6 +107,7 @@ h1 {
 	position: relative;
 	cursor: pointer;
 	margin-top: 8px;
+	padding: 5px;
 }
 
 #sort-direction img {
@@ -86,8 +116,7 @@ h1 {
 	height: 26px;
 	top: 2px;
 	left: 2px;
-	object-fit: contain;
-	object-position: center 2px; /* adjust vertical positioning */
+	padding: 5px;
 }
 
 #sort-direction:hover {
@@ -159,7 +188,7 @@ h1 {
 /* Grid list view */
 .grid {
 	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+	grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
 	grid-gap: 20px;
 }
 

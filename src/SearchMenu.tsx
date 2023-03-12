@@ -79,12 +79,10 @@ function SearchMenu(
 		valueContainer: (provided) => ({
 			...provided,
 			height: "30px",
-			padding: "0 6px",
-			marginBottom: "17px"
+			padding: "0 6px"
 		}),
 		input: (provided) => ({
-			...provided,
-			margin: "0px"
+			...provided
 		}),
 		indicatorSeparator: () => ({
 			display: "none"
@@ -92,7 +90,7 @@ function SearchMenu(
 		indicatorsContainer: (provided) => ({
 			...provided,
 			height: "40px",
-			marginBottom: "15px"
+			marginTop: "5px"
 		}),
 		menu: (provided) => ({
 			...provided,
@@ -104,6 +102,7 @@ function SearchMenu(
 	return (
 		<form id="menu">
 			<input
+				id="search-bar"
 				type="text"
 				value={searchQuery}
 				onChange={(event) => setSearchQuery(event.target.value)}

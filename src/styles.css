@@ -1,7 +1,10 @@
-#root {
+html {
 	background-color: #152238;
 	background-attachment: fixed;
 	background-size: cover;
+}
+
+#root {
 	margin: 0;
 	padding: 0;
 	height: 100vh; /* To make the page take up the entire height */
@@ -11,22 +14,22 @@
 
 /* Background by screen size */
 @media only screen and (max-width: 640px) {
-	#root {
+	html {
 		background-image: url("/public/assets/background640.svg"); /* original background (public/original.svg) by SVGBackgrounds.com */
 	}
 }
 @media only screen and (min-width: 641px) and (max-width: 1024px) {
-	#root {
+	html {
 		background-image: url("/public/assets/background1024.svg"); /* original background (public/original.svg) by SVGBackgrounds.com */
 	}
 }
 @media only screen and (min-width: 1025px) and (max-width: 1440px) {
-	#root {
+	html {
 		background-image: url("/public/assets/background1440.svg"); /* original background (public/original.svg) by SVGBackgrounds.com */
 	}
 }
 @media only screen and (min-width: 1441px) {
-	#root {
+	html {
 		background-image: url("/public/assets/background2000.svg"); /* original background (public/original.svg) by SVGBackgrounds.com */
 	}
 }
@@ -41,20 +44,19 @@ header {
 }
 
 header.hide {
-	top: -70px;
+	top: -100px;
 }
 
 header nav {
 	justify-content: space-between;
 	background-color: #444e60;
 	align-items: center;
-	margin: 0 auto;
+	margin: 9px auto 0 auto;
 	padding: 20px 0;
 	width: 80%;
 	min-width: 800px;
 	max-width: 1100px;
-	border-bottom-left-radius: 20px;
-	border-bottom-right-radius: 20px;
+	border-radius: 20px;
 }
 
 header nav ul {
@@ -84,7 +86,7 @@ main {
 	min-width: 800px;
 	max-width: 1100px;
 	background: white;
-	margin: 70px auto 0 auto;
+	margin: 80px auto 0 auto;
 	border-radius: 20px;
 	padding-bottom: 5px;
 	flex-grow: 1; /* Take up the remaining space */

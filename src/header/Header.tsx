@@ -1,3 +1,4 @@
+import "./css/Header.css";
 import React, { useEffect } from "react";
 
 function Header() {
@@ -27,15 +28,15 @@ function Header() {
 				<nav>
 					<ul>
 						<li>
-							<a href="#" className="active">
+							<a href="src#" className="active">
 								All
 							</a>
 						</li>
 						<li>
-							<a href="#">General</a>
+							<a href="src#">General</a>
 						</li>
 						<li>
-							<a href="#">Health</a>
+							<a href="src#">Health</a>
 						</li>
 					</ul>
 				</nav>

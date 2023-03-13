@@ -1,0 +1,60 @@
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    transition: top 0.3s ease-in-out;
+    width: 100%;
+}
+
+header.hide {
+    top: -100px;
+}
+
+header .container {
+    background-color: #444e60;
+    margin: 9px auto 0 auto;
+    padding: 20px 0;
+    width: 80%;
+    min-width: 800px;
+    max-width: 1100px;
+    border-radius: 20px;
+}
+
+header nav {
+    justify-content: space-between;
+    align-items: center;
+}
+
+header nav ul {
+    list-style: none;
+    margin: 0;
+    display: flex;
+    padding: 0 40px;
+}
+
+header nav ul li {
+    text-align: center;
+    margin-right: 10px;
+}
+
+header nav a {
+    color: white;
+    text-decoration: none;
+    text-transform: capitalize;
+    padding: 10px 20px;
+    margin: 0 auto;
+}
+
+header nav li a.active {
+    background: #145369;
+    border-radius: 10px;
+    cursor: auto;
+}
+
+header nav a:hover {
+    background: #152238;
+    border-radius: 10px;
+}
+
+/* CSS for the searchbar in larger view is in main/css/SearchMenu.css */

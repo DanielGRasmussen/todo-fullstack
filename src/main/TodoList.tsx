@@ -1,5 +1,6 @@
+import "./css/TodoList.css";
 import React, { useState, useEffect } from "react";
-import { getToDoList } from "./ExternalServices";
+import { getToDoList } from "../ExternalServices";
 import SearchMenu from "./SearchMenu";
 
 export interface ITodoData {
@@ -97,10 +98,6 @@ function TodoList(): JSX.Element {
 		sortedTodoList.reverse();
 	}
 
-	const handleSortOrderChange = (newSortOrder): void => {
-		setSortOrder(newSortOrder);
-	};
-
 	return (
 		<div>
 			{SearchMenu(
@@ -109,7 +106,7 @@ function TodoList(): JSX.Element {
 				sortingOptions,
 				selectedSortingOption,
 				setSelectedSortingOption,
-				handleSortOrderChange
+				setSortOrder
 			)}
 			<ul id="todos" className="grid">
 				{sortedTodoList.map((todo) => (

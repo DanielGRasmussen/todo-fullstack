@@ -1,4 +1,4 @@
-import { ITodoData } from "./TodoList";
+import { ITodoData } from "./main/TodoList";
 
 export async function getToDoList(): Promise<ITodoData[]> {
 	const todos: ITodoData[] = [

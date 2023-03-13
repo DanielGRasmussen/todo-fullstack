@@ -1,8 +1,8 @@
-import "./styles.css";
+import "./css/Main.css";
 import React from "react";
 import TodoList from "./TodoList";
 
-function App() {
+function Main() {
 	document.title = "Main | To Do List";
 
 	return (
@@ -13,4 +13,4 @@ function App() {
 	);
 }
 
-export default App;
+export default Main;

@@ -1,8 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
-import Header from "./header";
-import App from "./App";
+import Header from "./header/Header";
+import Main from "./main/Main";
 import reportWebVitals from "./reportWebVitals";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
@@ -20,7 +20,7 @@ root.render(
 				Skip to content
 			</button>
 			<Header />
-			<App />
+			<Main />
 			<footer></footer>
 		</div>
 	</React.StrictMode>

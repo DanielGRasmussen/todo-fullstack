@@ -1,0 +1,130 @@
+/* Menu */
+#menu {
+    display: flex;
+    justify-content: center;
+}
+
+@media screen and (max-width: 500px) {
+    #menu {
+        flex-wrap: wrap;
+        align-items: center;
+    }
+}
+
+/* Search bar */
+#search-bar {
+    width: 250px;
+    height: 46px;
+    font-size: 12pt;
+    border: 1px solid #9e9e9e;
+    border-radius: 4px;
+    padding-left: 8px;
+}
+
+@media screen and (min-width: 800px) {
+    #search-bar-container-container {
+        width: 100vw;
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 1;
+        transition: top 0.3s ease-in-out;
+        height: 70px;
+    }
+
+    #search-bar-container {
+        width: 80%;
+        min-width: 800px;
+        max-width: 1100px;
+        margin: 0 auto;
+    }
+
+    #menu #search-bar {
+        margin-top: 17px;
+        margin-left: calc(100% - 274px);
+        height: 40px;
+        border-radius: 15px;
+    }
+
+    #menu #search-bar-container-container.hide {
+        top: -100px;
+    }
+}
+
+/* React Select */
+@media screen and (max-width: 500px) {
+    /* The class name of the react-select control changes when the dropdown menu is up */
+    .css-b62m3t-container {
+        width: 245px;
+        margin-left: 10px;
+        padding: 0;
+        margin-top: 5px;
+    }
+
+    .css-b62m3t-container > div {
+        width: 225px;
+    }
+}
+
+/* React-select animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(2rem);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(2rem);
+    }
+}
+
+.select-menu {
+    animation: fadeIn 0.2s ease-in-out;
+}
+
+.select-menu-close {
+    animation: fadeOut 0.3s ease-in-out;
+}
+
+/* Ascending Descending */
+#view-as {
+    margin-left: 5px;
+    display: flex;
+    align-items: center;
+}
+
+#view-as img {
+    width: 20px;
+    height: 20px;
+    border: 1px solid #ccc;
+    background-color: #f2f2f2;
+    border-radius: 4px;
+    position: relative;
+    cursor: pointer;
+    margin-top: 5px;
+    margin-left: 5px;
+    padding: 5px;
+}
+
+#view-as img:hover {
+    outline-color: #999;
+    background-color: #e8e8e8;
+}
+
+#view-as img.active {
+    outline-color: #999;
+    background-color: #d1d1d1;
+    cursor: auto;
+}
+

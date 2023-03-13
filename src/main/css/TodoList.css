@@ -1,0 +1,47 @@
+/* To-do Items Displays */
+#todos {
+    padding: 0 15px;
+    list-style: none;
+}
+
+.list .todo-item {
+    margin-bottom: 10px;
+}
+
+/* Grid list view */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+    grid-gap: 20px;
+}
+
+.todo-item {
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+}
+
+.todo-item h3 {
+    margin: 0;
+    font-size: 1.4rem;
+}
+
+.todo-item .priority,
+.todo-item .completion-date {
+    font-size: 12px;
+    margin: 0;
+}
+
+.todo-item .description {
+    margin: 0;
+}
+
+/* Style the completion date */
+.todo-item .completion-date {
+    color: #666;
+}
+
+/* Style the priority */
+.todo-item .priority {
+    color: #e60000;
+}

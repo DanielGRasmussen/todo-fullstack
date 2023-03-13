@@ -119,7 +119,7 @@ header nav a:hover {
 	}
 
 	#menu #search-bar-container-container.hide {
-		top: -1000px;
+		top: -100px;
 	}
 }
 

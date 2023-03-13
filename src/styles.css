@@ -4,7 +4,7 @@ html {
 	background-size: cover;
 }
 
-#root {
+#root > div {
 	margin: 0;
 	padding: 0;
 	height: 100vh; /* To make the page take up the entire height */

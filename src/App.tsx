@@ -6,7 +6,7 @@ function App() {
 	document.title = "Main | To Do List";
 
 	return (
-		<main>
+		<main tabIndex={-1}>
 			<h1>To-Do</h1>
 			<TodoList />
 		</main>

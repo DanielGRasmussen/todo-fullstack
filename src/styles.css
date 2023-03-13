@@ -33,6 +33,26 @@ html {
 		background-image: url("/public/assets/background2000.svg"); /* original background (public/original.svg) by SVGBackgrounds.com */
 	}
 }
+
+/* Skip to content button */
+/* Hide the link by default */
+#skip-link {
+	position: absolute;
+	top: -50px;
+	left: 0;
+	background-color: #444e60;
+	color: white;
+	padding: 10px;
+	z-index: 1;
+	border-radius: 10px;
+}
+
+/* Show the link when it receives focus */
+#skip-link:focus {
+	top: 10px;
+	left: 10px;
+}
+
 /* Header */
 header {
 	position: fixed;

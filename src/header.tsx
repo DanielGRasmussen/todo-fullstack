@@ -4,13 +4,19 @@ import "./styles.css";
 function Header() {
 	useEffect(() => {
 		// Hide header on scroll
-		let prevScrollpos = window.pageYOffset;
+		let prevScrollpos = window.scrollY;
+		const header = document.querySelector("header");
+		const search_bar = document.getElementById(
+			"search-bar-container-container"
+		);
 		window.onscroll = function () {
-			const currentScrollPos = window.pageYOffset;
+			const currentScrollPos = window.scrollY;
 			if (prevScrollpos > currentScrollPos) {
-				document.querySelector("header").classList.remove("hide");
+				header.classList.remove("hide");
+				search_bar.classList.remove("hide");
 			} else {
-				document.querySelector("header").classList.add("hide");
+				header.classList.add("hide");
+				search_bar.classList.add("hide");
 			}
 			prevScrollpos = currentScrollPos;
 		};
@@ -18,21 +24,23 @@ function Header() {
 
 	return (
 		<header>
-			<nav>
-				<ul>
-					<li>
-						<a href="#" className="active">
-							All
-						</a>
-					</li>
-					<li>
-						<a href="#">General</a>
-					</li>
-					<li>
-						<a href="#">Health</a>
-					</li>
-				</ul>
-			</nav>
+			<div className="container">
+				<nav>
+					<ul>
+						<li>
+							<a href="#" className="active">
+								All
+							</a>
+						</li>
+						<li>
+							<a href="#">General</a>
+						</li>
+						<li>
+							<a href="#">Health</a>
+						</li>
+					</ul>
+				</nav>
+			</div>
 		</header>
 	);
 }

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { getToDoList } from "./ExternalServices";
-import searchMenu from "./SearchMenu";
+import SearchMenu from "./SearchMenu";
 
 export interface ITodoData {
 	id: string;
@@ -103,7 +103,7 @@ function TodoList(): JSX.Element {
 
 	return (
 		<div>
-			{searchMenu(
+			{SearchMenu(
 				searchQuery,
 				setSearchQuery,
 				sortingOptions,

@@ -88,13 +88,13 @@ function SearchMenu(
 
 	// Makes react-select thinner
 	const selectStyles = {
-		control: (provided, state) => ({
+		control: (provided) => ({
 			...provided,
 			background: "#fff",
 			borderColor: "#9e9e9e",
 			minHeight: "50px",
 			height: "50px",
-			boxShadow: state.isFocused ? null : null,
+			boxShadow: null,
 			width: "370px",
 			cursor: "pointer"
 		}),
@@ -120,13 +120,23 @@ function SearchMenu(
 
 	return (
 		<form id="menu">
-			<input
-				id="search-bar"
-				type="text"
-				value={searchQuery}
-				onChange={(event) => setSearchQuery(event.target.value)}
-				placeholder="Search..."
-			/>
+			<div id="search-bar-container-container">
+				{/* First container for absolute positioning and 100% width */}
+				<section id="search-bar-container">
+					{/*
+					 * Second container to be the same width as the header/main then use margins to move it. (Fancy CSS could probably replace that)
+					 * Section instead of div because my IDE and ESLint didn't agree on how it should be formatted.
+					 * This was not passed into the header function because the functions this calls on didn't to update the screen.
+					 */}
+					<input
+						id="search-bar"
+						type="text"
+						value={searchQuery}
+						onChange={(event) => setSearchQuery(event.target.value)}
+						placeholder="Search..."
+					/>
+				</section>
+			</div>
 			<Select
 				id={uniqueId}
 				options={sortingOptions}

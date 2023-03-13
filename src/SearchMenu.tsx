@@ -119,7 +119,7 @@ function SearchMenu(
 	};
 
 	return (
-		<form id="menu">
+		<form id="menu" autoComplete="off">
 			<div id="search-bar-container-container">
 				{/* First container for absolute positioning and 100% width */}
 				<section id="search-bar-container">

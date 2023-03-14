@@ -25,7 +25,7 @@
     #search-bar-container-container {
         width: 100vw;
         position: fixed;
-        top: 0;
+        top: -100px;
         left: 0;
         z-index: 1;
         transition: top 0.3s ease-in-out;
@@ -34,20 +34,24 @@
 
     #search-bar-container {
         width: 80%;
+        position: relative;
+        top: 0;
         min-width: 800px;
         max-width: 1100px;
         margin: 0 auto;
     }
 
     #menu #search-bar {
-        margin-top: 17px;
-        margin-left: calc(100% - 274px);
+        position: absolute;
+        top: 117px;
+        right: 15px;
         height: 40px;
         border-radius: 15px;
     }
 
     #menu #search-bar-container-container.hide {
-        top: -100px;
+        /* This is -200px instead of -100px so the animation speed stays the same and the containers don't block the nav */
+        top: -200px;
     }
 }
 

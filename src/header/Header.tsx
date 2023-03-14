@@ -37,6 +37,10 @@ function Header() {
 		};
 	}, []);
 
+	if (active === "all") {
+		setActive("general");
+	}
+
 	// To get the data
 	useEffect(() => {
 		const fetchTodoList = async () => {

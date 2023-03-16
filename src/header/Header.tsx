@@ -39,18 +39,24 @@ function Header() {
 		function showHeader() {
 			header.classList.remove("hide");
 			search_bar.classList.remove("hide");
-			down_arrow.classList.add("hide");
+			if (down_arrow) {
+				down_arrow.classList.add("hide");
+			}
 		}
 
 		function hideHeader() {
 			header.classList.add("hide");
 			search_bar.classList.add("hide");
-			down_arrow.classList.remove("hide");
+			if (down_arrow) {
+				down_arrow.classList.remove("hide");
+			}
 		}
 
-		down_arrow.addEventListener("click", () => {
-			showHeader();
-		});
+		if (down_arrow) {
+			down_arrow.addEventListener("click", () => {
+				showHeader();
+			});
+		}
 
 		window.onscroll = function () {
 			const currentScrollPos: number = window.scrollY;

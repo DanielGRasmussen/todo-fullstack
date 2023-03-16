@@ -1,51 +1,82 @@
-# [To-Do](https://melodious-taffy-0845af.netlify.app)
+# ToDo Web App
 
-## Description
+This is a web app developed using React for managing a to-do list.
 
-This is a To-Do list manager.
+## Installation
 
-## Prerequisites
+To install and run the project, you should have [Node.js](https://nodejs.org/) installed on your machine.
 
-- You must have Node installed. visit https://byui-cit.github.io/advcss/lesson01/l01-software.html and skip to the Node section for instructions
+1. Clone the repository:
 
-## Setup
+```bash
+git clone https://github.com/DanielGRasmussen/to-do
+```
 
-- `npm install`
-- `npm run start` starts up a local server and updates on any JS or CSS/SCSS changes.
+2. Install dependencies:
 
-## Available Scripts
+```bash
+cd to-do
+npm install
+```
 
-In the project directory, you can run:
+3. Start the development server:
 
-### `npm start`
+```bash
+npm run start
+```
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+4. Open [http://localhost:3000](http://localhost:3000) to view the app in the browser.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Features
 
-### `npm test`
+- Add and remove tasks
+- Filter tasks by status (completed, active, all)
+- Edit task description
+- Mark task as completed
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Architecture
 
-### `npm run build`
+This web application follows a component-based architecture style, where the UI is broken down into reusable components
+with specific responsibilities. The main application is divided into two main components - Header and Main. The Header
+component contains the application header and navigation menu, while the Main component contains the main content of the
+application.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```
+src/
+├── header/
+│   ├── header.tsx
+│   ├── css/
+│   │   └── header.css
+│   └── __tests__/
+│       └── header.test.tsx
+└── main/
+    ├── main.tsx
+    ├── elements.tsx
+    ├── todolist.tsx
+    ├── searchMenu.tsx
+    ├── css/
+    │   ├── main.css
+    │   ├── elements.css
+    │   └── todolist.css
+    └── __tests__/
+        ├── main.test.tsx
+        ├── elements.test.tsx
+        ├── todolist.test.tsx
+        └── searchMenu.test.tsx
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Dependencies
 
-### `npm run eject`
+This project uses the following dependencies:
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+- [react](https://reactjs.org/) - A JavaScript library for building user interfaces
+- [react-dom](https://reactjs.org/docs/react-dom.html) - Provides DOM-specific methods for React
+- [react-select](https://react-select.com/home) - A flexible and beautiful Select Input control for ReactJS with
+  multiselect, autocomplete, async and creatable support.
+- [normalize.css](https://necolas.github.io/normalize.css/) - A modern alternative to CSS resets
+- [web-vitals](https://github.com/GoogleChrome/web-vitals) - A small library for measuring performance metrics like
+  first input delay and largest contentful paint.
+- [jest](https://jestjs.io/) - A JavaScript testing framework
+- [eslint](https://eslint.org/) - A tool for identifying and reporting on patterns found in ECMAScript/JavaScript code
+- [prettier](https://prettier.io/) - A code formatter that enforces a consistent style

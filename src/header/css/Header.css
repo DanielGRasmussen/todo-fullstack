@@ -11,40 +11,14 @@ header.hide {
     top: -100px;
 }
 
-header .container {
-    background-color: #444e60;
-    margin: 9px auto 0 auto;
-    padding: 20px 0;
-    width: 80%;
-    min-width: 800px;
-    max-width: 1100px;
-    border-radius: 20px;
-}
-
-header nav {
-    justify-content: space-between;
-    align-items: center;
-    width: calc(100% - 275px);
-}
-
 header nav ul {
     list-style: none;
-    margin: 0;
-    display: flex;
-    padding: 0 40px;
-}
-
-header nav ul li {
-    text-align: center;
-    margin-right: 10px;
 }
 
 header nav a {
     color: white;
     text-decoration: none;
     text-transform: capitalize;
-    padding: 10px 20px;
-    margin: 0 auto;
 }
 
 header nav li a.active {
@@ -58,4 +32,100 @@ header nav a:hover {
     border-radius: 10px;
 }
 
+@media screen and (min-width: 800px) {
+    header .container {
+        background: #444e60;
+        margin: 9px auto 0 auto;
+        width: 80%;
+        min-width: 800px;
+        max-width: 1100px;
+        border-radius: 20px;
+        padding: 20px 0;
+    }
+
+    header nav {
+        justify-content: space-between;
+        align-items: center;
+        width: calc(100% - 275px);
+    }
+
+    header nav ul {
+        display: flex;
+        padding: 0 40px;
+        margin: 0 auto;
+    }
+
+    header nav ul li {
+        text-align: center;
+        margin-right: 10px;
+    }
+
+    header nav a {
+        padding: 10px 20px;
+    }
+}
+
 /* CSS for the searchbar in larger view is in main/css/SearchMenu.css */
+/* CSS for mobile header */
+@media screen and (max-width: 800px) {
+    header {
+        background: #444e60;
+        height: 70px;
+    }
+
+    header #hamburger {
+        position: absolute;
+        top: 13px;
+        right: 10px;
+        padding: 10px;
+        border: 1px solid black;
+        border-radius: 10px;
+        cursor: pointer;
+    }
+
+    header > .icon img {
+        width: 50px;
+        padding: 10px;
+    }
+
+    /* Sidebar */
+    header nav {
+        background: #444e60;
+        position: fixed;
+        top: 0;
+        left: -400px;
+        width: 80%;
+        min-width: 250px;
+        max-width: 400px;
+        height: 100vh;
+        transition: left 0.3s;
+        overflow-y: auto;
+    }
+
+    header nav img {
+        width: 100px;
+        margin: 10px auto 0 auto;
+        display: block;
+    }
+
+    header nav.open {
+        left: 0;
+    }
+
+    header nav ul {
+        margin: 20px 0;
+        padding: 0;
+    }
+
+    header nav ul li {
+        margin-bottom: 10px;
+    }
+
+    header nav ul li a {
+        display: block;
+        padding: 15px 30px;
+        width: 70%;
+        margin: 0 auto;
+        text-align: center;
+    }
+}

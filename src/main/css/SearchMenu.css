@@ -116,9 +116,17 @@
     border-radius: 4px;
     position: relative;
     cursor: pointer;
-    margin-top: 5px;
-    margin-left: 5px;
     padding: 5px;
+    margin-left: 5px;
+}
+
+
+#grid-container img {
+    margin-top: 6px;
+}
+
+#list-container img {
+    margin-top: 10px;
 }
 
 #view-as img:hover {
@@ -132,3 +140,39 @@
     cursor: auto;
 }
 
+/* Style for the tooltips */
+.tooltip {
+    position: relative;
+}
+
+.tooltip::before {
+    display: none;
+    position: absolute;
+    background-color: black;
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+    top: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+}
+
+/* Show the tooltip on hover */
+.tooltip:hover::before {
+    display: block;
+}
+
+/* Specific tooltip messages */
+#grid-container::before {
+    content: "Grid View";
+    width: 70px;
+}
+
+#list-container::before {
+    content: "List View";
+    width: 70px;
+    top: -26px;
+}
+
+/* Sort-direction title message in SortButton.css */

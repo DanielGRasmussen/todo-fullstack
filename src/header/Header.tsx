@@ -33,14 +33,31 @@ function Header() {
 		const search_bar: Element = document.getElementById(
 			"search-bar-container-container"
 		);
+		const down_arrow: Element = document.getElementById("down_arrow");
+
+		// Separate functions in case somehow something breaks, easier for user to fix
+		function showHeader() {
+			header.classList.remove("hide");
+			search_bar.classList.remove("hide");
+			down_arrow.classList.add("hide");
+		}
+
+		function hideHeader() {
+			header.classList.add("hide");
+			search_bar.classList.add("hide");
+			down_arrow.classList.remove("hide");
+		}
+
+		down_arrow.addEventListener("click", () => {
+			showHeader();
+		});
+
 		window.onscroll = function () {
 			const currentScrollPos: number = window.scrollY;
 			if (prevScrollpos > currentScrollPos) {
-				header.classList.remove("hide");
-				search_bar.classList.remove("hide");
+				showHeader();
 			} else {
-				header.classList.add("hide");
-				search_bar.classList.add("hide");
+				hideHeader();
 			}
 			prevScrollpos = currentScrollPos;
 		};
@@ -87,6 +104,12 @@ function Header() {
 	if (windowWidth > 800) {
 		return (
 			<header>
+				<img
+					src={`${process.env.PUBLIC_URL}/assets/drag_down_arrow.svg`}
+					alt="Down arrow to bring down header"
+					id="down_arrow"
+					className="hide"
+				/>
 				<div className="container">
 					<nav>{NavUl}</nav>
 				</div>

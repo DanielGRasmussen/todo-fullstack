@@ -49,3 +49,17 @@
         transform: rotate(360deg);
     }
 }
+
+/* Title messages (title css is in SearchMenu.css) */
+#sort-direction::before {
+    top: -38px;
+    width: 120px;
+}
+
+#sort-direction.ascending::before {
+    content: "Ascending Sort";
+}
+
+#sort-direction.descending::before {
+    content: "Descending Sort";
+}

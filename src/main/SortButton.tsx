@@ -2,26 +2,20 @@ import "./css/SortButton.css";
 import React, { useState } from "react";
 
 function SortButton({ onClick }): JSX.Element {
-	const [isDescending, setIsDescending] = useState(true);
+	const [isAscending, setIsAscending] = useState(true);
 	const [first, isFirst] = useState(true);
 
+	// up arrow   = ascending  = a to z
 	// down arrow = descending = z to a
 	const handleOnClick = (): void => {
-		setIsDescending(!isDescending);
+		setIsAscending(!isAscending);
 		isFirst(false);
-		onClick(isDescending);
+		onClick(isAscending);
 	};
-
-	let sortBy: string;
-	if (isDescending) {
-		sortBy = "Ascending";
-	} else {
-		sortBy = "Descending";
-	}
 
 	// Swap between rotating it upside-down and downside-up
 	const arrowStyle: { animation: string } = {
-		animation: isDescending
+		animation: isAscending
 			? "downside-up 0.3s linear forwards"
 			: "upside-down 0.3s linear forwards"
 	};
@@ -29,8 +23,12 @@ function SortButton({ onClick }): JSX.Element {
 	const blankStyle: { animation: string } = { animation: "" };
 
 	return (
-		<div onClick={handleOnClick} id="sort-direction">
-			{isDescending ? (
+		<div
+			onClick={handleOnClick}
+			id="sort-direction"
+			className={(isAscending ? "ascending" : "descending") + " tooltip"}
+		>
+			{isAscending ? (
 				<img
 					src={
 						process.env.PUBLIC_URL + first
@@ -39,14 +37,12 @@ function SortButton({ onClick }): JSX.Element {
 					}
 					alt="Ascending order"
 					style={first ? blankStyle : arrowStyle}
-					title={sortBy}
 				/>
 			) : (
 				<img
 					src={process.env.PUBLIC_URL + "/assets/up_arrow.svg"}
 					alt="Descending order"
 					style={arrowStyle}
-					title={sortBy}
 				/>
 			)}
 		</div>

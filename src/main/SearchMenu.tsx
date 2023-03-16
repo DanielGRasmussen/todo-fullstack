@@ -123,21 +123,23 @@ function SearchMenu(
 			/>
 			<SortButton onClick={handleSortOrderChange} />
 			<div id="view-as">
-				<span>View as:</span>
-				<img
-					src={process.env.PUBLIC_URL + "/assets/grid.svg"}
-					className="grid active"
-					alt="Grid"
-					title="Grid"
-					onClick={() => setTodoStyle("grid")}
-				/>
-				<img
-					src={process.env.PUBLIC_URL + "/assets/list.svg"}
-					className="list"
-					alt="List"
-					title="List"
-					onClick={() => setTodoStyle("list")}
-				/>
+				<span className="tooltip">View as:</span>
+				<div id="grid-container" className="tooltip">
+					<img
+						src={process.env.PUBLIC_URL + "/assets/grid.svg"}
+						className="grid active"
+						alt="Grid"
+						onClick={() => setTodoStyle("grid")}
+					/>
+				</div>
+				<div id="list-container" className="tooltip">
+					<img
+						src={process.env.PUBLIC_URL + "/assets/list.svg"}
+						className="list"
+						alt="List"
+						onClick={() => setTodoStyle("list")}
+					/>
+				</div>
 			</div>
 		</form>
 	);

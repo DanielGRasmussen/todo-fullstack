@@ -1,13 +1,21 @@
 import "./css/SearchMenu.css";
 import React from "react";
+import makeAnimated from "react-select/animated";
 import Select, { components } from "react-select";
 import SortButton from "./SortButton";
+
+const animatedComponents = makeAnimated();
+const customComponents = {
+	Menu: (props) => (
+		<components.Menu children="" {...props} className="select-menu" />
+	)
+};
 
 function SearchMenu(
 	searchQuery: string,
 	setSearchQuery,
 	sortingOptions: { value: string; label: string }[],
-	selectedSortingOption: { value: string; label: string },
+	selectedSortingOption: { value: string; label: string }[],
 	setSelectedSortingOption,
 	handleSortOrderChange
 ): JSX.Element {
@@ -72,15 +80,8 @@ function SearchMenu(
 				value={selectedSortingOption}
 				onChange={(option) => setSelectedSortingOption(option)}
 				styles={selectStyles}
-				components={{
-					Menu: (props) => (
-						<components.Menu
-							children=""
-							{...props}
-							className="select-menu"
-						/>
-					)
-				}}
+				isMulti
+				components={{ ...animatedComponents, ...customComponents }}
 				onMenuClose={() => {
 					// Can't just do event handlers with class toggle and timeout
 					// Menu reappears for a split second and animation goes ultra-fast if you do.

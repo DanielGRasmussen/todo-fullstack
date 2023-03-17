@@ -1,5 +1,5 @@
 import "./css/TodoList.css";
-import React, { useEffect, useState } from "react";
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { getToDoList } from "../ExternalServices";
 import SearchMenu from "./SearchMenu";
 
@@ -90,9 +90,10 @@ function TodoList(): JSX.Element {
 	// Create the elements for the search and functions to update them
 	const [todoList, setTodoList] = useState<ITodoData[]>([]);
 	const [searchQuery, setSearchQuery] = useState("");
-	const [selectedSortingOption, setSelectedSortingOption] = useState(
-		sortingOptions[0]
-	);
+	const [selectedSortingOption, setSelectedSortingOption]: [
+		{ value: string; label: string }[],
+		Dispatch<SetStateAction<{ value: string; label: string }[]>>
+	] = useState([sortingOptions[0]]);
 	const [sortOrder, setSortOrder] = useState(false);
 
 	useEffect(() => {
@@ -108,15 +109,20 @@ function TodoList(): JSX.Element {
 	);
 
 	const sortedTodoList: ITodoData[] = filteredTodoList.sort((a, b) => {
-		const aValue: string = a[selectedSortingOption.value];
-		const bValue: string = b[selectedSortingOption.value];
-		if (aValue < bValue) {
-			return -1;
+		let result = 0;
+		for (let i = 0; i < selectedSortingOption.length; i++) {
+			const aValue: string = a[selectedSortingOption[i].value];
+			const bValue: string = b[selectedSortingOption[i].value];
+			if (aValue < bValue) {
+				result = -1;
+				break;
+			}
+			if (aValue > bValue) {
+				result = 1;
+				break;
+			}
 		}
-		if (aValue > bValue) {
-			return 1;
-		}
-		return 0;
+		return result;
 	});
 
 	if (sortOrder) {

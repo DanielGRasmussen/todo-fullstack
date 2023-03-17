@@ -1,7 +1,5 @@
 import "./css/Header.css";
 import React, { useEffect, useState } from "react";
-import { ITodoData } from "../main/TodoList";
-import { getToDoList } from "../ExternalServices";
 
 function NavItem({ name, active = false }): JSX.Element {
 	return (
@@ -14,19 +12,11 @@ function NavItem({ name, active = false }): JSX.Element {
 }
 
 function Header() {
-	const [todoList, setTodoList] = useState<ITodoData[]>([]);
-	const [active, setActive] = useState("all");
+	const [active, setActive] = useState("inventory");
 	const [isOpen, setIsOpen] = useState(false);
 	const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
 	useEffect(() => {
-		// To get the data
-		const fetchTodoList = async () => {
-			const fetchedList: ITodoData[] = await getToDoList();
-			setTodoList(fetchedList);
-		};
-		fetchTodoList();
-
 		// Hide header on scroll
 		let prevScrollpos: number = window.scrollY;
 		const header: Element = document.querySelector("header");
@@ -90,21 +80,15 @@ function Header() {
 		});
 	}, []);
 
-	// Gets the unique types from todoList
-	const uniqueTypes: string[] = Array.from(
-		new Set(todoList.map((todo: ITodoData) => todo.type.toLowerCase()))
-	);
-	uniqueTypes.unshift("all");
-
-	if (active === "all") {
-		setActive("general");
+	if (active === "inventory") {
+		setActive("todo");
 	}
 
 	const NavUl = (
 		<ul>
-			{uniqueTypes.map((type) => (
-				<NavItem key={type} name={type} active={type === active} />
-			))}
+			<NavItem name="Todo" active={"todo" === active} />
+			<NavItem name="Inventory" active={"inventory" === active} />
+			<NavItem name="Shopping List" active={"shopping" === active} />
 		</ul>
 	);
 

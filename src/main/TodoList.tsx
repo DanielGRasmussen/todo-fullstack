@@ -95,6 +95,17 @@ function TodoList(): JSX.Element {
 		Dispatch<SetStateAction<{ value: string; label: string }[]>>
 	] = useState([sortingOptions[0]]);
 	const [sortOrder, setSortOrder] = useState(false);
+	const [filters, setFilters] = useState([]);
+
+	// Gets the unique types from todoList
+	const filterOptions = Array.from(
+		new Set(
+			todoList.map((todo: ITodoData) => ({
+				value: todo.type.toLowerCase(),
+				label: todo.type.toLowerCase()
+			}))
+		)
+	);
 
 	useEffect(() => {
 		const fetchTodoList = async () => {
@@ -104,8 +115,14 @@ function TodoList(): JSX.Element {
 		fetchTodoList();
 	}, []);
 
-	const filteredTodoList: ITodoData[] = todoList.filter((todo) =>
-		todo.title.toLowerCase().includes(searchQuery.toLowerCase())
+	// Search query is in it, and it's type is in filters (if there are any)
+	const filteredTodoList: ITodoData[] = todoList.filter(
+		(todo) =>
+			todo.title.toLowerCase().includes(searchQuery.toLowerCase()) &&
+			(filters.length === 0 ||
+				filters.some(
+					(option) => option.value === todo.type.toLowerCase()
+				))
 	);
 
 	const sortedTodoList: ITodoData[] = filteredTodoList.sort((a, b) => {
@@ -137,7 +154,10 @@ function TodoList(): JSX.Element {
 				sortingOptions,
 				selectedSortingOption,
 				setSelectedSortingOption,
-				setSortOrder
+				setSortOrder,
+				filterOptions,
+				filters,
+				setFilters
 			)}
 			<ul id="todos">
 				{sortedTodoList.map((todo) => (

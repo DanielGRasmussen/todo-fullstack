@@ -11,17 +11,36 @@ const customComponents = {
 	)
 };
 
+function select_on_close(uniqueId) {
+	// Can't just do event handlers with class toggle and timeout
+	// Menu reappears for a split second and animation goes ultra-fast if you do.
+	const menu = document.querySelector(`#${uniqueId} .select-menu`);
+	const container: HTMLElement = menu?.parentElement;
+	const clonedMenu = menu?.cloneNode(true) as HTMLElement;
+
+	if (!clonedMenu) return;
+
+	clonedMenu.classList.add("select-menu-close");
+	clonedMenu.addEventListener("animationend", () => {
+		container?.removeChild(clonedMenu);
+	});
+
+	container?.appendChild(clonedMenu);
+}
+
 function SearchMenu(
 	searchQuery: string,
 	setSearchQuery,
 	sortingOptions: { value: string; label: string }[],
 	selectedSortingOption: { value: string; label: string }[],
 	setSelectedSortingOption,
-	handleSortOrderChange
+	handleSortOrderChange,
+	filterOptions: { value: string; label: string }[],
+	filters: string[],
+	setFilters
 ): JSX.Element {
-	const [uniqueId] = React.useState(
-		() => "select_" + Math.random().toFixed(5).slice(2)
-	);
+	const sortUniqueId = "sort-select";
+	const filterUniqueId = "filter-select";
 
 	// Makes react-select thinner
 	const selectStyles = {
@@ -33,7 +52,8 @@ function SearchMenu(
 			height: "50px",
 			boxShadow: null,
 			width: "370px",
-			cursor: "pointer"
+			cursor: "pointer",
+			textTransform: "capitalize"
 		}),
 		valueContainer: (provided) => ({
 			...provided,
@@ -51,7 +71,8 @@ function SearchMenu(
 		menu: (provided) => ({
 			...provided,
 			marginTop: "-5px",
-			width: "370px"
+			width: "370px",
+			textTransform: "capitalize"
 		})
 	};
 
@@ -75,33 +96,32 @@ function SearchMenu(
 				</section>
 			</div>
 			<Select
-				id={uniqueId}
-				options={sortingOptions}
-				value={selectedSortingOption}
-				onChange={(option) => setSelectedSortingOption(option)}
+				id={filterUniqueId}
+				options={filterOptions}
+				value={filters}
+				onChange={(options) => setFilters(options)}
 				styles={selectStyles}
 				isMulti
 				components={{ ...animatedComponents, ...customComponents }}
 				onMenuClose={() => {
-					// Can't just do event handlers with class toggle and timeout
-					// Menu reappears for a split second and animation goes ultra-fast if you do.
-					const menu = document.querySelector(
-						`#${uniqueId} .select-menu`
-					);
-					const container: HTMLElement = menu?.parentElement;
-					const clonedMenu = menu?.cloneNode(true) as HTMLElement;
-
-					if (!clonedMenu) return;
-
-					clonedMenu.classList.add("select-menu-close");
-					clonedMenu.addEventListener("animationend", () => {
-						container?.removeChild(clonedMenu);
-					});
-
-					container?.appendChild(clonedMenu);
+					select_on_close(filterUniqueId);
 				}}
 			/>
-			<SortButton onClick={handleSortOrderChange} />
+			<Select
+				id={sortUniqueId}
+				options={sortingOptions}
+				value={selectedSortingOption}
+				onChange={(options) => setSelectedSortingOption(options)}
+				styles={selectStyles}
+				isMulti
+				components={{ ...animatedComponents, ...customComponents }}
+				onMenuClose={() => {
+					select_on_close(sortUniqueId);
+				}}
+			/>
+			<SortButton
+				onClick={"select_" + Math.random().toFixed(5).slice(2)}
+			/>
 		</form>
 	);
 }

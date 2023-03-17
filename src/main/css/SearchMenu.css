@@ -101,45 +101,6 @@
     animation: fadeOut 0.3s ease-in-out;
 }
 
-/* Ascending Descending */
-#view-as {
-    margin-left: 5px;
-    display: flex;
-    align-items: center;
-}
-
-#view-as img {
-    width: 20px;
-    height: 20px;
-    border: 1px solid #ccc;
-    background-color: #f2f2f2;
-    border-radius: 4px;
-    position: relative;
-    cursor: pointer;
-    padding: 5px;
-    margin-left: 5px;
-}
-
-
-#grid-container img {
-    margin-top: 6px;
-}
-
-#list-container img {
-    margin-top: 10px;
-}
-
-#view-as img:hover {
-    outline-color: #999;
-    background-color: #e8e8e8;
-}
-
-#view-as img.active {
-    outline-color: #999;
-    background-color: #d1d1d1;
-    cursor: auto;
-}
-
 /* Style for the tooltips */
 .tooltip {
     position: relative;
@@ -161,18 +122,6 @@
 /* Show the tooltip on hover */
 .tooltip:hover::before {
     display: block;
-}
-
-/* Specific tooltip messages */
-#grid-container::before {
-    content: "Grid View";
-    width: 70px;
-}
-
-#list-container::before {
-    content: "List View";
-    width: 70px;
-    top: -26px;
 }
 
 /* Sort-direction title message in SortButton.css */

@@ -3,27 +3,6 @@ import React from "react";
 import Select, { components } from "react-select";
 import SortButton from "./SortButton";
 
-function setTodoStyle(todoStyle: string): void {
-	// Either "grid" or "list" should probably use an enum or boolean "isList" parameter.
-	const todos = document.querySelector("#todos");
-	if (!todos) {
-		return;
-	}
-	// Gets the list style that this isn't.
-	const other: string = todoStyle === "grid" ? "list" : "grid";
-	todos.classList.remove(other);
-	todos.classList.add(todoStyle);
-
-	const selected: HTMLElement = document.querySelector(
-		`#view-as .${todoStyle}`
-	);
-	const deselected: HTMLElement = document.querySelector(
-		`#view-as .${other}`
-	);
-	selected.classList.add("active");
-	deselected.classList.remove("active");
-}
-
 function SearchMenu(
 	searchQuery: string,
 	setSearchQuery,
@@ -122,25 +101,6 @@ function SearchMenu(
 				}}
 			/>
 			<SortButton onClick={handleSortOrderChange} />
-			<div id="view-as">
-				<span className="tooltip">View as:</span>
-				<div id="grid-container" className="tooltip">
-					<img
-						src={process.env.PUBLIC_URL + "/assets/grid.svg"}
-						className="grid active"
-						alt="Grid"
-						onClick={() => setTodoStyle("grid")}
-					/>
-				</div>
-				<div id="list-container" className="tooltip">
-					<img
-						src={process.env.PUBLIC_URL + "/assets/list.svg"}
-						className="list"
-						alt="List"
-						onClick={() => setTodoStyle("list")}
-					/>
-				</div>
-			</div>
 		</form>
 	);
 }

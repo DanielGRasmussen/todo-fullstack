@@ -73,6 +73,8 @@ function Header() {
 			const nav: Element = document.querySelector("nav");
 			const hamburger: Element = document.getElementById("hamburger");
 			if (
+				nav &&
+				hamburger &&
 				!(
 					nav.contains(event.target as Node) ||
 					hamburger.contains(event.target as Node)

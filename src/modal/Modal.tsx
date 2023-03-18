@@ -3,8 +3,15 @@ import React, { useState } from "react";
 import Dates from "./Dates";
 
 function Subtask(subtask, dataChange) {
-	console.log(dataChange);
-	return <li>{subtask}</li>;
+	return (
+		<li
+			onClick={(event) => {
+				dataChange(event, "subtask");
+			}}
+		>
+			{subtask}
+		</li>
+	);
 }
 
 function Modal(isOpen: boolean, setIsOpen, todo) {

@@ -12,10 +12,10 @@
 }
 
 #modal {
-    width: calc(80% - 40px);
-    min-width: 760px;
-    max-width: 1060px;
-    min-height: 70vh;
+    width: calc(60% - 40px);
+    min-width: 635px;
+    max-width: 785px;
+    height: fit-content;
     background-color: white;
     border-radius: 20px;
     padding: 20px;
@@ -28,4 +28,67 @@
     right: 10px;
     width: 30px;
     cursor: pointer;
+}
+
+#modal p,
+#modal li,
+#modal h3 {
+    cursor: default;
+}
+
+#modal input {
+    border: 0;
+    height: 20px;
+    font-size: 11pt;
+}
+
+#modal .title {
+    width: calc(100% - 40px);
+    height: 40px;
+    font-size: 18pt;
+}
+
+#modal .priority {
+    color: #e60000;
+    margin-top: -5px;
+}
+
+#modal .priority input {
+    width: 1ch;
+    padding: 0 5px;
+    color: #e60000;
+}
+
+#modal .type {
+    font-size: 10pt;
+    background: #444e60;
+    padding: 5px 10px;
+    border-radius: 50px;
+    color: white;
+    width: fit-content;
+    margin-top: 3px;
+}
+
+#modal .type input {
+    width: 100px;
+    background: #444e60;
+    color: white;
+}
+
+#modal #description {
+    width: calc(100% - 40px);
+    height: 100px;
+    border: 0;
+    resize: none;
+    font-size: 11pt;
+}
+
+#modal #progress {
+    width: 250px;
+    height: 50px;
+    font-size: 20pt;
+    border-radius: 10px;
+    cursor: pointer;
+    display: block;
+    margin: 10px auto 0 auto;
 }

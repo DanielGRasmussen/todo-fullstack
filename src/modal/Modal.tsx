@@ -29,6 +29,12 @@ function Modal(isOpen: boolean, setIsOpen, todo) {
 		setChange(!change);
 	}
 
+	function overlayClicked(event) {
+		if (event.target.id === "modal-overlay") {
+			toggleModal();
+		}
+	}
+
 	function changeStatus(new_status: string) {
 		if (new_status === "in-progress") {
 			todo.actualStartDate = new Date().toISOString();
@@ -51,7 +57,7 @@ function Modal(isOpen: boolean, setIsOpen, todo) {
 
 	if (isOpen) {
 		return (
-			<div id="modal-overlay">
+			<div id="modal-overlay" onClick={overlayClicked}>
 				<div id="modal">
 					<input
 						type="text"
@@ -61,9 +67,13 @@ function Modal(isOpen: boolean, setIsOpen, todo) {
 						}}
 						className="title"
 					/>
-					{/* Make look like h2 */}
-					<p>
-						Task type:{" "}
+					<img
+						src={process.env.PUBLIC_URL + "/assets/close_x.svg"}
+						alt="Close modal"
+						onClick={toggleModal}
+						id="close-modal"
+					/>
+					<p className="type">
 						<input
 							type="text"
 							defaultValue={todo.type}
@@ -72,8 +82,7 @@ function Modal(isOpen: boolean, setIsOpen, todo) {
 							}}
 						/>
 					</p>
-					{/* No clue where this should go */}
-					<p>
+					<p className="priority">
 						Priority:{" "}
 						<input
 							type="text"
@@ -84,31 +93,29 @@ function Modal(isOpen: boolean, setIsOpen, todo) {
 						/>
 					</p>
 					{Dates(todo, dataChange)}
-					{/* No clue where this should go and it is nowhere near done */}
+					{/* Nowhere near done */}
+					<h3>Subtasks:</h3>
 					<ul>
 						{todo.subTasks.map((subtask) =>
 							Subtask(subtask, dataChange)
 						)}
 					</ul>
+					<h3>Description</h3>
 					<textarea
 						defaultValue={todo.description}
 						onBlur={(event) => {
 							dataChange(event.target.value, "description");
 						}}
+						id="description"
 					></textarea>
 					<button
 						onClick={() => {
 							changeStatus(buttonTextOpts[todo.status][1]);
 						}}
+						id="progress"
 					>
 						{buttonTextOpts[todo.status][0]}
 					</button>
-					<img
-						src={process.env.PUBLIC_URL + "/assets/close_x.svg"}
-						alt="Close modal"
-						onClick={toggleModal}
-						id="close-modal"
-					/>
 				</div>
 			</div>
 		);

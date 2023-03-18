@@ -1,0 +1,11 @@
+#modal #dates {
+    position: absolute;
+    top: 53px;
+    right: 10px;
+    list-style: none;
+    color: #666;
+}
+
+#modal #dates input {
+    color: #666;
+}

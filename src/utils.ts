@@ -9,3 +9,15 @@ export function formatDate(ISOstring: string): string {
 		hour12: true
 	});
 }
+
+export function clickAnywhere(elements: Element[], next): void {
+	window.addEventListener("click", (event) => {
+		if (
+			elements.some(
+				(element) => element && !element.contains(event.target as Node)
+			)
+		) {
+			next();
+		}
+	});
+}

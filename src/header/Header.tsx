@@ -1,5 +1,6 @@
 import "./css/Header.css";
 import React, { useEffect, useState } from "react";
+import { clickAnywhere } from "../utils";
 
 function NavItem({ name, active = false }): JSX.Element {
 	return (
@@ -59,20 +60,13 @@ function Header() {
 		};
 
 		// Close navigation menu when clicked outside
-		window.addEventListener("click", (event) => {
-			const nav: Element = document.querySelector("nav");
-			const hamburger: Element = document.getElementById("hamburger");
-			if (
-				nav &&
-				hamburger &&
-				!(
-					nav.contains(event.target as Node) ||
-					hamburger.contains(event.target as Node)
-				)
-			) {
-				setIsOpen(false);
-			}
-		});
+		function clickedElsewhere() {
+			setIsOpen(false);
+		}
+
+		const nav: Element = document.querySelector("nav");
+		const hamburger: Element = document.getElementById("hamburger");
+		clickAnywhere([nav, hamburger], clickedElsewhere);
 
 		// Reload this function when window size changes
 		window.addEventListener("resize", () => {

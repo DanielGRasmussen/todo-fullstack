@@ -1,19 +1,8 @@
 import "./css/TodoElement.css";
 import React from "react";
+import { formatDate } from "../utils";
 
 function TodoElement(todo, setIsOpen, setModalTodo): JSX.Element {
-	// Convert ISO to date
-	function formatDate(ISOstring: string): string {
-		return new Date(ISOstring).toLocaleString("en-US", {
-			month: "numeric",
-			day: "numeric",
-			year: "numeric",
-			hour: "numeric",
-			minute: "numeric",
-			hour12: true
-		});
-	}
-
 	const behindStart: boolean =
 		todo.status === "incomplete" &&
 		!todo.actualStartDate &&
@@ -25,6 +14,7 @@ function TodoElement(todo, setIsOpen, setModalTodo): JSX.Element {
 
 	return (
 		<li
+			key={todo.id}
 			className={`todo-item ${todo.status} ${todo.type} ${
 				behindStart || behindFinish ? "behind" : ""
 			}`}

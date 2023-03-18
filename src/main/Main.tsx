@@ -1,7 +1,7 @@
 import "./css/Main.css";
 import React, { useState } from "react";
 import TodoList from "./TodoList";
-import Modal from "./Modal";
+import Modal from "../modal/Modal";
 
 function Main() {
 	document.title = "Main | To Do List";

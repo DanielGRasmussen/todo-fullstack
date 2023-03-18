@@ -119,9 +119,7 @@ function SearchMenu(
 					select_on_close(sortUniqueId);
 				}}
 			/>
-			<SortButton
-				onClick={"select_" + Math.random().toFixed(5).slice(2)}
-			/>
+			<SortButton onClick={handleSortOrderChange} />
 		</form>
 	);
 }

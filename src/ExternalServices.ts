@@ -1,7 +1,7 @@
 import { ITodoData } from "./main/TodoList";
 import { sleep } from "./utils";
 
-const todos: ITodoData[] = [
+let todos: ITodoData[] = [
 	{
 		id: "1",
 		created: new Date("15 March 2023 19:30 UTC").toISOString(),
@@ -185,4 +185,10 @@ export function getTodoByIdFromLocal(id: string): ITodoData {
 	for (const todoData of todos) {
 		if (todoData.id === id) return todoData;
 	}
+}
+
+export async function deleteTodoById(id: string): Promise<void> {
+	await sleep(100);
+	todos = todos.filter((item) => item.id !== id);
+	return;
 }

@@ -3,8 +3,9 @@ import React, { useState } from "react";
 import Dates from "./Dates";
 import { sleep } from "../utils";
 import SubTask from "./SubTask";
+import { deleteTodoById } from "../ExternalServices";
 
-function Modal(isOpen: boolean, setIsOpen, todo, setModalTodo) {
+function Modal(isOpen: boolean, setIsOpen, todo, setModalTodo, fetchTodoList) {
 	const [change, setChange] = useState(false);
 
 	function toggleModal() {
@@ -27,7 +28,15 @@ function Modal(isOpen: boolean, setIsOpen, todo, setModalTodo) {
 		todo[dataType] = newValue;
 		todo.lastUpdated = new Date().toISOString();
 		// Here we should place a call to external services to update db
+		fetchTodoList();
 		setChange(!change);
+	}
+
+	function deleteTodo() {
+		deleteTodoById(todo.id).then(() => {
+			fetchTodoList();
+		});
+		toggleModal();
 	}
 
 	function overlayClicked(event) {
@@ -51,7 +60,7 @@ function Modal(isOpen: boolean, setIsOpen, todo, setModalTodo) {
 	};
 
 	if (!isOpen) return;
-
+	let i = 0;
 	return (
 		<div id="modal-overlay" onClick={overlayClicked}>
 			<div id="modal">
@@ -68,6 +77,12 @@ function Modal(isOpen: boolean, setIsOpen, todo, setModalTodo) {
 					alt="Close modal"
 					onClick={toggleModal}
 					id="close-modal"
+				/>
+				<img
+					src={process.env.PUBLIC_URL + "/assets/trash.svg"}
+					alt="Delete current todo"
+					onClick={deleteTodo}
+					id="delete-todo"
 				/>
 				<p className="type">
 					<input
@@ -94,9 +109,11 @@ function Modal(isOpen: boolean, setIsOpen, todo, setModalTodo) {
 				) : (
 					<span className="space"></span>
 				)}
-				<ul>
-					{todo.subTasks.map((subtask) =>
-						SubTask(subtask, dataChange, setModalTodo)
+				<ul id="subtasks">
+					{todo.subTasks.map(
+						(subtask) =>
+							SubTask(subtask, fetchTodoList, setModalTodo, i),
+						(i += 1)
 					)}
 				</ul>
 				<h3>Description</h3>

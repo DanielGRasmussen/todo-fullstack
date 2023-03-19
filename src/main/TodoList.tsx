@@ -1,6 +1,5 @@
 import "./css/TodoList.css";
-import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { getToDoList } from "../ExternalServices";
+import React, { Dispatch, SetStateAction, useState } from "react";
 import SearchMenu from "./SearchMenu";
 import TodoElement from "./TodoElement";
 
@@ -20,7 +19,7 @@ export interface ITodoData {
 	lastUpdated: string;
 }
 
-function TodoList(setIsOpen, setModalTodo): JSX.Element {
+function TodoList(setIsOpen, setModalTodo, todoList): JSX.Element {
 	// Gives the to-do list with sorting options
 	const sortingOptions: { value: string; label: string }[] = [
 		{ value: "title", label: "Title" },
@@ -36,7 +35,6 @@ function TodoList(setIsOpen, setModalTodo): JSX.Element {
 	];
 
 	// Create the elements for the search and functions to update them
-	const [todoList, setTodoList] = useState<ITodoData[]>([]);
 	const [searchQuery, setSearchQuery] = useState("");
 	const [selectedSortingOption, setSelectedSortingOption]: [
 		{ value: string; label: string }[],
@@ -46,7 +44,7 @@ function TodoList(setIsOpen, setModalTodo): JSX.Element {
 	const [filters, setFilters] = useState([]);
 
 	// Gets the unique types from todoList
-	const filterOptions = Array.from(
+	const filterOptions: { value: string; label: string }[] = Array.from(
 		new Set(
 			todoList.map((todo: ITodoData) => ({
 				value: todo.type.toLowerCase(),
@@ -54,14 +52,6 @@ function TodoList(setIsOpen, setModalTodo): JSX.Element {
 			}))
 		)
 	);
-
-	useEffect(() => {
-		async function fetchTodoList(): Promise<void> {
-			const fetchedList: ITodoData[] = await getToDoList();
-			setTodoList(fetchedList);
-		}
-		fetchTodoList();
-	}, []);
 
 	// Search query is in it, and it's type is in filters (if there are any)
 	const filteredTodoList: ITodoData[] = todoList.filter(

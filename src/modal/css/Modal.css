@@ -40,6 +40,14 @@
     cursor: pointer;
 }
 
+#delete-todo {
+    position: absolute;
+    top: 10px;
+    right: 50px;
+    height: 30px;
+    cursor: pointer;
+}
+
 #modal p,
 #modal li,
 #modal h3 {
@@ -53,7 +61,7 @@
 }
 
 #modal .title {
-    width: calc(100% - 40px);
+    width: calc(100% - 80px);
     height: 40px;
     font-size: 18pt;
 }

@@ -60,7 +60,6 @@ function Modal(isOpen: boolean, setIsOpen, todo, setModalTodo, fetchTodoList) {
 	};
 
 	if (!isOpen) return;
-	let i = 0;
 	return (
 		<div id="modal-overlay" onClick={overlayClicked}>
 			<div id="modal">
@@ -110,10 +109,8 @@ function Modal(isOpen: boolean, setIsOpen, todo, setModalTodo, fetchTodoList) {
 					<span className="space"></span>
 				)}
 				<ul id="subtasks">
-					{todo.subTasks.map(
-						(subtask) =>
-							SubTask(subtask, fetchTodoList, setModalTodo, i),
-						(i += 1)
+					{todo.subTasks.map((subtask) =>
+						SubTask(subtask, fetchTodoList, setModalTodo)
 					)}
 				</ul>
 				<h3>Description</h3>

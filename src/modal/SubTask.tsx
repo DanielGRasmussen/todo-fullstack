@@ -2,7 +2,7 @@ import "./css/SubTask.css";
 import React from "react";
 import { deleteTodoById, getTodoByIdFromLocal } from "../ExternalServices";
 
-function SubTask(subtask, fetchTodoList, setModalTodo, i): JSX.Element {
+function SubTask(subtask, fetchTodoList, setModalTodo): JSX.Element {
 	let title = subtask.name;
 	let subTaskTodo;
 	if (subtask.link) {
@@ -33,7 +33,7 @@ function SubTask(subtask, fetchTodoList, setModalTodo, i): JSX.Element {
 					setModalTodo(subTaskTodo);
 				}
 			}}
-			key={i}
+			key={title}
 			className={subtask.link ? "clickable" : ""}
 		>
 			<span className="linked">{"Linked: "}</span>

@@ -4,7 +4,9 @@
 
 #subtasks {
     width: 300px;
-    margin-left: 70px;
+    margin-left: 110px;
+    padding: 0;
+    list-style: none;
 }
 
 #subtasks li {
@@ -13,12 +15,12 @@
 
 #subtasks .linked {
     position: absolute;
-    left: -100px;
+    left: -80px;
 }
 
 #subtasks input {
     cursor: pointer;
     position: absolute;
-    left: -50px;
+    left: -30px;
     top: -1px;
 }

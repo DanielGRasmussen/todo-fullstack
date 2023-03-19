@@ -1,6 +1,6 @@
 import "./css/Main.css";
 import React, { useEffect, useState } from "react";
-import TodoList, { ITodoData } from "./TodoList";
+import { ITodoData, TodoList } from "./TodoList";
 import Modal from "../modal/Modal";
 import { getToDoList } from "../ExternalServices";
 

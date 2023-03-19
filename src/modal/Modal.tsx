@@ -23,6 +23,7 @@ function Modal(isOpen: boolean, setIsOpen, todo) {
 
 	function dataChange(newValue, dataType: string) {
 		// General dataChange function to reload the modal and pass on new data to db
+		if (todo[dataType] === newValue) return;
 		todo[dataType] = newValue;
 		todo.lastUpdated = new Date().toISOString();
 		// Here we should place a call to external services to update db

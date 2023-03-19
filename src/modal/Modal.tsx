@@ -47,7 +47,7 @@ function Modal(isOpen: boolean, setIsOpen, todo, setModalTodo, fetchTodoList) {
 		if (new_status === "incomplete") {
 			todo.actualStartDate = "";
 			todo.actualEndDate = "";
-		} else todo[buttonTextOpts[new_status]] = new Date().toISOString();
+		} else todo[buttonTextOpts[new_status][2]] = new Date().toISOString();
 
 		dataChange(new_status, "status");
 	}

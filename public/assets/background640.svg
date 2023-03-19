@@ -12,15 +12,17 @@
     </defs>
     <g fill="#FFF" fill-opacity="0">
         <g stroke="url(#orange)">
-            <path d="M 417 935 A 50 50 0 0 1 517 935 L 467 935 Z" stroke-width="9.6"/>
-            <path d="M200 666 L225 706 L200 746 L175 706 Z" stroke-width="6.4"/>
-            <path d="M268, 303 L293.0, 259.7 L343.0, 259.7 L368, 303 L343.0, 346.3 L293.0, 346.3z" stroke-width="4.3"/>
-            <circle cx="541" cy="979" r="40" stroke-width="5.0"/>
+            <path d="M 417 935 A 50 50 0 0 1 517 935 L 467 935 Z" stroke-width="9.6" transform="rotate(29 467 935)"/>
+            <path d="M200 666 L225 706 L200 746 L175 706 Z" stroke-width="6.4" transform="rotate(242 175 706)"/>
+            <path d="M268, 303 L293.0, 259.7 L343.0, 259.7 L368, 303 L343.0, 346.3 L293.0, 346.3z" stroke-width="4.3"
+                  transform="rotate(153 293 346)"/>
+            <circle cx="541" cy="979" r="40" stroke-width="5.0" transform="rotate(76 541 979)"/>
         </g>
         <g stroke="url(#blue)">
-            <circle cx="200" cy="84" r="40" stroke-width="6.8"/>
-            <path d="M375, 340 L400.0, 296.7 L450.0, 296.7 L475, 340 L450.0, 383.3 L400.0, 383.3z" stroke-width="8.7"/>
-            <path d="M384 369 L409 409 L384 449 L359 409 Z" stroke-width="9.4"/>
+            <circle cx="200" cy="84" r="40" stroke-width="6.8" transform="rotate(313 200 84)"/>
+            <path d="M375, 340 L400.0, 296.7 L450.0, 296.7 L475, 340 L450.0, 383.3 L400.0, 383.3z" stroke-width="8.7"
+                  transform="rotate(262 400 273)"/>
+            <path d="M384 369 L409 409 L384 449 L359 409 Z" stroke-width="9.4" transform="rotate(272 429 409)"/>
         </g>
     </g>
 </svg>

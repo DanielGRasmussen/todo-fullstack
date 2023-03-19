@@ -19,7 +19,7 @@ export interface ITodoData {
 	lastUpdated: string;
 }
 
-function TodoList(setIsOpen, setModalTodo, todoList): JSX.Element {
+function TodoList(setIsOpen, setModalTodo, todoList: ITodoData[]): JSX.Element {
 	// Gives the to-do list with sorting options
 	const sortingOptions: { value: string; label: string }[] = [
 		{ value: "title", label: "Title" },
@@ -44,14 +44,20 @@ function TodoList(setIsOpen, setModalTodo, todoList): JSX.Element {
 	const [filters, setFilters] = useState([]);
 
 	// Gets the unique types from todoList
-	const filterOptions: { value: string; label: string }[] = Array.from(
-		new Set(
-			todoList.map((todo: ITodoData) => ({
-				value: todo.type.toLowerCase(),
-				label: todo.type.toLowerCase()
-			}))
-		)
-	);
+	const filterOptions: { value: string; label: string }[] = todoList
+		.map((todo: ITodoData) => ({
+			value: todo.type.toLowerCase(),
+			label: todo.type.toLowerCase()
+		}))
+		.filter(
+			(todo, index: number, self) =>
+				// Checks if current index is the same as the first occurrence of this item.
+				index ===
+				self.findIndex(
+					(item) =>
+						item.value.toLowerCase() === todo.value.toLowerCase()
+				)
+		);
 
 	// Search query is in it, and it's type is in filters (if there are any)
 	const filteredTodoList: ITodoData[] = todoList.filter(

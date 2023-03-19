@@ -13,10 +13,11 @@ function NavItem({ name, active = false }): JSX.Element {
 }
 
 function Header() {
-	// eslint-disable-next-line no-unused-vars
 	const [active, setActive] = useState("inventory");
 	const [isOpen, setIsOpen] = useState(false);
 	const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+	if (active === "inventory") setActive("todo");
 
 	useEffect(() => {
 		// Hide header on scroll

@@ -58,6 +58,11 @@
     font-size: 18pt;
 }
 
+#modal .space {
+    height: 40px;
+    display: block;
+}
+
 #modal .priority {
     color: #e60000;
     margin-top: -5px;

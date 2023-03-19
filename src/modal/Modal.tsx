@@ -4,7 +4,7 @@ import Dates from "./Dates";
 import { sleep } from "../utils";
 import SubTask from "./SubTask";
 
-function Modal(isOpen: boolean, setIsOpen, todo) {
+function Modal(isOpen: boolean, setIsOpen, todo, setModalTodo) {
 	const [change, setChange] = useState(false);
 
 	function toggleModal() {
@@ -89,11 +89,14 @@ function Modal(isOpen: boolean, setIsOpen, todo) {
 					/>
 				</p>
 				{Dates(todo, dataChange)}
-				{/* Nowhere near done */}
-				<h3>Subtasks:</h3>
+				{todo.subTasks.length ? (
+					<h3>Subtasks:</h3>
+				) : (
+					<span className="space"></span>
+				)}
 				<ul>
 					{todo.subTasks.map((subtask) =>
-						SubTask(subtask, dataChange)
+						SubTask(subtask, dataChange, setModalTodo)
 					)}
 				</ul>
 				<h3>Description</h3>

@@ -10,7 +10,7 @@ function Main(): JSX.Element {
 	return (
 		<main tabIndex={-1}>
 			<h1>To-Do</h1>
-			{Modal(isOpen, setIsOpen, modalTodo)}
+			{Modal(isOpen, setIsOpen, modalTodo, setModalTodo)}
 			{TodoList(setIsOpen, setModalTodo)}
 		</main>
 	);

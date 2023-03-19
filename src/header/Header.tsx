@@ -20,11 +20,11 @@ function Header() {
 	useEffect(() => {
 		// Hide header on scroll
 		let prevScrollpos: number = window.scrollY;
-		const header: Element = document.querySelector("header");
-		const search_bar: Element = document.getElementById(
+		const header: HTMLElement = document.querySelector("header");
+		const search_bar: HTMLElement = document.getElementById(
 			"search-bar-container-container"
 		);
-		const down_arrow: Element = document.getElementById("down_arrow");
+		const down_arrow: HTMLElement = document.getElementById("down_arrow");
 
 		// Separate functions in case somehow something breaks, easier for user to fix
 		function showHeader() {
@@ -51,11 +51,8 @@ function Header() {
 
 		window.onscroll = function () {
 			const currentScrollPos: number = window.scrollY;
-			if (prevScrollpos > currentScrollPos) {
-				showHeader();
-			} else {
-				hideHeader();
-			}
+			if (prevScrollpos > currentScrollPos) showHeader();
+			else hideHeader();
 			prevScrollpos = currentScrollPos;
 		};
 
@@ -64,8 +61,8 @@ function Header() {
 			setIsOpen(false);
 		}
 
-		const nav: Element = document.querySelector("nav");
-		const hamburger: Element = document.getElementById("hamburger");
+		const nav: HTMLElement = document.querySelector("nav");
+		const hamburger: HTMLElement = document.getElementById("hamburger");
 		clickAnywhere([nav, hamburger], clickedElsewhere);
 
 		// Reload this function when window size changes
@@ -74,9 +71,7 @@ function Header() {
 		});
 	}, []);
 
-	if (active === "inventory") {
-		setActive("todo");
-	}
+	if (active === "inventory") setActive("todo");
 
 	const NavUl = (
 		<ul>

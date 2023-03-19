@@ -13,7 +13,6 @@ function SortButton({ onClick }): JSX.Element {
 		onClick(isAscending);
 	};
 
-	// Swap between rotating it upside-down and downside-up
 	const arrowStyle: { animation: string } = {
 		animation: isAscending
 			? "downside-up 0.3s linear forwards"

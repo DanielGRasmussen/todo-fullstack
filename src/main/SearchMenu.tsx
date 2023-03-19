@@ -11,12 +11,12 @@ const customComponents = {
 	)
 };
 
-function select_on_close(uniqueId) {
+function select_on_close(uniqueId: string): void {
 	// Can't just do event handlers with class toggle and timeout
 	// Menu reappears for a split second and animation goes ultra-fast if you do.
-	const menu = document.querySelector(`#${uniqueId} .select-menu`);
+	const menu: Element = document.querySelector(`#${uniqueId} .select-menu`);
 	const container: HTMLElement = menu?.parentElement;
-	const clonedMenu = menu?.cloneNode(true) as HTMLElement;
+	const clonedMenu: HTMLElement = menu?.cloneNode(true) as HTMLElement;
 
 	if (!clonedMenu) return;
 

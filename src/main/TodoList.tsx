@@ -14,7 +14,7 @@ export interface ITodoData {
 	title: string;
 	description: string;
 	type: string;
-	subTasks: string[];
+	subTasks: { message: string; link: boolean; id: string }[];
 	priority: string;
 	status: string;
 	lastUpdated: string;
@@ -56,10 +56,10 @@ function TodoList(setIsOpen, setModalTodo): JSX.Element {
 	);
 
 	useEffect(() => {
-		const fetchTodoList = async () => {
+		async function fetchTodoList(): Promise<void> {
 			const fetchedList: ITodoData[] = await getToDoList();
 			setTodoList(fetchedList);
-		};
+		}
 		fetchTodoList();
 	}, []);
 

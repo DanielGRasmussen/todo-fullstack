@@ -106,4 +106,4 @@ function TodoList(setIsOpen, setModalTodo, todoList): JSX.Element {
 	);
 }
 
-export default TodoList;
+export { TodoList };

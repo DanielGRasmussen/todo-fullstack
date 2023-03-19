@@ -1,6 +1,7 @@
 import "./css/Modal.css";
 import React, { useState } from "react";
 import Dates from "./Dates";
+import { sleep } from "../utils";
 
 function Subtask(subtask, dataChange) {
 	return (
@@ -18,7 +19,17 @@ function Modal(isOpen: boolean, setIsOpen, todo) {
 	const [change, setChange] = useState(false);
 
 	function toggleModal() {
-		setIsOpen(!isOpen);
+		if (isOpen) {
+			const modalOverlay: Element =
+				document.getElementById("modal-overlay");
+			modalOverlay.classList.add("close");
+			sleep(190).then(() => {
+				setIsOpen(false);
+			});
+			// Using an event listener is better and more maintainable but makes the modal reappear for a split second.
+		} else {
+			setIsOpen(true);
+		}
 	}
 
 	function dataChange(newValue, dataType: string) {

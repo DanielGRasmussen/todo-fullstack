@@ -14,7 +14,7 @@ export interface ITodoData {
 	title: string;
 	description: string;
 	type: string;
-	subTasks: { message: string; link: boolean; id: string }[];
+	subTasks: { name: string; link: boolean; id: string }[];
 	priority: string;
 	status: string;
 	lastUpdated: string;

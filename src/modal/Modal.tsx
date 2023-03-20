@@ -141,7 +141,7 @@ export function Modal(
 						SubTask(subtask, fetchTodoList, setModalTodo)
 					)}
 				</ul>
-				<h3>Description</h3>
+				<h3>Description:</h3>
 				<textarea
 					defaultValue={restoreUserInput(todo.description)}
 					onBlur={(event) => {

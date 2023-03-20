@@ -5,12 +5,16 @@ import React from "react";
 function Dates(todo, dataChange) {
 	return (
 		<ul id="dates">
-			<li>Created: {formatDate(restoreUserInput(todo.created))}</li>
 			<li>
-				Last Updated: {formatDate(restoreUserInput(todo.lastUpdated))}
+				Created: <br />
+				{formatDate(restoreUserInput(todo.created))}
 			</li>
 			<li>
-				Planned Start:{" "}
+				Last Updated: <br />
+				{formatDate(restoreUserInput(todo.lastUpdated))}
+			</li>
+			<li>
+				Planned Start: <br />
 				<input
 					type="text"
 					defaultValue={formatDate(
@@ -22,13 +26,13 @@ function Dates(todo, dataChange) {
 				/>
 			</li>
 			<li>
-				Actual Start:{" "}
+				Actual Start: <br />
 				{todo.actualStartDate
 					? formatDate(restoreUserInput(todo.actualStartDate))
 					: "TBD"}
 			</li>
 			<li>
-				Planned End:{" "}
+				Planned End: <br />
 				<input
 					type="text"
 					defaultValue={formatDate(
@@ -40,7 +44,7 @@ function Dates(todo, dataChange) {
 				/>
 			</li>
 			<li>
-				Actual End:{" "}
+				Actual End: <br />
 				{todo.actualEndDate
 					? formatDate(restoreUserInput(todo.actualEndDate))
 					: "TBD"}

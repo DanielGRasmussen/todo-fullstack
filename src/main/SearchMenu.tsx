@@ -39,9 +39,6 @@ function SearchMenu(
 	filters: string[],
 	setFilters
 ): JSX.Element {
-	const sortUniqueId = "sort-select";
-	const filterUniqueId = "filter-select";
-
 	// Makes react-select thinner
 	const selectStyles = {
 		control: (provided) => ({
@@ -96,7 +93,7 @@ function SearchMenu(
 				</section>
 			</div>
 			<Select
-				id={filterUniqueId}
+				id="filter-select"
 				options={filterOptions}
 				value={filters}
 				onChange={(options) => setFilters(options)}
@@ -104,22 +101,24 @@ function SearchMenu(
 				isMulti
 				components={{ ...animatedComponents, ...customComponents }}
 				onMenuClose={() => {
-					select_on_close(filterUniqueId);
+					select_on_close("filter-select");
 				}}
 			/>
-			<Select
-				id={sortUniqueId}
-				options={sortingOptions}
-				value={selectedSortingOption}
-				onChange={(options) => setSelectedSortingOption(options)}
-				styles={selectStyles}
-				isMulti
-				components={{ ...animatedComponents, ...customComponents }}
-				onMenuClose={() => {
-					select_on_close(sortUniqueId);
-				}}
-			/>
-			<SortButton onClick={handleSortOrderChange} />
+			<div id="sorts">
+				<Select
+					id="sort-select"
+					options={sortingOptions}
+					value={selectedSortingOption}
+					onChange={(options) => setSelectedSortingOption(options)}
+					styles={selectStyles}
+					isMulti
+					components={{ ...animatedComponents, ...customComponents }}
+					onMenuClose={() => {
+						select_on_close("sort-select");
+					}}
+				/>
+				<SortButton onClick={handleSortOrderChange} />
+			</div>
 		</form>
 	);
 }

@@ -2,13 +2,9 @@
 #menu {
 	display: flex;
 	justify-content: center;
-}
-
-@media screen and (max-width: 500px) {
-	#menu {
-		flex-wrap: wrap;
-		align-items: center;
-	}
+	flex-direction: column;
+	flex-wrap: wrap;
+	align-items: center;
 }
 
 /* Search bar */
@@ -56,13 +52,16 @@
 }
 
 /* React Select */
+.css-b62m3t-container {
+	margin-top: 10px;
+}
+
 @media screen and (max-width: 500px) {
 	/* The class name of the react-select control changes when the dropdown menu is up */
 	.css-b62m3t-container {
 		width: 245px;
 		margin-left: 10px;
 		padding: 0;
-		margin-top: 5px;
 	}
 
 	.css-b62m3t-container > div {
@@ -99,6 +98,11 @@
 
 .select-menu-close {
 	animation: fadeOut 0.3s ease-in-out;
+}
+
+/* Selects organization */
+#menu #sorts {
+	display: flex;
 }
 
 /* Style for the tooltips */

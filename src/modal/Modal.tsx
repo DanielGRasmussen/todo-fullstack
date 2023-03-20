@@ -38,7 +38,8 @@ export function Modal(
 
 	function dataChange(newValue, dataType: string) {
 		// General dataChange function to reload the modal and pass on new data to db
-		if (todo[dataType] === newValue) return;
+
+		let value = newValue;
 		if (dataType === "priority") {
 			if (!checkPriorityValid(newValue)) {
 				startNotice("error", "Invalid Priority Entry", 2000);
@@ -52,9 +53,11 @@ export function Modal(
 				startNotice("error", "Invalid Date", 2000);
 				return;
 			}
+			value = new Date(value).toISOString();
 		}
+		if (restoreUserInput(todo[dataType]) === value) return;
 
-		todo[dataType] = cleanUserInput(newValue);
+		todo[dataType] = cleanUserInput(value);
 		todo.lastUpdated = new Date().toISOString();
 		// Here we should place a call to external services to update db
 		fetchTodoList();

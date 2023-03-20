@@ -1,11 +1,24 @@
 import "./css/Modal.css";
 import React, { useState } from "react";
 import Dates from "./Dates";
-import { sleep } from "../utils";
+import {
+	checkPriorityValid,
+	cleanUserInput,
+	isDateFormatValid,
+	restoreUserInput,
+	sleep
+} from "../utils";
 import SubTask from "./SubTask";
 import { deleteTodoById } from "../ExternalServices";
 
-function Modal(isOpen: boolean, setIsOpen, todo, setModalTodo, fetchTodoList) {
+function Modal(
+	isOpen: boolean,
+	setIsOpen,
+	todo,
+	setModalTodo,
+	fetchTodoList,
+	startNotice
+) {
 	const [change, setChange] = useState(false);
 
 	function toggleModal() {
@@ -25,7 +38,22 @@ function Modal(isOpen: boolean, setIsOpen, todo, setModalTodo, fetchTodoList) {
 	function dataChange(newValue, dataType: string) {
 		// General dataChange function to reload the modal and pass on new data to db
 		if (todo[dataType] === newValue) return;
-		todo[dataType] = newValue;
+		if (dataType === "priority") {
+			if (!checkPriorityValid(newValue)) {
+				startNotice("error", "Invalid Priority Entry", 2000);
+				return;
+			}
+		} else if (
+			dataType === "proposedStartDate" ||
+			dataType === "proposedEndDate"
+		) {
+			if (!isDateFormatValid(newValue)) {
+				startNotice("error", "Invalid Date", 2000);
+				return;
+			}
+		}
+
+		todo[dataType] = cleanUserInput(newValue);
 		todo.lastUpdated = new Date().toISOString();
 		// Here we should place a call to external services to update db
 		fetchTodoList();
@@ -65,7 +93,7 @@ function Modal(isOpen: boolean, setIsOpen, todo, setModalTodo, fetchTodoList) {
 			<div id="modal">
 				<input
 					type="text"
-					defaultValue={todo.title}
+					defaultValue={restoreUserInput(todo.title)}
 					onBlur={(event) => {
 						dataChange(event.target.value, "title");
 					}}
@@ -86,7 +114,7 @@ function Modal(isOpen: boolean, setIsOpen, todo, setModalTodo, fetchTodoList) {
 				<p className="type">
 					<input
 						type="text"
-						defaultValue={todo.type}
+						defaultValue={restoreUserInput(todo.type)}
 						onBlur={(event) => {
 							dataChange(event.target.value, "type");
 						}}
@@ -96,7 +124,7 @@ function Modal(isOpen: boolean, setIsOpen, todo, setModalTodo, fetchTodoList) {
 					Priority:{" "}
 					<input
 						type="text"
-						defaultValue={todo.priority}
+						defaultValue={restoreUserInput(todo.priority)}
 						onBlur={(event) => {
 							dataChange(event.target.value, "priority");
 						}}
@@ -115,7 +143,7 @@ function Modal(isOpen: boolean, setIsOpen, todo, setModalTodo, fetchTodoList) {
 				</ul>
 				<h3>Description</h3>
 				<textarea
-					defaultValue={todo.description}
+					defaultValue={restoreUserInput(todo.description)}
 					onBlur={(event) => {
 						dataChange(event.target.value, "description");
 					}}

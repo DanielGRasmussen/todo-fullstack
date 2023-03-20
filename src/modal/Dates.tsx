@@ -1,17 +1,21 @@
 import "./css/Dates.css";
-import { formatDate } from "../utils";
+import { formatDate, restoreUserInput } from "../utils";
 import React from "react";
 
 function Dates(todo, dataChange) {
 	return (
 		<ul id="dates">
-			<li>Created: {formatDate(todo.created)}</li>
-			<li>Last Updated: {formatDate(todo.lastUpdated)}</li>
+			<li>Created: {formatDate(restoreUserInput(todo.created))}</li>
+			<li>
+				Last Updated: {formatDate(restoreUserInput(todo.lastUpdated))}
+			</li>
 			<li>
 				Planned Start:{" "}
 				<input
 					type="text"
-					defaultValue={formatDate(todo.proposedStartDate)}
+					defaultValue={formatDate(
+						restoreUserInput(todo.proposedStartDate)
+					)}
 					onBlur={(event) => {
 						dataChange(event.target.value, "proposedStartDate");
 					}}
@@ -20,14 +24,16 @@ function Dates(todo, dataChange) {
 			<li>
 				Actual Start:{" "}
 				{todo.actualStartDate
-					? formatDate(todo.actualStartDate)
+					? formatDate(restoreUserInput(todo.actualStartDate))
 					: "TBD"}
 			</li>
 			<li>
 				Planned End:{" "}
 				<input
 					type="text"
-					defaultValue={formatDate(todo.proposedEndDate)}
+					defaultValue={formatDate(
+						restoreUserInput(todo.proposedEndDate)
+					)}
 					onBlur={(event) => {
 						dataChange(event.target.value, "proposedEndDate");
 					}}
@@ -35,7 +41,9 @@ function Dates(todo, dataChange) {
 			</li>
 			<li>
 				Actual End:{" "}
-				{todo.actualEndDate ? formatDate(todo.actualEndDate) : "TBD"}
+				{todo.actualEndDate
+					? formatDate(restoreUserInput(todo.actualEndDate))
+					: "TBD"}
 			</li>
 		</ul>
 	);

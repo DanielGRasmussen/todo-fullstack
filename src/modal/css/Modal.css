@@ -25,7 +25,6 @@ body.freeze {
 	height: fit-content;
 	max-height: 90%;
 	background: white;
-	border-radius: 20px;
 	padding: 20px;
 	position: relative;
 	animation: modalAppear 0.2s ease-in-out;
@@ -41,6 +40,12 @@ body.freeze {
 	}
 }
 
+@media screen and (min-width: 675px) {
+	#modal {
+		border-radius: 20px;
+	}
+}
+
 #modal-overlay.close #modal {
 	animation: modalVanish 0.2s ease-in-out;
 }
@@ -51,6 +56,12 @@ body.freeze {
 	right: 10px;
 	width: 30px;
 	cursor: pointer;
+}
+
+#close-modal:hover,
+#delete-todo:hover {
+	background-color: #f0f0f0;
+	border-radius: 5px;
 }
 
 #delete-todo {

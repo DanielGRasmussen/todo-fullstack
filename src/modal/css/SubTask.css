@@ -25,7 +25,7 @@
 	top: -1px;
 }
 
-@media screen and (max-width: 635px) {
+@media screen and (max-width: 800px) {
 	#subtasks input {
 		top: -5px;
 	}

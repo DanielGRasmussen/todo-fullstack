@@ -110,15 +110,18 @@ function Header() {
 				alt="Hamburger Button"
 				onClick={() => setIsOpen(!isOpen)}
 			/>
-			<nav className={isOpen ? "open" : ""}>
-				<a href="/" className="icon">
-					<img
-						src={`${process.env.PUBLIC_URL}/assets/icon.svg`}
-						alt="Logo"
-					/>
-				</a>
-				{NavUl}
-			</nav>
+			{/* Wrapper so that user can click on right without it triggering modal */}
+			<div className={`${isOpen ? "open" : ""} wrapper`}>
+				<nav className={isOpen ? "open" : ""}>
+					<a href="/" className="icon">
+						<img
+							src={`${process.env.PUBLIC_URL}/assets/icon.svg`}
+							alt="Logo"
+						/>
+					</a>
+					{NavUl}
+				</nav>
+			</div>
 		</header>
 	);
 }

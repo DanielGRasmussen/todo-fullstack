@@ -12,6 +12,12 @@ function TodoElement(todo, setIsOpen, setModalTodo): JSX.Element {
 		!todo.actualEndDate &&
 		new Date() > new Date(restoreUserInput(todo.proposedEndDate));
 
+	// IDE and ESLint disagreed how it should be formatted
+	const actual = `Start date: ${formatDate(todo.actualStartDate)}`;
+	const planned = `Planned Start: ${formatDate(
+		restoreUserInput(todo.proposedStartDate)
+	)}`;
+
 	return (
 		<li
 			key={todo.id}
@@ -28,11 +34,7 @@ function TodoElement(todo, setIsOpen, setModalTodo): JSX.Element {
 			<p className="priority">
 				Priority: {restoreUserInput(todo.priority)}
 			</p>
-			<p className="date">
-				{todo.actualStartDate
-					? `Start date: ${formatDate(todo.actualStartDate)}`
-					: `Planned Start: ${formatDate(todo.proposedStartDate)}`}
-			</p>
+			<p className="date">{todo.actualStartDate ? actual : planned}</p>
 			<p className="date">
 				Completion date:{" "}
 				{formatDate(

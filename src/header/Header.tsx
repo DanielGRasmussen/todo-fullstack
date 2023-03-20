@@ -5,7 +5,7 @@ import { clickAnywhere } from "../utils";
 function NavItem({ name, active = false }): JSX.Element {
 	return (
 		<li>
-			<a href="src#" className={active ? "active" : ""}>
+			<a href="#" className={active ? "active" : ""}>
 				{name}
 			</a>
 		</li>
@@ -13,11 +13,15 @@ function NavItem({ name, active = false }): JSX.Element {
 }
 
 function Header() {
-	const [active, setActive] = useState("inventory");
+	/* The Header component uses the useState hook to keep track of the current window width and whether or not the
+	 * navigation menu is open. It also uses the useEffect hook to add event listeners for scrolling and resizing the
+	 * window. It also has some logic for showing and hiding elements based on user interaction with the page. For
+	 * example, when the user scrolls down, it hides the header and search bar elements. When they scroll up again, it
+	 * shows these elements again.
+	 */
+	const [active] = useState("todo");
 	const [isOpen, setIsOpen] = useState(false);
 	const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-
-	if (active === "inventory") setActive("todo");
 
 	useEffect(() => {
 		// Hide header on scroll
@@ -51,24 +55,31 @@ function Header() {
 			});
 		}
 
-		window.onscroll = function () {
+		function handleScroll() {
 			const currentScrollPos: number = window.scrollY;
 			if (prevScrollpos > currentScrollPos) showHeader();
 			else hideHeader();
 			prevScrollpos = currentScrollPos;
-		};
+		}
 
-		// Close navigation menu when clicked outside
+		window.addEventListener("scroll", handleScroll);
+
 		function clickedElsewhere() {
 			setIsOpen(false);
 		}
 
 		clickAnywhere([], clickedElsewhere, ["nav", "#hamburger"]);
 
-		// Reload this function when window size changes
-		window.addEventListener("resize", () => {
+		function handleResize() {
 			setWindowWidth(window.innerWidth);
-		});
+		}
+
+		window.addEventListener("resize", handleResize);
+
+		return () => {
+			window.removeEventListener("scroll", handleScroll);
+			window.removeEventListener("resize", handleResize);
+		};
 	}, []);
 
 	const NavUl = (

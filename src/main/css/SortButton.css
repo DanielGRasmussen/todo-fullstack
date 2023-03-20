@@ -1,65 +1,65 @@
 #sort-direction {
-    width: 30px;
-    height: 30px;
-    border: 1px solid #ccc;
-    background-color: #f2f2f2;
-    border-radius: 4px;
-    position: relative;
-    cursor: pointer;
-    margin-top: 5px;
-    padding: 5px;
+	width: 30px;
+	height: 30px;
+	border: 1px solid #ccc;
+	background-color: #f2f2f2;
+	border-radius: 4px;
+	position: relative;
+	cursor: pointer;
+	margin-top: 5px;
+	padding: 5px;
 }
 
 @media screen and (min-width: 500px) {
-    #sort-direction {
-        margin-left: 10px;
-    }
+	#sort-direction {
+		margin-left: 10px;
+	}
 }
 
 #sort-direction img {
-    position: absolute;
-    width: 26px;
-    height: 26px;
-    top: 2px;
-    left: 2px;
-    padding: 5px;
+	position: absolute;
+	width: 26px;
+	height: 26px;
+	top: 2px;
+	left: 2px;
+	padding: 5px;
 }
 
 #sort-direction:hover {
-    outline-color: #999;
-    background-color: #e8e8e8;
+	outline-color: #999;
+	background-color: #e8e8e8;
 }
 
 /* Slowly rotate upside down */
 @keyframes upside-down {
-    from {
-        transform: rotate(0);
-    }
-    to {
-        transform: rotate(180deg);
-    }
+	from {
+		transform: rotate(0);
+	}
+	to {
+		transform: rotate(180deg);
+	}
 }
 
 /* Slowly rotate downside-up */
 @keyframes downside-up {
-    from {
-        transform: rotate(180deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
+	from {
+		transform: rotate(180deg);
+	}
+	to {
+		transform: rotate(360deg);
+	}
 }
 
 /* Title messages (title css is in SearchMenu.css) */
 #sort-direction::before {
-    top: -38px;
-    width: 120px;
+	top: -38px;
+	width: 120px;
 }
 
 #sort-direction.ascending::before {
-    content: "Ascending Sort";
+	content: "Ascending Sort";
 }
 
 #sort-direction.descending::before {
-    content: "Descending Sort";
+	content: "Descending Sort";
 }

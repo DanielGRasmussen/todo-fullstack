@@ -1,22 +1,22 @@
 #modal #dates {
-    padding: 0;
-    list-style: none;
-    color: #666;
+	padding: 0;
+	list-style: none;
+	color: #666;
 }
 
 @media screen and (min-width: 635px) {
-    #modal #dates {
-        position: absolute;
-        top: 53px;
-        right: 10px;
-    }
+	#modal #dates {
+		position: absolute;
+		top: 53px;
+		right: 10px;
+	}
 
-    #modal #dates br {
-        display: none;
-    }
+	#modal #dates br {
+		display: none;
+	}
 }
 
 #modal #dates input {
-    color: #666;
-    padding: 0;
+	color: #666;
+	padding: 0;
 }

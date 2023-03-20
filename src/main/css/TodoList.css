@@ -1,8 +1,8 @@
 /* To-do Items Displays */
 #todos {
-    padding: 0 15px 0 8px; /* 7px gets added as border for status */
-    list-style: none;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
-    grid-gap: 20px;
+	padding: 0 15px 0 8px; /* 7px gets added as border for status */
+	list-style: none;
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+	grid-gap: 20px;
 }

@@ -1,5 +1,5 @@
 import "./css/Main.css";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { ITodoData, TodoList } from "./TodoList";
 import { Modal } from "../modal/Modal";
 import { getToDoList } from "../ExternalServices";
@@ -13,20 +13,24 @@ function Main(): JSX.Element {
 	const [showNotice, setShowNotice] = useState(false);
 	const [noticeInfo, setNoticeInfo] = useState({ type: "", message: "" });
 
-	function startNotice(noticeType: string, noticeMessage: string) {
-		setNoticeInfo({ type: noticeType, message: noticeMessage });
-		setShowNotice(true);
-		setTimeout(() => hideNotice(), 2000);
+	function startNotice() {
+		useCallback((noticeType: string, noticeMessage: string) => {
+			setNoticeInfo({ type: noticeType, message: noticeMessage });
+			setShowNotice(true);
+			setTimeout(() => hideNotice(), 2000);
+		}, []);
 	}
 
 	function hideNotice() {
-		const notice = document.getElementById("notice");
-		if (notice) {
-			notice.classList.add("close");
-			sleep(500).then(() => {
-				setShowNotice(false);
-			});
-		}
+		useCallback(function () {
+			const notice = document.getElementById("notice");
+			if (notice) {
+				notice.classList.add("close");
+				sleep(500).then(() => {
+					setShowNotice(false);
+				});
+			}
+		}, []);
 	}
 
 	async function fetchTodoList(): Promise<void> {

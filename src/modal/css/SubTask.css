@@ -1,32 +1,32 @@
 .clickable {
-    cursor: pointer !important;
+	cursor: pointer !important;
 }
 
 #subtasks {
-    width: 300px;
-    margin-left: 110px;
-    padding: 0;
-    list-style: none;
+	width: 300px;
+	margin-left: 110px;
+	padding: 0;
+	list-style: none;
 }
 
 #subtasks li {
-    position: relative;
+	position: relative;
 }
 
 #subtasks .linked {
-    position: absolute;
-    left: -80px;
+	position: absolute;
+	left: -80px;
 }
 
 #subtasks input {
-    cursor: pointer;
-    position: absolute;
-    left: -30px;
-    top: -1px;
+	cursor: pointer;
+	position: absolute;
+	left: -30px;
+	top: -1px;
 }
 
 @media screen and (max-width: 635px) {
-    #subtasks input {
-        top: -5px;
-    }
+	#subtasks input {
+		top: -5px;
+	}
 }

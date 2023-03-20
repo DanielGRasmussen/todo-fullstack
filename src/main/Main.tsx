@@ -1,7 +1,7 @@
 import "./css/Main.css";
 import React, { useEffect, useState } from "react";
 import { ITodoData, TodoList } from "./TodoList";
-import Modal from "../modal/Modal";
+import { Modal } from "../modal/Modal";
 import { getToDoList } from "../ExternalServices";
 import Notice from "./Notice";
 import { sleep } from "../utils";

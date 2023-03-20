@@ -19,7 +19,11 @@ export interface ITodoData {
 	lastUpdated: string;
 }
 
-function TodoList(setIsOpen, setModalTodo, todoList: ITodoData[]): JSX.Element {
+export function TodoList(
+	setIsOpen,
+	setModalTodo,
+	todoList: ITodoData[]
+): JSX.Element {
 	// Gives the to-do list with sorting options
 	const sortingOptions: { value: string; label: string }[] = [
 		{ value: "title", label: "Title" },
@@ -111,5 +115,3 @@ function TodoList(setIsOpen, setModalTodo, todoList: ITodoData[]): JSX.Element {
 		</div>
 	);
 }
-
-export { TodoList };

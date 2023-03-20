@@ -11,7 +11,7 @@ import {
 import SubTask from "./SubTask";
 import { deleteTodoById } from "../ExternalServices";
 
-function Modal(
+export function Modal(
 	isOpen: boolean,
 	setIsOpen,
 	todo,
@@ -161,5 +161,3 @@ function Modal(
 		</div>
 	);
 }
-
-export default Modal;

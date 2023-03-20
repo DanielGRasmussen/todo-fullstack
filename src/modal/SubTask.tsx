@@ -23,6 +23,7 @@ function SubTask(subtask, fetchTodoList, setModalTodo): JSX.Element {
 		});
 	}
 
+	title = restoreUserInput(title);
 	return (
 		<li
 			onClick={(event) => {

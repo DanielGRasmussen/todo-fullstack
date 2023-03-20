@@ -27,6 +27,7 @@ export function Modal(
 				document.getElementById("modal-overlay");
 			modalOverlay.classList.add("close");
 			sleep(190).then(() => {
+				document.querySelector("body").classList.remove("freeze");
 				setIsOpen(false);
 			});
 			// Using an event listener is better and more maintainable but makes the modal reappear for a split second.
@@ -88,6 +89,7 @@ export function Modal(
 	};
 
 	if (!isOpen) return;
+	document.querySelector("body").classList.add("freeze");
 	return (
 		<div id="modal-overlay" onClick={overlayClicked}>
 			<div id="modal">

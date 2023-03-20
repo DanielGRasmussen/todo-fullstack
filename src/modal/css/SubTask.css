@@ -24,3 +24,9 @@
     left: -30px;
     top: -1px;
 }
+
+@media screen and (max-width: 635px) {
+    #subtasks input {
+        top: -5px;
+    }
+}

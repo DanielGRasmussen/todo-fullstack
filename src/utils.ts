@@ -15,8 +15,8 @@ export function formatDate(ISOstring: string): string {
 export function clickAnywhere(elements: Element[], next): void {
 	window.addEventListener("click", (event) => {
 		if (
-			elements.some(
-				(element) => element && !element.contains(event.target as Node)
+			!elements.some(
+				(element) => element && element.contains(event.target as Node)
 			)
 		) {
 			next();

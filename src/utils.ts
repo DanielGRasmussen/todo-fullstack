@@ -12,8 +12,17 @@ export function formatDate(ISOstring: string): string {
 	});
 }
 
-export function clickAnywhere(elements: Element[], next): void {
+export function clickAnywhere(
+	elements: Element[],
+	next,
+	querySelectors: string[] = []
+): void {
 	window.addEventListener("click", (event) => {
+		for (let i = 0; i < querySelectors.length; i++) {
+			const selectedItem = document.querySelector(querySelectors[i]);
+			elements.push(selectedItem);
+		}
+
 		if (
 			!elements.some(
 				(element) => element && element.contains(event.target as Node)

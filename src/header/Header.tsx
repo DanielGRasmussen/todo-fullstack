@@ -63,9 +63,7 @@ function Header() {
 			setIsOpen(false);
 		}
 
-		const nav: HTMLElement = document.querySelector("nav");
-		const hamburger: HTMLElement = document.getElementById("hamburger");
-		clickAnywhere([nav, hamburger], clickedElsewhere);
+		clickAnywhere([], clickedElsewhere, ["nav", "#hamburger"]);
 
 		// Reload this function when window size changes
 		window.addEventListener("resize", () => {

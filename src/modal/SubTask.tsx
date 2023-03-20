@@ -3,7 +3,12 @@ import React from "react";
 import { deleteTodoById, getTodoByIdFromLocal } from "../ExternalServices";
 import { cleanUserInput, restoreUserInput } from "../utils";
 
-function SubTask(subtask, fetchTodoList, setModalTodo): JSX.Element {
+function SubTask(
+	subtask,
+	fetchTodoList,
+	setModalTodo,
+	dataChange
+): JSX.Element {
 	let title = restoreUserInput(subtask.name);
 	let subTaskTodo;
 	if (subtask.link) {
@@ -19,7 +24,8 @@ function SubTask(subtask, fetchTodoList, setModalTodo): JSX.Element {
 		subtask.link = false;
 		subtask.name = cleanUserInput(subTaskTodo.title);
 		deleteTodoById(subTaskTodo.id).then(() => {
-			fetchTodoList();
+			dataChange("", "", true);
+			//fetchTodoList();
 		});
 	}
 

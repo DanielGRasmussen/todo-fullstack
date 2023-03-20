@@ -36,7 +36,7 @@ export function Modal(
 		}
 	}
 
-	function dataChange(newValue, dataType: string) {
+	function dataChange(newValue, dataType: string, forceUpdate = false) {
 		// General dataChange function to reload the modal and pass on new data to db
 
 		let value = newValue;
@@ -55,7 +55,7 @@ export function Modal(
 			}
 			value = new Date(value).toISOString();
 		}
-		if (restoreUserInput(todo[dataType]) === value) return;
+		if (restoreUserInput(todo[dataType]) === value && !forceUpdate) return;
 
 		todo[dataType] = cleanUserInput(value);
 		todo.lastUpdated = new Date().toISOString();
@@ -143,7 +143,12 @@ export function Modal(
 				)}
 				<ul id="subtasks">
 					{todo.subTasks.map((subtask) =>
-						SubTask(subtask, fetchTodoList, setModalTodo)
+						SubTask(
+							subtask,
+							fetchTodoList,
+							setModalTodo,
+							dataChange
+						)
 					)}
 				</ul>
 				<h3>Description:</h3>

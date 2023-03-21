@@ -1,5 +1,5 @@
 import "./css/Main.css";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ITodoData, TodoList } from "./TodoList";
 import { Modal } from "../modal/Modal";
 import { getToDoList } from "../ExternalServices";
@@ -22,24 +22,20 @@ function Main(): JSX.Element {
 		}
 	});
 
-	function startNotice() {
-		useCallback((noticeType: string, noticeMessage: string) => {
-			setNoticeInfo({ type: noticeType, message: noticeMessage });
-			setShowNotice(true);
-			setTimeout(() => hideNotice(), 2000);
-		}, []);
+	function startNotice(noticeType: string, noticeMessage: string) {
+		setNoticeInfo({ type: noticeType, message: noticeMessage });
+		setShowNotice(true);
+		setTimeout(() => hideNotice(), 2000);
 	}
 
 	function hideNotice() {
-		useCallback(function () {
-			const notice = document.getElementById("notice");
-			if (notice) {
-				notice.classList.add("close");
-				sleep(500).then(() => {
-					setShowNotice(false);
-				});
-			}
-		}, []);
+		const notice = document.getElementById("notice");
+		if (notice) {
+			notice.classList.add("close");
+			sleep(500).then(() => {
+				setShowNotice(false);
+			});
+		}
 	}
 
 	function askConfirmation(noticeMessage: string, confirmationNext) {

@@ -35,6 +35,8 @@ function SearchMenu(
 	selectedSortingOption: { value: string; label: string }[],
 	setSelectedSortingOption,
 	handleSortOrderChange,
+	currentStatusFilters,
+	setStatusFilter,
 	filterOptions: { value: string; label: string }[],
 	filters: string[],
 	setFilters
@@ -73,6 +75,12 @@ function SearchMenu(
 		})
 	};
 
+	const statusOptions = [
+		{ value: "incomplete", label: "Incomplete" },
+		{ value: "in-progress", label: "In-Progress" },
+		{ value: "complete", label: "Complete" }
+	];
+
 	return (
 		<form id="menu" autoComplete="off">
 			<div id="search-bar-container-container">
@@ -93,6 +101,19 @@ function SearchMenu(
 				</section>
 			</div>
 			<Select
+				id="status-filter"
+				options={statusOptions}
+				value={currentStatusFilters}
+				onChange={(options) => setStatusFilter(options)}
+				styles={selectStyles}
+				isMulti
+				components={{ ...animatedComponents, ...customComponents }}
+				onMenuClose={() => {
+					select_on_close("status-filter");
+				}}
+				placeholder="Status filter"
+			/>
+			<Select
 				id="filter-select"
 				options={filterOptions}
 				value={filters}
@@ -103,6 +124,7 @@ function SearchMenu(
 				onMenuClose={() => {
 					select_on_close("filter-select");
 				}}
+				placeholder="Type filter"
 			/>
 			<div id="sorts">
 				<Select
@@ -116,6 +138,7 @@ function SearchMenu(
 					onMenuClose={() => {
 						select_on_close("sort-select");
 					}}
+					placeholder="Sort options"
 				/>
 				<SortButton onClick={handleSortOrderChange} />
 			</div>

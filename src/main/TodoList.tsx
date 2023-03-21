@@ -2,6 +2,7 @@ import "./css/TodoList.css";
 import React, { Dispatch, SetStateAction, useState } from "react";
 import SearchMenu from "./SearchMenu";
 import TodoElement from "./TodoElement";
+import { restoreUserInput } from "../utils";
 
 export interface ITodoData {
 	id: string;
@@ -46,6 +47,7 @@ export function TodoList(
 	] = useState([sortingOptions[0]]);
 	const [sortOrder, setSortOrder] = useState(false);
 	const [filters, setFilters] = useState([]);
+	const [currentStatusFilters, setStatusFilter] = useState([]);
 
 	// Gets the unique types from todoList
 	const filterOptions: { value: string; label: string }[] = todoList
@@ -64,14 +66,43 @@ export function TodoList(
 		);
 
 	// Search query is in it, and it's type is in filters (if there are any)
-	const filteredTodoList: ITodoData[] = todoList.filter(
-		(todo) =>
-			todo.title.toLowerCase().includes(searchQuery.toLowerCase()) &&
-			(filters.length === 0 ||
-				filters.some(
-					(option) => option.value === todo.type.toLowerCase()
-				))
-	);
+	const filteredTodoList = todoList.filter((todo: ITodoData) => {
+		// Filter by searchQuery
+		if (
+			searchQuery &&
+			!restoreUserInput(todo.title)
+				.toLowerCase()
+				.includes(searchQuery.toLowerCase())
+		) {
+			return false;
+		}
+
+		// Filter by filters
+		if (
+			filters.length > 0 &&
+			!filters.some(
+				(filter) =>
+					filter.value === restoreUserInput(todo.type).toLowerCase()
+			)
+		) {
+			return false;
+		}
+
+		// Filter by currentStatusFilters
+		if (currentStatusFilters.length === 0 && todo.status === "complete") {
+			return false;
+		}
+
+		if (
+			currentStatusFilters.length > 0 &&
+			!currentStatusFilters.some((filter) => filter.value === todo.status)
+		) {
+			return false;
+		}
+
+		// If all conditions are met, return true to keep this todoitem in the filtered list
+		return true;
+	});
 
 	const sortedTodoList: ITodoData[] = filteredTodoList.sort((a, b) => {
 		let result = 0;
@@ -103,6 +134,8 @@ export function TodoList(
 				selectedSortingOption,
 				setSelectedSortingOption,
 				setSortOrder,
+				currentStatusFilters,
+				setStatusFilter,
 				filterOptions,
 				filters,
 				setFilters

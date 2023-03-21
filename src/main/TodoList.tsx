@@ -2,7 +2,6 @@ import "./css/TodoList.css";
 import React, { Dispatch, SetStateAction, useState } from "react";
 import SearchMenu from "./SearchMenu";
 import TodoElement from "./TodoElement";
-import { restoreUserInput } from "../utils";
 
 export interface ITodoData {
 	id: string;
@@ -70,9 +69,7 @@ export function TodoList(
 		// Filter by searchQuery
 		if (
 			searchQuery &&
-			!restoreUserInput(todo.title)
-				.toLowerCase()
-				.includes(searchQuery.toLowerCase())
+			!todo.title.toLowerCase().includes(searchQuery.toLowerCase())
 		) {
 			return false;
 		}
@@ -80,10 +77,7 @@ export function TodoList(
 		// Filter by filters
 		if (
 			filters.length > 0 &&
-			!filters.some(
-				(filter) =>
-					filter.value === restoreUserInput(todo.type).toLowerCase()
-			)
+			!filters.some((filter) => filter.value === todo.type.toLowerCase())
 		) {
 			return false;
 		}

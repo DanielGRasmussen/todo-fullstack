@@ -1,13 +1,7 @@
 import "./css/Modal.css";
 import React, { useState } from "react";
 import Dates from "./Dates";
-import {
-	checkPriorityValid,
-	cleanUserInput,
-	isDateFormatValid,
-	restoreUserInput,
-	sleep
-} from "../utils";
+import { checkPriorityValid, isDateFormatValid, sleep } from "../utils";
 import SubTask from "./SubTask";
 import { deleteTodoById } from "../ExternalServices";
 
@@ -56,9 +50,9 @@ export function Modal(
 			}
 			value = new Date(value).toISOString();
 		}
-		if (restoreUserInput(todo[dataType]) === value && !forceUpdate) return;
+		if (todo[dataType] === value && !forceUpdate) return;
 
-		todo[dataType] = cleanUserInput(value);
+		todo[dataType] = value;
 		todo.lastUpdated = new Date().toISOString();
 		// Here we should place a call to external services to update db
 		fetchTodoList();
@@ -74,9 +68,7 @@ export function Modal(
 		}
 
 		askConfirmation(
-			`Are you sure you want to permanently delete "${restoreUserInput(
-				todo.title
-			)}" and all subtasks?`,
+			`Are you sure you want to permanently delete "${todo.title}" and all subtasks?`,
 			next
 		);
 	}
@@ -108,7 +100,7 @@ export function Modal(
 			<div id="modal">
 				<input
 					type="text"
-					defaultValue={restoreUserInput(todo.title)}
+					defaultValue={todo.title}
 					onBlur={(event) => {
 						dataChange(event.target.value, "title");
 					}}
@@ -129,7 +121,7 @@ export function Modal(
 				<p className="type">
 					<input
 						type="text"
-						defaultValue={restoreUserInput(todo.type)}
+						defaultValue={todo.type}
 						onBlur={(event) => {
 							dataChange(event.target.value, "type");
 						}}
@@ -139,7 +131,7 @@ export function Modal(
 					Priority:{" "}
 					<input
 						type="text"
-						defaultValue={restoreUserInput(todo.priority)}
+						defaultValue={todo.priority}
 						onBlur={(event) => {
 							dataChange(event.target.value, "priority");
 						}}
@@ -163,7 +155,7 @@ export function Modal(
 				</ul>
 				<h3>Description:</h3>
 				<textarea
-					defaultValue={restoreUserInput(todo.description)}
+					defaultValue={todo.description}
 					onBlur={(event) => {
 						dataChange(event.target.value, "description");
 					}}

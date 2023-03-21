@@ -1,7 +1,6 @@
 import "./css/SubTask.css";
 import React from "react";
 import { deleteTodoById, getTodoByIdFromLocal } from "../ExternalServices";
-import { cleanUserInput, restoreUserInput } from "../utils";
 
 function SubTask(
 	subtask,
@@ -9,11 +8,11 @@ function SubTask(
 	setModalTodo,
 	dataChange
 ): JSX.Element {
-	let title = restoreUserInput(subtask.name);
+	let title = subtask.name;
 	let subTaskTodo;
 	if (subtask.link) {
 		subTaskTodo = getTodoByIdFromLocal(subtask.id);
-		title = restoreUserInput(subTaskTodo.title);
+		title = subTaskTodo.title;
 	}
 
 	function linkedClick(event) {
@@ -22,14 +21,13 @@ function SubTask(
 			return;
 		}
 		subtask.link = false;
-		subtask.name = cleanUserInput(subTaskTodo.title);
+		subtask.name = subTaskTodo.title;
 		deleteTodoById(subTaskTodo.id).then(() => {
 			dataChange("", "", true);
 			//fetchTodoList();
 		});
 	}
 
-	title = restoreUserInput(title);
 	return (
 		<li
 			onClick={(event) => {

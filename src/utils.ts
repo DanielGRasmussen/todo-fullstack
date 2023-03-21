@@ -1,5 +1,3 @@
-import DOMPurify from "dompurify";
-
 export function formatDate(ISOstring: string): string {
 	// Convert ISO to date
 	return new Date(ISOstring).toLocaleString("en-US", {
@@ -35,16 +33,6 @@ export function clickAnywhere(
 
 export function sleep(ms): Promise<void> {
 	return new Promise((resolve) => setTimeout(resolve, ms));
-}
-
-export function cleanUserInput(input: string): string {
-	// Sanitize the input
-	const sanitizedValue = DOMPurify.sanitize(input);
-	return encodeURIComponent(sanitizedValue);
-}
-
-export function restoreUserInput(input: string): string {
-	return decodeURIComponent(input);
 }
 
 export function checkPriorityValid(priority: string): boolean {

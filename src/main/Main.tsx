@@ -18,7 +18,7 @@ function Main(): JSX.Element {
 		message: "",
 		// Typing stuffs
 		next: function () {
-			const a = 1 + 2;
+			return 1 + 2;
 		}
 	});
 

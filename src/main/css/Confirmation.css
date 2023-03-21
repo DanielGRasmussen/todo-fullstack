@@ -1,0 +1,101 @@
+#confirmation-overlay {
+	position: fixed;
+	top: 0;
+	right: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, 0.5);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	z-index: 12;
+	animation: overlayAppear 0.2s ease-in-out;
+}
+
+#confirmation-overlay.close {
+	animation: overlayVanish 0.2s ease-in-out;
+}
+
+#confirmation {
+	position: relative;
+	overflow: hidden;
+	cursor: default;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+
+	width: fit-content;
+	height: 70px;
+
+	background: white;
+	padding: 10px 30px 10px 20px;
+
+	border: 1px solid black;
+	border-radius: 10px;
+
+	animation: modalAppear 0.2s ease-in-out;
+}
+
+#confirmation-overlay.close #confirmation {
+	animation: confirmationVanish 0.2s ease-in-out;
+}
+
+#confirmation button {
+	cursor: pointer;
+	font-size: 12pt;
+
+	position: absolute;
+	bottom: 10px;
+	width: 100px;
+
+	padding: 10px 20px;
+	border: 1px solid black;
+	border-radius: 10px;
+	background: #f2f2f2;
+}
+
+#confirmation button:hover {
+	background-color: #e8e8e8;
+}
+
+#confirmation #cancel {
+	left: calc(50% - 110px);
+}
+
+#confirmation #confirm {
+	right: calc(50% - 110px);
+}
+
+@keyframes confirmationAppear {
+	from {
+		transform: translateY(-30vh);
+	}
+	to {
+		transform: translateY(0);
+	}
+}
+
+@keyframes confirmationVanish {
+	from {
+		transform: translateY(0);
+	}
+	to {
+		transform: translateY(30vh);
+	}
+}
+
+@keyframes overlayAppear {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
+@keyframes overlayVanish {
+	from {
+		opacity: 1;
+	}
+	to {
+		opacity: 0;
+	}
+}

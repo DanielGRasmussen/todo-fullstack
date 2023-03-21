@@ -17,7 +17,8 @@ export function Modal(
 	todo,
 	setModalTodo,
 	fetchTodoList,
-	startNotice
+	startNotice,
+	askConfirmation
 ) {
 	const [change, setChange] = useState(false);
 
@@ -65,10 +66,19 @@ export function Modal(
 	}
 
 	function deleteTodo() {
-		deleteTodoById(todo.id).then(() => {
-			fetchTodoList();
-		});
-		toggleModal();
+		function next() {
+			deleteTodoById(todo.id).then(() => {
+				fetchTodoList();
+			});
+			toggleModal();
+		}
+
+		askConfirmation(
+			`Are you sure you want to permanently delete "${restoreUserInput(
+				todo.title
+			)}" and all subtasks?`,
+			next
+		);
 	}
 
 	function overlayClicked(event) {

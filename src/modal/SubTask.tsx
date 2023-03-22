@@ -7,12 +7,14 @@ interface ISubTaskProps {
 	subtask: { name: string; link: boolean; id: string };
 	setModalTodo: React.Dispatch<React.SetStateAction<ITodoData>>;
 	dataChange;
+	startNotice;
 }
 
 function SubTask({
 	subtask,
 	setModalTodo,
-	dataChange
+	dataChange,
+	startNotice
 }: ISubTaskProps): JSX.Element {
 	let title = subtask.name;
 	let subTaskTodo;
@@ -28,9 +30,10 @@ function SubTask({
 		}
 		subtask.link = false;
 		subtask.name = subTaskTodo.title;
+		startNotice("notice", "Deleting linked subtask.");
+		dataChange("", "", true); // Updates the checkbox uncheck.
 		deleteTodoById(subTaskTodo.id).then(() => {
-			dataChange("", "", true);
-			//fetchTodoList();
+			dataChange("", "", true); // Removes subtask from TodoList.
 		});
 	}
 

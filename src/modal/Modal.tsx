@@ -56,6 +56,9 @@ export function Modal(
 		todo.lastUpdated = new Date().toISOString();
 		// Here we should place a call to external services to update db
 		fetchTodoList();
+		if (!forceUpdate) {
+			startNotice("success", "Data Updated");
+		}
 		setChange(!change);
 	}
 
@@ -64,11 +67,12 @@ export function Modal(
 			deleteTodoById(todo.id).then(() => {
 				fetchTodoList();
 			});
+			startNotice("success", "Deleting Todo");
 			toggleModal();
 		}
 
 		askConfirmation(
-			`Are you sure you want to permanently delete "${todo.title}" and all subtasks?`,
+			`Are you sure you want to permanently delete "${todo.title}" and all linked subtasks?`,
 			next
 		);
 	}
@@ -149,6 +153,7 @@ export function Modal(
 							subtask={subtask}
 							setModalTodo={setModalTodo}
 							dataChange={dataChange}
+							startNotice={startNotice}
 						/>
 					))}
 				</ul>

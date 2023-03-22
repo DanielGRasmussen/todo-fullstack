@@ -16,7 +16,7 @@ exports[`SearchMenu should render the component 1`] = `
           id="search-bar"
           placeholder="Search..."
           type="text"
-          value="Test Search Query"
+          value=""
         />
       </section>
     </div>

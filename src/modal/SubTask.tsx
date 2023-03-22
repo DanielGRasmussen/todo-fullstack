@@ -1,13 +1,19 @@
 import "./css/SubTask.css";
 import React from "react";
 import { deleteTodoById, getTodoByIdFromLocal } from "../ExternalServices";
+import { ITodoData } from "../main/TodoList";
 
-function SubTask(
+interface ISubTaskProps {
+	subtask: { name: string; link: boolean; id: string };
+	setModalTodo: React.Dispatch<React.SetStateAction<ITodoData>>;
+	dataChange;
+}
+
+function SubTask({
 	subtask,
-	fetchTodoList,
 	setModalTodo,
 	dataChange
-): JSX.Element {
+}: ISubTaskProps): JSX.Element {
 	let title = subtask.name;
 	let subTaskTodo;
 	if (subtask.link) {

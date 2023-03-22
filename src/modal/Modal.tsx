@@ -137,21 +137,20 @@ export function Modal(
 						}}
 					/>
 				</p>
-				{Dates(todo, dataChange)}
+				<Dates todo={todo} dataChange={dataChange} />
 				{todo.subTasks.length ? (
 					<h3>Subtasks:</h3>
 				) : (
 					<span className="space"></span>
 				)}
 				<ul id="subtasks">
-					{todo.subTasks.map((subtask) =>
-						SubTask(
-							subtask,
-							fetchTodoList,
-							setModalTodo,
-							dataChange
-						)
-					)}
+					{todo.subTasks.map((subtask) => (
+						<SubTask
+							subtask={subtask}
+							setModalTodo={setModalTodo}
+							dataChange={dataChange}
+						/>
+					))}
 				</ul>
 				<h3>Description:</h3>
 				<textarea

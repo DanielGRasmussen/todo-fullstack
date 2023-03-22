@@ -1,8 +1,22 @@
 import "./css/Dates.css";
 import { formatDate } from "../utils";
 import React from "react";
+import { ITodoData } from "../main/TodoList";
 
-function Dates(todo, dataChange) {
+interface IDatesProps {
+	todo: ITodoData;
+	dataChange;
+}
+
+function Dates({ todo, dataChange }: IDatesProps) {
+	/* This component renders an unordered list containing several list items for each date related to the "todo" item.
+	 * The list items include the created date, last updated date, planned start and end dates, and actual start and end
+	 * dates. The planned start and end dates are rendered as input fields that trigger the "dataChange" function when
+	 * their values change. The actual start and end dates are based on pressing the button in the modal.
+	 *
+	 * todo: Object following ITodoData. Used for the dates.
+	 * dataChange: A function to be called when a date input field is blurred with the current info in the field.
+	 */
 	return (
 		<ul id="dates">
 			<li>

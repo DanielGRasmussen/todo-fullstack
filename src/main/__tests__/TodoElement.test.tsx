@@ -40,6 +40,7 @@ describe("TodoElement component", () => {
 			screen.getByText(`Priority: ${mockTodo.priority}`)
 		).toBeInTheDocument();
 		expect(screen.getByText(mockTodo.description)).toBeInTheDocument();
+		// Can't test date because stupid nonbreaking space (nbsp) character.
 	});
 
 	it("calls setIsOpen and setModalTodo when clicked", () => {

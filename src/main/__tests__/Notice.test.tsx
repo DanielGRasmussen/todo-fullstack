@@ -3,36 +3,31 @@ import React from "react";
 import { fireEvent, render } from "@testing-library/react";
 
 describe("Notice component", () => {
+	const noticeInfo = {
+		type: "success",
+		message: "Success message"
+	};
 	it("renders correctly with given props", () => {
-		const noticeInfo = {
-			type: "success",
-			message: "Success message"
-		};
-		const hideNotice = jest.fn();
-		const showNotice = true;
 		const { getByText, getByAltText } = render(
 			<Notice
 				noticeInfo={noticeInfo}
-				hideNotice={hideNotice}
-				showNotice={showNotice}
+				hideNotice={jest.fn()}
+				showNotice={true}
 			/>
 		);
-		expect(getByText(noticeInfo.message)).toBeInTheDocument();
+		const notice = getByText(noticeInfo.message);
+		expect(notice).toBeInTheDocument();
+		expect(notice).toHaveClass(noticeInfo.type);
 		expect(getByAltText("Close")).toBeInTheDocument();
 	});
 
 	it("hides the notice when the close button is clicked", () => {
-		const noticeInfo = {
-			type: "success",
-			message: "Success message"
-		};
 		const hideNotice = jest.fn();
-		const showNotice = true;
 		const { getByAltText } = render(
 			<Notice
 				noticeInfo={noticeInfo}
 				hideNotice={hideNotice}
-				showNotice={showNotice}
+				showNotice={true}
 			/>
 		);
 		fireEvent.click(getByAltText("Close"));
@@ -40,17 +35,11 @@ describe("Notice component", () => {
 	});
 
 	it("does not render when showNotice is false", () => {
-		const noticeInfo = {
-			type: "success",
-			message: "Success message"
-		};
-		const hideNotice = jest.fn();
-		const showNotice = false;
 		const { queryByText, queryByAltText } = render(
 			<Notice
 				noticeInfo={noticeInfo}
-				hideNotice={hideNotice}
-				showNotice={showNotice}
+				hideNotice={jest.fn()}
+				showNotice={false}
 			/>
 		);
 		expect(queryByText(noticeInfo.message)).toBeNull();

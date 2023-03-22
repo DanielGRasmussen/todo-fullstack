@@ -12,10 +12,8 @@ describe("SortButton", () => {
 
 	it("should change sort order when clicked", () => {
 		const setSortOrderMock = jest.fn();
-		const { getByTestId } = render(
-			<SortButton sortOrder={true} setSortOrder={setSortOrderMock} />
-		);
-		const button = getByTestId("sort-direction");
+		render(<SortButton sortOrder={true} setSortOrder={setSortOrderMock} />);
+		const button = document.getElementById("sort-direction");
 		fireEvent.click(button);
 		expect(setSortOrderMock).toHaveBeenCalledWith(false);
 	});

@@ -1,5 +1,5 @@
 import React from "react";
-import { render } from "@testing-library/react";
+import { fireEvent, render } from "@testing-library/react";
 import SearchMenu from "../SearchMenu";
 
 describe("SearchMenu", () => {
@@ -10,7 +10,7 @@ describe("SearchMenu", () => {
 	const setFilters = jest.fn();
 
 	const props = {
-		searchQuery: "Test Search Query",
+		searchQuery: "",
 		setSearchQuery,
 		sortingOptions: [
 			{ value: "option1", label: "Option 1" },
@@ -33,5 +33,14 @@ describe("SearchMenu", () => {
 	it("should render the component", () => {
 		const { container } = render(<SearchMenu {...props} />);
 		expect(container).toMatchSnapshot();
+	});
+
+	it("should call the setSearchQuery function", () => {
+		render(<SearchMenu {...props} />);
+		const searchBar = document.getElementById(
+			"search-bar"
+		) as HTMLInputElement;
+		fireEvent.change(searchBar, { target: { value: "new value" } });
+		expect(setSearchQuery).toHaveBeenCalledWith("new value");
 	});
 });

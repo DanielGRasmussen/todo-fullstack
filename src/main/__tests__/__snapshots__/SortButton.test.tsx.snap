@@ -3,7 +3,6 @@
 exports[`SortButton should render correctly 1`] = `
 <div
   class="ascending tooltip"
-  data-testid="sort-direction"
   id="sort-direction"
 >
   <img

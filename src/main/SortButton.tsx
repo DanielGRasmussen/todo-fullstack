@@ -42,7 +42,6 @@ function SortButton({
 		<div
 			onClick={handleOnClick}
 			id="sort-direction"
-			data-testid="sort-direction"
 			className={(sortOrder ? "ascending" : "descending") + " tooltip"}
 		>
 			{sortOrder ? (

@@ -165,7 +165,6 @@ function SearchMenu({
 			<div id="sorts">
 				<Select
 					id="sort-select"
-					data-testid="sort-select"
 					options={sortingOptions}
 					value={selectedSortingOption}
 					onChange={(options) => setSelectedSortingOption(options)}

@@ -23,6 +23,19 @@ function Header() {
 	const [isOpen, setIsOpen] = useState(false);
 	const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
+	function toggleHeader(
+		header: HTMLElement,
+		search_bar: HTMLElement,
+		down_arrow: HTMLElement,
+		show: boolean
+	) {
+		header.classList.toggle("hide", !show);
+		search_bar.classList.toggle("hide", !show);
+		if (down_arrow) {
+			down_arrow.classList.toggle("hide", show);
+		}
+	}
+
 	useEffect(() => {
 		// Hide header on scroll
 		let prevScrollpos: number = window.scrollY;
@@ -32,33 +45,20 @@ function Header() {
 		);
 		const down_arrow: HTMLElement = document.getElementById("down_arrow");
 
-		// Separate functions in case somehow something breaks, easier for user to fix
-		function showHeader() {
-			header.classList.remove("hide");
-			search_bar.classList.remove("hide");
-			if (down_arrow) {
-				down_arrow.classList.add("hide");
-			}
-		}
-
-		function hideHeader() {
-			header.classList.add("hide");
-			search_bar.classList.add("hide");
-			if (down_arrow) {
-				down_arrow.classList.remove("hide");
-			}
-		}
-
 		if (down_arrow) {
 			down_arrow.addEventListener("click", () => {
-				showHeader();
+				toggleHeader(header, search_bar, down_arrow, true);
 			});
 		}
 
 		function handleScroll() {
 			const currentScrollPos: number = window.scrollY;
-			if (prevScrollpos > currentScrollPos) showHeader();
-			else hideHeader();
+			toggleHeader(
+				header,
+				search_bar,
+				down_arrow,
+				prevScrollpos > currentScrollPos
+			);
 			prevScrollpos = currentScrollPos;
 		}
 

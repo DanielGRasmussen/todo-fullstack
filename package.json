@@ -1,11 +1,8 @@
 {
-	"name": "to-do",
+	"name": "todo",
 	"version": "0.1.0",
 	"private": true,
 	"dependencies": {
-		"@testing-library/jest-dom": "^5.16.5",
-		"@testing-library/react": "^13.4.0",
-		"@testing-library/user-event": "^13.5.0",
 		"normalize.css": "^8.0.1",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",
@@ -40,13 +37,19 @@
 		]
 	},
 	"devDependencies": {
+		"@testing-library/user-event": "^13.5.0",
+		"@testing-library/jest-dom": "^5.16.5",
+		"@testing-library/react": "^14.0.0",
+		"@types/jest": "^29.5.0",
 		"@typescript-eslint/eslint-plugin": "^5.54.1",
 		"@typescript-eslint/parser": "^5.54.1",
 		"eslint-config-prettier": "^8.6.0",
 		"eslint-plugin-import": "^2.27.5",
 		"eslint-plugin-jsx-a11y": "^6.7.1",
 		"eslint-plugin-react": "^7.32.2",
+		"jest": "^29.5.0",
 		"prettier": "^2.8.4",
-		"react-scripts": "^5.0.1"
+		"react-scripts": "^5.0.1",
+		"ts-jest": "^29.0.5"
 	}
 }

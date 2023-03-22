@@ -1,8 +1,29 @@
 import "./css/TodoElement.css";
 import React from "react";
+import { ITodoData } from "./TodoList";
 import { formatDate } from "../utils";
 
-function TodoElement(todo, setIsOpen, setModalTodo): JSX.Element {
+interface ITodoElementProps {
+	todo: ITodoData;
+	setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+	setModalTodo: React.Dispatch<React.SetStateAction<ITodoData>>;
+}
+
+function TodoElement({
+	todo,
+	setIsOpen,
+	setModalTodo
+}: ITodoElementProps): JSX.Element {
+	/* This renders an element with information given to it in the parameters.
+	 *
+	 * This component takes three props:
+	 * todo: object that follows ITodoData and have its information used for this.
+	 * setIsOpen: a function that sets a boolean state indicating whether a modal is open.
+	 * setModalTodo: a function that sets a state object representing the currently selected todo item in the modal.
+	 *
+	 * This renders a list item with the information of a single "todo" item. It uses the planned/actual dates depending
+	 * on if the actual has any content. It also applies classes depending on if the plans are behind schedule.
+	 */
 	const behindStart: boolean =
 		todo.status === "incomplete" &&
 		!todo.actualStartDate &&

@@ -1,6 +1,6 @@
 # ToDo Web App
 
-This is a web app developed using React for managing a to-do list.
+This is a web app developed using React for managing a todo list.
 
 ## Installation
 

@@ -28,19 +28,55 @@ function select_on_close(uniqueId: string): void {
 	container?.appendChild(clonedMenu);
 }
 
-function SearchMenu(
-	searchQuery: string,
+interface ISearchMenu {
+	searchQuery: string;
+	setSearchQuery;
+	sortingOptions: { value: string; label: string }[];
+	selectedSortingOption: { value: string; label: string }[];
+	setSelectedSortingOption;
+	sortOrder: boolean;
+	setSortOrder;
+	currentStatusFilters: { value: string; label: string }[];
+	setStatusFilter;
+	filterOptions: { value: string; label: string }[];
+	filters: string[];
+	setFilters;
+}
+
+function SearchMenu({
+	searchQuery,
 	setSearchQuery,
-	sortingOptions: { value: string; label: string }[],
-	selectedSortingOption: { value: string; label: string }[],
+	sortingOptions,
+	selectedSortingOption,
 	setSelectedSortingOption,
-	handleSortOrderChange,
+	sortOrder,
+	setSortOrder,
 	currentStatusFilters,
 	setStatusFilter,
-	filterOptions: { value: string; label: string }[],
-	filters: string[],
+	filterOptions,
+	filters,
 	setFilters
-): JSX.Element {
+}: ISearchMenu): JSX.Element {
+	/* This renders the search menu with options to filter for the TodoList
+	 *
+	 * This component takes twelve props:
+	 * searchQuery: The current search query entered by the user.
+	 * setSearchQuery: A function to update the search query based on user input.
+	 * sortingOptions: An array of sorting options to be displayed in the sorting dropdown menu.
+	 * selectedSortingOption: The currently selected sorting option.
+	 * setSelectedSortingOption: A function to update the selected sorting option based on user selection.
+	 * sortOrder: The current sorting order (ascending or descending).
+	 * setSortOrder: A function to update the sorting order based on user selection.
+	 * currentStatusFilters: The currently selected status filters.
+	 * setStatusFilter: A function to update the selected status filters based on user selection.
+	 * filterOptions: An array of filter options to be displayed in the type filter dropdown menu.
+	 * filters: The currently selected type filters.
+	 * setFilters: A function to update the selected type filters based on user selection.
+	 *
+	 * The component returns a form with several search inputs such as a search bar, a select dropdown for status
+	 * filters, a select dropdown for type filters, and a select dropdown for sorting options. The form also includes a
+	 * button to toggle the sort order.
+	 */
 	// Makes react-select thinner
 	const selectStyles = {
 		control: (provided) => ({
@@ -129,6 +165,7 @@ function SearchMenu(
 			<div id="sorts">
 				<Select
 					id="sort-select"
+					data-testid="sort-select"
 					options={sortingOptions}
 					value={selectedSortingOption}
 					onChange={(options) => setSelectedSortingOption(options)}
@@ -140,7 +177,7 @@ function SearchMenu(
 					}}
 					placeholder="Sort options"
 				/>
-				<SortButton onClick={handleSortOrderChange} />
+				<SortButton sortOrder={sortOrder} setSortOrder={setSortOrder} />
 			</div>
 		</form>
 	);

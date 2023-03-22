@@ -30,21 +30,21 @@
 	cursor: pointer;
 }
 
-#notice .load {
+#notice .timer {
 	position: absolute;
 	bottom: 0;
 	left: 0;
 	height: 5px;
 	background-color: #ccc;
 	width: 100%;
-	animation: loading-bar 2s ease-in-out;
+	animation: timer-bar 2s ease-in-out;
 }
 
-#notice.close .load {
+#notice.close .timer {
 	width: 0;
 }
 
-@keyframes loading-bar {
+@keyframes timer-bar {
 	0% {
 		width: 100%;
 	}

@@ -19,12 +19,18 @@ export interface ITodoData {
 	lastUpdated: string;
 }
 
-export function TodoList(
+interface ITodoListProps {
+	setIsOpen: Dispatch<SetStateAction<boolean>>;
+	setModalTodo: Dispatch<SetStateAction<ITodoData>>;
+	todoList: ITodoData[];
+}
+
+export function TodoList({
 	setIsOpen,
 	setModalTodo,
-	todoList: ITodoData[]
-): JSX.Element {
-	// Gives the to-do list with sorting options
+	todoList
+}: ITodoListProps): JSX.Element {
+	// Gives the todo list with sorting options
 	const sortingOptions: { value: string; label: string }[] = [
 		{ value: "title", label: "Title" },
 		{ value: "priority", label: "Priority" },
@@ -44,7 +50,7 @@ export function TodoList(
 		{ value: string; label: string }[],
 		Dispatch<SetStateAction<{ value: string; label: string }[]>>
 	] = useState([sortingOptions[0]]);
-	const [sortOrder, setSortOrder] = useState(false);
+	const [sortOrder, setSortOrder] = useState(true);
 	const [filters, setFilters] = useState([]);
 	const [currentStatusFilters, setStatusFilter] = useState([]);
 
@@ -115,29 +121,34 @@ export function TodoList(
 		return result;
 	});
 
-	if (sortOrder) {
+	if (!sortOrder) {
 		sortedTodoList.reverse();
 	}
 
 	return (
 		<div>
-			{SearchMenu(
-				searchQuery,
-				setSearchQuery,
-				sortingOptions,
-				selectedSortingOption,
-				setSelectedSortingOption,
-				setSortOrder,
-				currentStatusFilters,
-				setStatusFilter,
-				filterOptions,
-				filters,
-				setFilters
-			)}
+			<SearchMenu
+				searchQuery={searchQuery}
+				setSearchQuery={setSearchQuery}
+				sortingOptions={sortingOptions}
+				selectedSortingOption={selectedSortingOption}
+				setSelectedSortingOption={setSelectedSortingOption}
+				sortOrder={sortOrder}
+				setSortOrder={setSortOrder}
+				currentStatusFilters={currentStatusFilters}
+				setStatusFilter={setStatusFilter}
+				filterOptions={filterOptions}
+				filters={filters}
+				setFilters={setFilters}
+			/>
 			<ul id="todos">
-				{sortedTodoList.map((todo) =>
-					TodoElement(todo, setIsOpen, setModalTodo)
-				)}
+				{sortedTodoList.map((todo) => (
+					<TodoElement
+						todo={todo}
+						setIsOpen={setIsOpen}
+						setModalTodo={setModalTodo}
+					/>
+				))}
 			</ul>
 		</div>
 	);

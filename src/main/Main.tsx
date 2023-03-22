@@ -69,7 +69,7 @@ function Main(): JSX.Element {
 
 	return (
 		<main tabIndex={-1}>
-			<h1>To-Do</h1>
+			<h1>Todo</h1>
 			<Notice
 				noticeInfo={noticeInfo}
 				hideNotice={hideNotice}
@@ -89,7 +89,11 @@ function Main(): JSX.Element {
 				startNotice,
 				askConfirmation
 			)}
-			{TodoList(setIsOpen, setModalTodo, todoList)}
+			<TodoList
+				setIsOpen={setIsOpen}
+				setModalTodo={setModalTodo}
+				todoList={todoList}
+			/>
 		</main>
 	);
 }

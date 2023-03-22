@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SortButton should render correctly 1`] = `
+<div
+  class="ascending tooltip"
+  data-testid="sort-direction"
+  id="sort-direction"
+>
+  <img
+    alt="Ascending order"
+    src="/assets/up_arrow.svg"
+  />
+</div>
+`;

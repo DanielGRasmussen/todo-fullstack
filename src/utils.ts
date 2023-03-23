@@ -1,5 +1,3 @@
-import { ITodoData } from "./main/TodoList";
-
 export function formatDate(ISOstring: string): string {
 	// Convert ISO to date
 	return new Date(ISOstring).toLocaleString("en-US", {
@@ -73,37 +71,45 @@ export function getCurrentTimeInUserTimezone(): string {
 }
 
 export function filterTodosByDate(
-	todo: ITodoData,
+	datesToCheck: string[],
 	currentTimeframe: string
 ): boolean {
-	const currentDate = new Date();
-	const datesToCheck = [
-		new Date(todo.proposedStartDate),
-		new Date(todo.actualStartDate),
-		new Date(todo.proposedEndDate),
-		new Date(todo.actualEndDate)
-	];
-
 	const now = new Date();
 
 	switch (currentTimeframe) {
 		case "behind":
-			return datesToCheck.some((date) => date && date < currentDate);
+			return datesToCheck.some((dateToCheck) => {
+				if (!dateToCheck) return false;
+				const date = new Date(dateToCheck);
+				return date < now;
+			});
 		case "today":
 			const today = now;
 			today.setDate(now.getDate() + 1);
 			today.setHours(0, 0, 0, 0);
-			return datesToCheck.some((date) => date && date <= today);
+			return datesToCheck.some((dateToCheck) => {
+				if (!dateToCheck) return false;
+				const date = new Date(dateToCheck);
+				return date <= today;
+			});
 		case "tomorrow":
 			const tomorrow = now;
 			tomorrow.setDate(now.getDate() + 2);
 			tomorrow.setHours(0, 0, 0, 0);
-			return datesToCheck.some((date) => date && date <= tomorrow);
+			return datesToCheck.some((dateToCheck) => {
+				if (!dateToCheck) return false;
+				const date = new Date(dateToCheck);
+				return date <= tomorrow;
+			});
 		case "week":
 			const endOfWeek = now;
 			endOfWeek.setDate(now.getDate() + (7 - now.getDay()));
 			endOfWeek.setHours(0, 0, 0, 0);
-			return datesToCheck.some((date) => date && date <= endOfWeek);
+			return datesToCheck.some((dateToCheck) => {
+				if (!dateToCheck) return false;
+				const date = new Date(dateToCheck);
+				return date <= endOfWeek;
+			});
 		case "month":
 			const endOfMonth = new Date(
 				now.getFullYear(),
@@ -111,10 +117,18 @@ export function filterTodosByDate(
 				0
 			);
 			endOfMonth.setHours(23, 59, 59, 999);
-			return datesToCheck.some((date) => date && date <= endOfMonth);
+			return datesToCheck.some((dateToCheck) => {
+				if (!dateToCheck) return false;
+				const date = new Date(dateToCheck);
+				return date <= endOfMonth;
+			});
 		case "year":
 			const endOfYear = new Date(now.getFullYear() + 1, 0, 1);
-			return datesToCheck.some((date) => date && date <= endOfYear);
+			return datesToCheck.some((dateToCheck) => {
+				if (!dateToCheck) return false;
+				const date = new Date(dateToCheck);
+				return date <= endOfYear;
+			});
 		default:
 			return true;
 	}

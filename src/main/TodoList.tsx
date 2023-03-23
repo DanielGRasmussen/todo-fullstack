@@ -58,6 +58,8 @@ export function TodoList({
 		value: string;
 		label: string;
 	}>({ value: "all", label: "All" });
+	const [startDate, setStartDate] = useState(null);
+	const [endDate, setEndDate] = useState(null);
 
 	// Gets the unique types from todoList
 	const filterOptions: { value: string; label: string }[] = todoList
@@ -105,8 +107,34 @@ export function TodoList({
 			return false;
 		}
 
+		// Filter by start/end date
+		const datesToCheck = [
+			todo.proposedStartDate,
+			todo.actualStartDate,
+			todo.proposedEndDate,
+			todo.actualEndDate
+		];
+
+		const remove = datesToCheck.some((dateToCheck) => {
+			if (!dateToCheck) return false;
+			const date = new Date(dateToCheck);
+			if (startDate && endDate) {
+				const start = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate() + 1);
+				const end = new Date(endDate.getFullYear(), endDate.getMonth(), endDate.getDate() + 1);
+				return start < date && date < end;
+			} else if (startDate) {
+				const start = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate() + 1);
+				return start < date;
+			} else if (endDate) {
+				const end = new Date(endDate.getFullYear(), endDate.getMonth(), endDate.getDate() + 1);
+				return date < end;
+			}
+			return true;
+		});
+		if (!remove) return false;
+
 		// Filter by currentTimeframe
-		return filterTodosByDate(todo, currentTimeframe.value);
+		return filterTodosByDate(datesToCheck, currentTimeframe.value);
 	});
 
 	const sortedTodoList: ITodoData[] = filteredTodoList.sort((a, b) => {
@@ -147,6 +175,10 @@ export function TodoList({
 				setFilters={setFilters}
 				currentTimeframe={currentTimeframe}
 				setCurrentTimeframe={setCurrentTimeframe}
+				startDate={startDate}
+				setStartDate={setStartDate}
+				endDate={endDate}
+				setEndDate={setEndDate}
 			/>
 			<ul id="todos">
 				{sortedTodoList.map((todo) => (

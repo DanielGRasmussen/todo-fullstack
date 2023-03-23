@@ -2,6 +2,8 @@ import "./css/SearchMenu.css";
 import React from "react";
 import makeAnimated from "react-select/animated";
 import Select, { components } from "react-select";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import SortButton from "./SortButton";
 
 const animatedComponents = makeAnimated();
@@ -43,24 +45,32 @@ interface ISearchMenu {
 	setFilters;
 	currentTimeframe: { value: string; label: string };
 	setCurrentTimeframe;
+	startDate;
+	setStartDate;
+	endDate;
+	setEndDate;
 }
 
 function SearchMenu({
-	searchQuery,
-	setSearchQuery,
-	sortingOptions,
-	selectedSortingOption,
-	setSelectedSortingOption,
-	sortOrder,
-	setSortOrder,
-	currentStatusFilters,
-	setStatusFilter,
-	filterOptions,
-	filters,
-	setFilters,
-	currentTimeframe,
-	setCurrentTimeframe
-}: ISearchMenu): JSX.Element {
+						searchQuery,
+						setSearchQuery,
+						sortingOptions,
+						selectedSortingOption,
+						setSelectedSortingOption,
+						sortOrder,
+						setSortOrder,
+						currentStatusFilters,
+						setStatusFilter,
+						filterOptions,
+						filters,
+						setFilters,
+						currentTimeframe,
+						setCurrentTimeframe,
+						startDate,
+						setStartDate,
+						endDate,
+						setEndDate
+					}: ISearchMenu): JSX.Element {
 	/* This renders the search menu with options to filter for the TodoList
 	 *
 	 * This component takes twelve props:
@@ -116,6 +126,12 @@ function SearchMenu({
 			textTransform: "capitalize"
 		})
 	};
+
+	function dateSelectionChange(dates) {
+		const [start, end] = dates;
+		setStartDate(start);
+		setEndDate(end);
+	}
 
 	const statusOptions = [
 		{ value: "incomplete", label: "Incomplete" },
@@ -194,19 +210,36 @@ function SearchMenu({
 				/>
 				<SortButton sortOrder={sortOrder} setSortOrder={setSortOrder} />
 			</div>
-			<Select
-				id="timeframe"
-				options={timeframeOptions}
-				value={currentTimeframe}
-				onChange={(option) => setCurrentTimeframe(option)}
-				styles={selectStyles}
-				isSearchable={false}
-				components={{ ...animatedComponents, ...customComponents }}
-				onMenuClose={() => {
-					select_on_close("timeframe");
-				}}
-				placeholder="Timeframe"
-			/>
+			<div id="dates">
+				<div id="datepicker-wrapper">
+					{/* For the clearing element. */}
+					<DatePicker
+						selected={startDate}
+						onChange={dateSelectionChange}
+						startDate={startDate}
+						endDate={endDate}
+						selectsRange
+						showIcon
+						isClearable
+						placeholderText="Select date range"
+						id="datepicker"
+					/>
+				</div>
+				<br />
+				<Select
+					id="timeframe"
+					options={timeframeOptions}
+					value={currentTimeframe}
+					onChange={(option) => setCurrentTimeframe(option)}
+					styles={selectStyles}
+					isSearchable={false}
+					components={{ ...animatedComponents, ...customComponents }}
+					onMenuClose={() => {
+						select_on_close("timeframe");
+					}}
+					placeholder="Timeframe"
+				/>
+			</div>
 		</form>
 	);
 }

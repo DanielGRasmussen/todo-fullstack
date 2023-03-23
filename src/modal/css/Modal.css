@@ -1,5 +1,10 @@
 body.freeze {
 	overflow: hidden;
+	padding-right: 15px;
+}
+
+body.freeze header {
+	left: -7.5px;
 }
 
 #modal-overlay {

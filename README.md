@@ -1,4 +1,4 @@
-# ToDo Web App
+# Todo Web App
 
 This is a web app developed using React for managing a todo list.
 
@@ -9,13 +9,13 @@ To install and run the project, you should have [Node.js](https://nodejs.org/) i
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/DanielGRasmussen/to-do
+git clone https://github.com/DanielGRasmussen/todo-webapp
 ```
 
 2. Install dependencies:
 
 ```bash
-cd to-do
+cd todo-webapp
 npm install
 ```
 

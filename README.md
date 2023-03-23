@@ -1,4 +1,4 @@
-# ToDo Web App
+# Todo Web App
 
 This is a web app developed using React for managing a todo list.
 

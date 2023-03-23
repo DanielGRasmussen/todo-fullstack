@@ -2,6 +2,7 @@ import "./css/TodoList.css";
 import React, { Dispatch, SetStateAction, useState } from "react";
 import SearchMenu from "./SearchMenu";
 import TodoElement from "./TodoElement";
+import { filterTodosByDate } from "../utils";
 
 export interface ITodoData {
 	id: string;
@@ -53,6 +54,10 @@ export function TodoList({
 	const [sortOrder, setSortOrder] = useState(true);
 	const [filters, setFilters] = useState([]);
 	const [currentStatusFilters, setStatusFilter] = useState([]);
+	const [currentTimeframe, setCurrentTimeframe] = useState<{
+		value: string;
+		label: string;
+	}>({ value: "all", label: "All" });
 
 	// Gets the unique types from todoList
 	const filterOptions: { value: string; label: string }[] = todoList
@@ -100,8 +105,8 @@ export function TodoList({
 			return false;
 		}
 
-		// If all conditions are met, return true to keep this todoitem in the filtered list
-		return true;
+		// Filter by currentTimeframe
+		return filterTodosByDate(todo, currentTimeframe.value);
 	});
 
 	const sortedTodoList: ITodoData[] = filteredTodoList.sort((a, b) => {
@@ -140,6 +145,8 @@ export function TodoList({
 				filterOptions={filterOptions}
 				filters={filters}
 				setFilters={setFilters}
+				currentTimeframe={currentTimeframe}
+				setCurrentTimeframe={setCurrentTimeframe}
 			/>
 			<ul id="todos">
 				{sortedTodoList.map((todo) => (

@@ -41,6 +41,8 @@ interface ISearchMenu {
 	filterOptions: { value: string; label: string }[];
 	filters: string[];
 	setFilters;
+	currentTimeframe: { value: string; label: string };
+	setCurrentTimeframe;
 }
 
 function SearchMenu({
@@ -55,7 +57,9 @@ function SearchMenu({
 	setStatusFilter,
 	filterOptions,
 	filters,
-	setFilters
+	setFilters,
+	currentTimeframe,
+	setCurrentTimeframe
 }: ISearchMenu): JSX.Element {
 	/* This renders the search menu with options to filter for the TodoList
 	 *
@@ -72,6 +76,8 @@ function SearchMenu({
 	 * filterOptions: An array of filter options to be displayed in the type filter dropdown menu.
 	 * filters: The currently selected type filters.
 	 * setFilters: A function to update the selected type filters based on user selection.
+	 * currentTimeframe: The currently selected timeframe.
+	 * setCurrentTimeframe: A function to update the selected type timeframe based on user selection.
 	 *
 	 * The component returns a form with several search inputs such as a search bar, a select dropdown for status
 	 * filters, a select dropdown for type filters, and a select dropdown for sorting options. The form also includes a
@@ -115,6 +121,16 @@ function SearchMenu({
 		{ value: "incomplete", label: "Incomplete" },
 		{ value: "in-progress", label: "In-Progress" },
 		{ value: "complete", label: "Complete" }
+	];
+
+	const timeframeOptions = [
+		{ value: "behind", label: "Behind" },
+		{ value: "today", label: "Today" },
+		{ value: "tomorrow", label: "Tomorrow" },
+		{ value: "week", label: "This week" },
+		{ value: "month", label: "This month" },
+		{ value: "year", label: "This year" },
+		{ value: "all", label: "All" }
 	];
 
 	return (
@@ -178,6 +194,19 @@ function SearchMenu({
 				/>
 				<SortButton sortOrder={sortOrder} setSortOrder={setSortOrder} />
 			</div>
+			<Select
+				id="timeframe"
+				options={timeframeOptions}
+				value={currentTimeframe}
+				onChange={(option) => setCurrentTimeframe(option)}
+				styles={selectStyles}
+				isSearchable={false}
+				components={{ ...animatedComponents, ...customComponents }}
+				onMenuClose={() => {
+					select_on_close("timeframe");
+				}}
+				placeholder="Timeframe"
+			/>
 		</form>
 	);
 }

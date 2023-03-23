@@ -69,6 +69,15 @@
 	}
 }
 
+#timeframe {
+	width: 180px;
+	margin-left: 10px;
+}
+
+#timeframe > div {
+	width: 160px;
+}
+
 /* React-select animations */
 @keyframes fadeIn {
 	from {

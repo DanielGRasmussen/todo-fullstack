@@ -1,3 +1,5 @@
+import { ITodoData } from "./main/TodoList";
+
 export function formatDate(ISOstring: string): string {
 	// Convert ISO to date
 	return new Date(ISOstring).toLocaleString("en-US", {
@@ -56,4 +58,64 @@ export function isDateFormatValid(dateString: string): boolean {
 	 */
 
 	return dateRegex.test(dateString);
+}
+
+export function getCurrentTimeInUserTimezone(): string {
+	const now = new Date();
+	const options: Intl.DateTimeFormatOptions = {
+		hour: "numeric",
+		minute: "numeric",
+		second: "numeric",
+		hour12: false,
+		timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone
+	};
+	return now.toLocaleTimeString(undefined, options);
+}
+
+export function filterTodosByDate(
+	todo: ITodoData,
+	currentTimeframe: string
+): boolean {
+	const currentDate = new Date();
+	const datesToCheck = [
+		new Date(todo.proposedStartDate),
+		new Date(todo.actualStartDate),
+		new Date(todo.proposedEndDate),
+		new Date(todo.actualEndDate)
+	];
+
+	const now = new Date();
+
+	switch (currentTimeframe) {
+		case "behind":
+			return datesToCheck.some((date) => date && date < currentDate);
+		case "today":
+			const today = now;
+			today.setDate(now.getDate() + 1);
+			today.setHours(0, 0, 0, 0);
+			return datesToCheck.some((date) => date && date <= today);
+		case "tomorrow":
+			const tomorrow = now;
+			tomorrow.setDate(now.getDate() + 2);
+			tomorrow.setHours(0, 0, 0, 0);
+			return datesToCheck.some((date) => date && date <= tomorrow);
+		case "week":
+			const endOfWeek = now;
+			endOfWeek.setDate(now.getDate() + (7 - now.getDay()));
+			endOfWeek.setHours(0, 0, 0, 0);
+			return datesToCheck.some((date) => date && date <= endOfWeek);
+		case "month":
+			const endOfMonth = new Date(
+				now.getFullYear(),
+				now.getMonth() + 1,
+				0
+			);
+			endOfMonth.setHours(23, 59, 59, 999);
+			return datesToCheck.some((date) => date && date <= endOfMonth);
+		case "year":
+			const endOfYear = new Date(now.getFullYear() + 1, 0, 1);
+			return datesToCheck.some((date) => date && date <= endOfYear);
+		default:
+			return true;
+	}
 }

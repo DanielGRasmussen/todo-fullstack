@@ -65,6 +65,7 @@ export function Modal(
 
 	function deleteTodo() {
 		function next() {
+			// Deletes reference to this todo for the parent task.
 			if (todo.parentTask) {
 				const parent: ITodoData = getTodoByIdFromLocal(todo.parentTask);
 				for (const subtask of parent.subTasks) {
@@ -75,11 +76,11 @@ export function Modal(
 					}
 				}
 			}
+			// Deletes linked subtasks
 			for (const subtask of todo.subTasks) {
 				if (subtask.link) {
-					deleteTodoById(subtask.id).then(() => {
-						fetchTodoList();
-					});
+					fetchTodoList(); // Error if this is gone.
+					deleteTodoById(subtask.id);
 				}
 			}
 			deleteTodoById(todo.id).then(() => {

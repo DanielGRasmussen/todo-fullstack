@@ -114,17 +114,82 @@
 	}
 }
 
-/* React Select */
-@media screen and (max-width: 500px) {
-	/* The class name of the react-select control changes when the dropdown menu is up */
-	.css-b62m3t-container {
-		width: 245px;
-		margin-left: 10px;
-		padding: 0;
+/* Tablet/mobile SearchMenu */
+@media screen and (max-width: 800px) {
+	#menu {
+		display: block;
 	}
 
-	.css-b62m3t-container > div {
-		width: 225px;
+	#menu label {
+		margin-top: 10px;
+		display: block;
+	}
+
+	#search-bar {
+		width: 80%;
+		margin: 0 auto;
+		display: block;
+	}
+
+	#menu > div {
+		margin: 0 auto;
+		width: 80%;
+		min-width: 300px;
+	}
+
+	#datepicker-wrapper {
+		width: 100%;
+	}
+
+	#datepicker {
+		width: calc(100% - 11px);
+	}
+
+	.css-b62m3t-container .css-u5xlfi-control,
+	.css-b62m3t-container .css-10v2721-control {
+		width: 100%;
+		margin: 0 auto;
+	}
+
+	#sort-select {
+		width: calc(100% - 50px);
+	}
+
+	.dropdown-item-header {
+		cursor: pointer;
+		position: relative;
+	}
+
+	.arrow {
+		position: absolute;
+		top: 13px;
+		right: 20px;
+		width: 0;
+		height: 0;
+		margin-left: 5px;
+		border-style: solid;
+		border-width: 5px 4px 0 4px;
+		border-color: #4e4e4e transparent transparent transparent;
+		transition: transform 0.3s ease-in-out;
+	}
+
+	.arrow.up {
+		transform: rotate(180deg);
+	}
+
+	.dropdown-item-content {
+		transition: all 0.3s ease-in-out;
+		height: 0;
+		overflow: hidden;
+	}
+
+	/* fit-content doesn't show the animation for whatever reason */
+	.dropdown-item-content.filters.show {
+		height: 324px;
+	}
+
+	.dropdown-item-content.sorts.show {
+		height: 50px;
 	}
 }
 

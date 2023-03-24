@@ -1,5 +1,5 @@
 import "./css/SearchMenu.css";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import makeAnimated from "react-select/animated";
 import Select, { components } from "react-select";
 import DatePicker from "react-datepicker";
@@ -93,6 +93,29 @@ function SearchMenu({
 	 * filters, a select dropdown for type filters, and a select dropdown for sorting options. The form also includes a
 	 * button to toggle the sort order.
 	 */
+	const [filterOpen, setfilterOpen] = useState(false);
+	const [sortOpen, setsortOpen] = useState(false);
+	const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+	function toggleFilters() {
+		setfilterOpen(!filterOpen);
+	}
+
+	function toggleSorts() {
+		setsortOpen(!sortOpen);
+	}
+
+	useEffect(() => {
+		function handleResize() {
+			setWindowWidth(window.innerWidth);
+		}
+
+		window.addEventListener("resize", handleResize);
+		return () => {
+			window.removeEventListener("resize", handleResize);
+		};
+	});
+
 	// Makes react-select thinner
 	const selectStyles = {
 		control: (provided) => ({
@@ -149,26 +172,9 @@ function SearchMenu({
 		{ value: "all", label: "All" }
 	];
 
-	return (
-		<form id="menu" autoComplete="off">
-			<div id="search-bar-container-container">
-				{/* First container for absolute positioning and 100% width */}
-				<section id="search-bar-container">
-					{/*
-					 * Second container to be the same width as the header/main then use margins to move it. (Fancy CSS could probably replace that)
-					 * Section instead of div because my IDE and ESLint didn't agree on how it should be formatted.
-					 * This was not passed into the header function because the functions this calls on didn't to update the screen.
-					 */}
-					<input
-						id="search-bar"
-						type="text"
-						value={searchQuery}
-						onChange={(event) => setSearchQuery(event.target.value)}
-						placeholder="Search..."
-					/>
-				</section>
-			</div>
-			<h2 id="filters-label">Filters</h2>
+	const filterHeader = <h2 id="filters-label">Filters</h2>;
+	const filterElements = (
+		<>
 			<div id="status">
 				<label htmlFor="status-filter">Status filter:</label>
 				<Select
@@ -197,12 +203,11 @@ function SearchMenu({
 					onMenuClose={() => {
 						select_on_close("filter-select");
 					}}
-					placeholder="Type filter"
 				/>
 			</div>
 			<div id="datepicker-wrapper">
 				{/* For the clearing element. */}
-				<label htmlFor="datepicker">Type filter:</label>
+				<label htmlFor="datepicker">Date range:</label>
 				<DatePicker
 					selected={startDate}
 					onChange={dateSelectionChange}
@@ -228,26 +233,88 @@ function SearchMenu({
 					onMenuClose={() => {
 						select_on_close("timeframe");
 					}}
-					placeholder="Timeframe"
 				/>
 			</div>
-			<h2 id="sorts-label">Sorts</h2>
-			<div id="sorts">
-				<Select
-					id="sort-select"
-					options={sortingOptions}
-					value={selectedSortingOption}
-					onChange={(options) => setSelectedSortingOption(options)}
-					styles={selectStyles}
-					isMulti
-					components={{ ...animatedComponents, ...customComponents }}
-					onMenuClose={() => {
-						select_on_close("sort-select");
-					}}
-					placeholder="Sort options"
-				/>
-				<SortButton sortOrder={sortOrder} setSortOrder={setSortOrder} />
+		</>
+	);
+
+	const filtersDropdown = (
+		<div className="dropdown-item">
+			<div className="dropdown-item-header" onClick={toggleFilters}>
+				{filterHeader}
+				<span className={`arrow ${filterOpen ? "up" : "down"}`} />
 			</div>
+
+			<div
+				className={`dropdown-item-content filters ${
+					filterOpen ? "show" : null
+				}`}
+			>
+				{filterElements}
+			</div>
+		</div>
+	);
+
+	const sortHeader = <h2 id="sorts-label">Sorts</h2>;
+	const sortElements = (
+		<div id="sorts">
+			<Select
+				id="sort-select"
+				options={sortingOptions}
+				value={selectedSortingOption}
+				onChange={(options) => setSelectedSortingOption(options)}
+				styles={selectStyles}
+				isMulti
+				components={{ ...animatedComponents, ...customComponents }}
+				onMenuClose={() => {
+					select_on_close("sort-select");
+				}}
+				placeholder="Sort options"
+			/>
+			<SortButton sortOrder={sortOrder} setSortOrder={setSortOrder} />
+		</div>
+	);
+
+	const sortDropdown = (
+		<div className="dropdown-item">
+			<div className="dropdown-item-header" onClick={toggleSorts}>
+				{sortHeader}
+				<span className={`arrow ${sortOpen ? "up" : "down"}`} />
+			</div>
+
+			<div
+				className={`dropdown-item-content sorts ${
+					sortOpen ? "show" : null
+				}`}
+			>
+				{sortElements}
+			</div>
+		</div>
+	);
+
+	return (
+		<form id="menu" autoComplete="off">
+			<div id="search-bar-container-container">
+				{/* First container for absolute positioning and 100% width */}
+				<section id="search-bar-container">
+					{/*
+					 * Second container to be the same width as the header/main then use margins to move it. (Fancy CSS could probably replace that)
+					 * Section instead of div because my IDE and ESLint didn't agree on how it should be formatted.
+					 * This was not passed into the header function because the functions this calls on didn't to update the screen.
+					 */}
+					<input
+						id="search-bar"
+						type="text"
+						value={searchQuery}
+						onChange={(event) => setSearchQuery(event.target.value)}
+						placeholder="Search..."
+					/>
+				</section>
+			</div>
+			{windowWidth > 800 ? filterHeader : null}
+			{windowWidth < 800 ? filtersDropdown : filterElements}
+			{windowWidth > 800 ? sortHeader : null}
+			{windowWidth < 800 ? sortDropdown : sortElements}
 		</form>
 	);
 }

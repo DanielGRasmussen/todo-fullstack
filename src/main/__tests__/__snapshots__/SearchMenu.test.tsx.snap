@@ -184,7 +184,7 @@ exports[`SearchMenu should render the component 1`] = `
               class=" css-1jqq78o-placeholder"
               id="react-select-3-placeholder"
             >
-              Type filter
+              Select...
             </div>
             <div
               class=" css-qbdosj-Input"
@@ -242,7 +242,7 @@ exports[`SearchMenu should render the component 1`] = `
       <label
         for="datepicker"
       >
-        Type filter:
+        Date range:
       </label>
       <div
         class="react-datepicker-wrapper"
@@ -297,7 +297,7 @@ exports[`SearchMenu should render the component 1`] = `
               class=" css-1jqq78o-placeholder"
               id="react-select-4-placeholder"
             >
-              Timeframe
+              Select...
             </div>
             <input
               aria-autocomplete="list"

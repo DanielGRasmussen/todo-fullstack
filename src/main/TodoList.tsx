@@ -15,6 +15,7 @@ export interface ITodoData {
 	description: string;
 	type: string;
 	subTasks: { name: string; link: boolean; id: string }[];
+	parentTask: string;
 	priority: string;
 	status: string;
 	lastUpdated: string;
@@ -119,14 +120,30 @@ export function TodoList({
 			if (!dateToCheck) return false;
 			const date = new Date(dateToCheck);
 			if (startDate && endDate) {
-				const start = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate() + 1);
-				const end = new Date(endDate.getFullYear(), endDate.getMonth(), endDate.getDate() + 1);
+				const start = new Date(
+					startDate.getFullYear(),
+					startDate.getMonth(),
+					startDate.getDate() + 1
+				);
+				const end = new Date(
+					endDate.getFullYear(),
+					endDate.getMonth(),
+					endDate.getDate() + 1
+				);
 				return start < date && date < end;
 			} else if (startDate) {
-				const start = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate() + 1);
+				const start = new Date(
+					startDate.getFullYear(),
+					startDate.getMonth(),
+					startDate.getDate() + 1
+				);
 				return start < date;
 			} else if (endDate) {
-				const end = new Date(endDate.getFullYear(), endDate.getMonth(), endDate.getDate() + 1);
+				const end = new Date(
+					endDate.getFullYear(),
+					endDate.getMonth(),
+					endDate.getDate() + 1
+				);
 				return date < end;
 			}
 			return true;

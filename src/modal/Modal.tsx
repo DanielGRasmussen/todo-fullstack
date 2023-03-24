@@ -3,7 +3,8 @@ import React, { useState } from "react";
 import Dates from "./Dates";
 import { checkPriorityValid, isDateFormatValid, sleep } from "../utils";
 import SubTask from "./SubTask";
-import { deleteTodoById } from "../ExternalServices";
+import { deleteTodoById, getTodoByIdFromLocal } from "../ExternalServices";
+import { ITodoData } from "../main/TodoList";
 
 export function Modal(
 	isOpen: boolean,
@@ -64,6 +65,23 @@ export function Modal(
 
 	function deleteTodo() {
 		function next() {
+			if (todo.parentTask) {
+				const parent: ITodoData = getTodoByIdFromLocal(todo.parentTask);
+				for (const subtask of parent.subTasks) {
+					if (subtask.link && subtask.id === todo.id) {
+						subtask.name = todo.title;
+						subtask.link = false;
+						subtask.id = "";
+					}
+				}
+			}
+			for (const subtask of todo.subTasks) {
+				if (subtask.link) {
+					deleteTodoById(subtask.id).then(() => {
+						fetchTodoList();
+					});
+				}
+			}
 			deleteTodoById(todo.id).then(() => {
 				fetchTodoList();
 			});

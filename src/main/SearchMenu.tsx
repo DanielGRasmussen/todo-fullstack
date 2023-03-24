@@ -52,25 +52,25 @@ interface ISearchMenu {
 }
 
 function SearchMenu({
-						searchQuery,
-						setSearchQuery,
-						sortingOptions,
-						selectedSortingOption,
-						setSelectedSortingOption,
-						sortOrder,
-						setSortOrder,
-						currentStatusFilters,
-						setStatusFilter,
-						filterOptions,
-						filters,
-						setFilters,
-						currentTimeframe,
-						setCurrentTimeframe,
-						startDate,
-						setStartDate,
-						endDate,
-						setEndDate
-					}: ISearchMenu): JSX.Element {
+	searchQuery,
+	setSearchQuery,
+	sortingOptions,
+	selectedSortingOption,
+	setSelectedSortingOption,
+	sortOrder,
+	setSortOrder,
+	currentStatusFilters,
+	setStatusFilter,
+	filterOptions,
+	filters,
+	setFilters,
+	currentTimeframe,
+	setCurrentTimeframe,
+	startDate,
+	setStartDate,
+	endDate,
+	setEndDate
+}: ISearchMenu): JSX.Element {
 	/* This renders the search menu with options to filter for the TodoList
 	 *
 	 * This component takes twelve props:
@@ -168,32 +168,70 @@ function SearchMenu({
 					/>
 				</section>
 			</div>
-			<Select
-				id="status-filter"
-				options={statusOptions}
-				value={currentStatusFilters}
-				onChange={(options) => setStatusFilter(options)}
-				styles={selectStyles}
-				isMulti
-				components={{ ...animatedComponents, ...customComponents }}
-				onMenuClose={() => {
-					select_on_close("status-filter");
-				}}
-				placeholder="Status filter"
-			/>
-			<Select
-				id="filter-select"
-				options={filterOptions}
-				value={filters}
-				onChange={(options) => setFilters(options)}
-				styles={selectStyles}
-				isMulti
-				components={{ ...animatedComponents, ...customComponents }}
-				onMenuClose={() => {
-					select_on_close("filter-select");
-				}}
-				placeholder="Type filter"
-			/>
+			<h2 id="filters-label">Filters</h2>
+			<div id="status">
+				<label htmlFor="status-filter">Status filter:</label>
+				<Select
+					id="status-filter"
+					options={statusOptions}
+					value={currentStatusFilters}
+					onChange={(options) => setStatusFilter(options)}
+					styles={selectStyles}
+					isMulti
+					components={{ ...animatedComponents, ...customComponents }}
+					onMenuClose={() => {
+						select_on_close("status-filter");
+					}}
+				/>
+			</div>
+			<div id="type">
+				<label htmlFor="type-filter">Type filter:</label>
+				<Select
+					id="type-filter"
+					options={filterOptions}
+					value={filters}
+					onChange={(options) => setFilters(options)}
+					styles={selectStyles}
+					isMulti
+					components={{ ...animatedComponents, ...customComponents }}
+					onMenuClose={() => {
+						select_on_close("filter-select");
+					}}
+					placeholder="Type filter"
+				/>
+			</div>
+			<div id="datepicker-wrapper">
+				{/* For the clearing element. */}
+				<label htmlFor="datepicker">Type filter:</label>
+				<DatePicker
+					selected={startDate}
+					onChange={dateSelectionChange}
+					startDate={startDate}
+					endDate={endDate}
+					selectsRange
+					showIcon
+					isClearable
+					placeholderText="Select date range"
+					id="datepicker"
+				/>
+			</div>
+			<div id="time">
+				<label htmlFor="timeframe">Timeframe:</label>
+				<Select
+					id="timeframe"
+					options={timeframeOptions}
+					value={currentTimeframe}
+					onChange={(option) => setCurrentTimeframe(option)}
+					styles={selectStyles}
+					isSearchable={false}
+					components={{ ...animatedComponents, ...customComponents }}
+					onMenuClose={() => {
+						select_on_close("timeframe");
+					}}
+					placeholder="Timeframe"
+				/>
+			</div>
+			<h2 id="sorts-label">Sorts</h2>
 			<div id="sorts">
 				<Select
 					id="sort-select"
@@ -209,36 +247,6 @@ function SearchMenu({
 					placeholder="Sort options"
 				/>
 				<SortButton sortOrder={sortOrder} setSortOrder={setSortOrder} />
-			</div>
-			<div id="dates">
-				<div id="datepicker-wrapper">
-					{/* For the clearing element. */}
-					<DatePicker
-						selected={startDate}
-						onChange={dateSelectionChange}
-						startDate={startDate}
-						endDate={endDate}
-						selectsRange
-						showIcon
-						isClearable
-						placeholderText="Select date range"
-						id="datepicker"
-					/>
-				</div>
-				<br />
-				<Select
-					id="timeframe"
-					options={timeframeOptions}
-					value={currentTimeframe}
-					onChange={(option) => setCurrentTimeframe(option)}
-					styles={selectStyles}
-					isSearchable={false}
-					components={{ ...animatedComponents, ...customComponents }}
-					onMenuClose={() => {
-						select_on_close("timeframe");
-					}}
-					placeholder="Timeframe"
-				/>
 			</div>
 		</form>
 	);

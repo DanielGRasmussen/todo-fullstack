@@ -20,7 +20,12 @@ function SubTask({
 	let subTaskTodo;
 	if (subtask.link) {
 		subTaskTodo = getTodoByIdFromLocal(subtask.id);
-		title = subTaskTodo.title;
+		if (subTaskTodo) {
+			title = subTaskTodo.title;
+			subtask.name = title;
+		} else {
+			title = subtask.name;
+		}
 	}
 
 	function linkedClick(event) {

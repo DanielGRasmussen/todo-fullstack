@@ -546,6 +546,12 @@ export function getTodoByIdFromLocal(id: string): ITodoData {
 	}
 }
 
+export async function saveTodo(todoData: ITodoData): Promise<void> {
+	await sleep(500);
+	todos.push(todoData);
+	return;
+}
+
 export async function deleteTodoById(id: string): Promise<void> {
 	await sleep(100);
 	todos = todos.filter((item) => item.id !== id);

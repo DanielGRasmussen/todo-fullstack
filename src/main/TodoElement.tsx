@@ -7,12 +7,14 @@ interface ITodoElementProps {
 	todo: ITodoData;
 	setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 	setModalTodo: React.Dispatch<React.SetStateAction<ITodoData>>;
+	setModalCreate: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 function TodoElement({
 	todo,
 	setIsOpen,
-	setModalTodo
+	setModalTodo,
+	setModalCreate
 }: ITodoElementProps): JSX.Element {
 	/* This renders an element with information given to it in the parameters.
 	 *
@@ -44,6 +46,7 @@ function TodoElement({
 				behindStart || behindFinish ? "behind" : ""
 			}`}
 			onClick={() => {
+				setModalCreate(false);
 				setIsOpen(true);
 				setModalTodo(todo);
 			}}

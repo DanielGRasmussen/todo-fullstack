@@ -5,7 +5,7 @@ import TodoElement from "./TodoElement";
 import { filterTodosByDate } from "../utils";
 
 export interface ITodoData {
-	id: string;
+	id?: string;
 	created: string;
 	proposedStartDate: string;
 	actualStartDate: string;
@@ -25,12 +25,16 @@ interface ITodoListProps {
 	setIsOpen: Dispatch<SetStateAction<boolean>>;
 	setModalTodo: Dispatch<SetStateAction<ITodoData>>;
 	todoList: ITodoData[];
+	createTodo: () => void;
+	setModalCreate: Dispatch<SetStateAction<boolean>>;
 }
 
 export function TodoList({
 	setIsOpen,
 	setModalTodo,
-	todoList
+	todoList,
+	createTodo,
+	setModalCreate
 }: ITodoListProps): JSX.Element {
 	// Gives the todo list with sorting options
 	const sortingOptions: { value: string; label: string }[] = [
@@ -197,12 +201,20 @@ export function TodoList({
 				endDate={endDate}
 				setEndDate={setEndDate}
 			/>
+
 			<ul id="todos">
+				<img
+					onClick={createTodo}
+					src={process.env.PUBLIC_URL + "/assets/create_plus.svg"}
+					alt="Create todo"
+					id="create-todo"
+				/>
 				{sortedTodoList.map((todo) => (
 					<TodoElement
 						todo={todo}
 						setIsOpen={setIsOpen}
 						setModalTodo={setModalTodo}
+						setModalCreate={setModalCreate}
 					/>
 				))}
 			</ul>

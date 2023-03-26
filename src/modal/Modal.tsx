@@ -3,12 +3,17 @@ import React, { useState } from "react";
 import Dates from "./Dates";
 import { checkPriorityValid, isDateFormatValid, sleep } from "../utils";
 import SubTask from "./SubTask";
-import { deleteTodoById, getTodoByIdFromLocal } from "../ExternalServices";
+import {
+	deleteTodoById,
+	getTodoByIdFromLocal,
+	saveTodo
+} from "../ExternalServices";
 import { ITodoData } from "../main/TodoList";
 
 export function Modal(
 	isOpen: boolean,
 	setIsOpen,
+	create,
 	todo,
 	setModalTodo,
 	fetchTodoList,
@@ -34,7 +39,6 @@ export function Modal(
 
 	function dataChange(newValue, dataType: string, forceUpdate = false) {
 		// General dataChange function to reload the modal and pass on new data to db
-
 		let value = newValue;
 		if (dataType === "priority") {
 			if (!checkPriorityValid(newValue)) {
@@ -55,6 +59,9 @@ export function Modal(
 
 		todo[dataType] = value;
 		todo.lastUpdated = new Date().toISOString();
+
+		if (create) return startNotice("success", "Updated");
+
 		// Here we should place a call to external services to update db
 		fetchTodoList();
 		if (!forceUpdate) {
@@ -90,10 +97,25 @@ export function Modal(
 			toggleModal();
 		}
 
-		askConfirmation(
-			`Are you sure you want to permanently delete "${todo.title}" and all linked subtasks?`,
-			next
-		);
+		let askNext = next;
+		if (create)
+			askNext = () => {
+				startNotice("success", "Canceling Todo creation");
+				toggleModal();
+			};
+
+		const question = create
+			? "Are you sure you want to cancel creation of this todo item?"
+			: `Are you sure you want to permanently delete "${todo.title}" and all linked subtasks?`;
+		askConfirmation(question, askNext);
+	}
+
+	function createTodo() {
+		saveTodo(todo).then(() => {
+			fetchTodoList();
+		});
+		startNotice("success", "Creating Todo");
+		toggleModal();
 	}
 
 	function overlayClicked(event) {
@@ -120,7 +142,7 @@ export function Modal(
 	document.querySelector("body").classList.add("freeze");
 	return (
 		<div id="modal-overlay" onClick={overlayClicked}>
-			<div id="modal">
+			<div id="modal" className={create ? "create" : null}>
 				<input
 					type="text"
 					defaultValue={todo.title}
@@ -160,12 +182,8 @@ export function Modal(
 						}}
 					/>
 				</p>
-				<Dates todo={todo} dataChange={dataChange} />
-				{todo.subTasks.length ? (
-					<h3>Subtasks:</h3>
-				) : (
-					<span className="space"></span>
-				)}
+				<Dates todo={todo} dataChange={dataChange} create={create} />
+				<h3>Subtasks:</h3>
 				<ul id="subtasks">
 					{todo.subTasks.map((subtask) => (
 						<SubTask
@@ -186,11 +204,15 @@ export function Modal(
 				></textarea>
 				<button
 					onClick={() => {
+						if (create) {
+							createTodo();
+							return;
+						}
 						changeStatus(buttonTextOpts[todo.status][1]);
 					}}
 					id="progress"
 				>
-					{buttonTextOpts[todo.status][0]}
+					{create ? "Save" : buttonTextOpts[todo.status][0]}
 				</button>
 			</div>
 		</div>

@@ -85,8 +85,13 @@ body.freeze header {
 
 #modal input {
 	border: 0;
+	border-radius: 7px;
 	height: 20px;
 	font-size: 11pt;
+}
+
+#modal.create input {
+	border: 1px solid lightgray;
 }
 
 #modal .title {
@@ -132,11 +137,16 @@ body.freeze header {
 	width: calc(100% - 40px);
 	height: 100px;
 	border: 0;
+	border-radius: 7px;
 	resize: none;
 	font-size: 11pt;
 	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
 	"Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
 	"Helvetica Neue", sans-serif;
+}
+
+#modal.create #description {
+	border: 1px solid lightgray;
 }
 
 #modal #progress {

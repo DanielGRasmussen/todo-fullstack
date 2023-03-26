@@ -49,7 +49,7 @@ function SubTask({
 				}
 			}}
 			key={title}
-			className={subtask.link ? "clickable" : ""}
+			className={subtask.link ? "clickable" : null}
 		>
 			<span className="linked">{"Linked: "}</span>
 			<input

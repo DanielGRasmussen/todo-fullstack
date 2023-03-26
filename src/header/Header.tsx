@@ -5,7 +5,7 @@ import { clickAnywhere } from "../utils";
 function NavItem({ name, active = false }): JSX.Element {
 	return (
 		<li>
-			<a href="#" className={active ? "active" : ""}>
+			<a href="#" className={active ? "active" : null}>
 				{name}
 			</a>
 		</li>
@@ -122,8 +122,8 @@ function Header() {
 				onClick={() => setIsOpen(!isOpen)}
 			/>
 			{/* Wrapper so that user can click on right without it triggering modal */}
-			<div className={`${isOpen ? "open" : ""} wrapper`}>
-				<nav className={isOpen ? "open" : ""}>
+			<div className={`${isOpen ? "open" : null} wrapper`}>
+				<nav className={isOpen ? "open" : null}>
 					<a href="/" className="icon">
 						<img
 							src={`${process.env.PUBLIC_URL}/assets/icon.svg`}

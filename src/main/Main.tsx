@@ -9,8 +9,10 @@ import Confirmation from "./Confirmation";
 
 function Main(): JSX.Element {
 	const [todoList, setTodoList] = useState<ITodoData[]>([]);
+	// Modal isOpen
 	const [isOpen, setIsOpen] = useState(false);
 	const [modalTodo, setModalTodo] = useState({});
+	const [modalCreate, setModalCreate] = useState(false);
 	const [showNotice, setShowNotice] = useState(false);
 	const [noticeInfo, setNoticeInfo] = useState({ type: "", message: "" });
 	const [showConfirmation, setShowConfirmation] = useState(false);
@@ -58,6 +60,26 @@ function Main(): JSX.Element {
 		}
 	}
 
+	function createTodo(): void {
+		setModalCreate(true);
+		setModalTodo({
+			created: "",
+			proposedStartDate: "",
+			actualStartDate: "",
+			proposedEndDate: "",
+			actualEndDate: "",
+			title: "",
+			description: "",
+			type: "",
+			subTasks: [],
+			parentTask: "",
+			priority: "",
+			status: "incomplete",
+			lastUpdated: ""
+		});
+		setIsOpen(true);
+	}
+
 	async function fetchTodoList(): Promise<void> {
 		const fetchedList: ITodoData[] = await getToDoList();
 		setTodoList(fetchedList);
@@ -83,6 +105,7 @@ function Main(): JSX.Element {
 			{Modal(
 				isOpen,
 				setIsOpen,
+				modalCreate,
 				modalTodo,
 				setModalTodo,
 				fetchTodoList,
@@ -93,6 +116,8 @@ function Main(): JSX.Element {
 				setIsOpen={setIsOpen}
 				setModalTodo={setModalTodo}
 				todoList={todoList}
+				createTodo={createTodo}
+				setModalCreate={setModalCreate}
 			/>
 		</main>
 	);

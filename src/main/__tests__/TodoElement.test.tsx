@@ -16,12 +16,14 @@ describe("TodoElement component", () => {
 		description: "This is a test todo",
 		type: "personal",
 		subTasks: [],
+		parentTask: "",
 		priority: "5",
 		status: "incomplete",
 		lastUpdated: new Date().toISOString()
 	};
 	const mockSetIsOpen = jest.fn();
 	const mockSetModalTodo = jest.fn();
+	const setModalCreate = jest.fn();
 
 	beforeEach(() => {
 		render(
@@ -29,6 +31,7 @@ describe("TodoElement component", () => {
 				todo={mockTodo}
 				setIsOpen={mockSetIsOpen}
 				setModalTodo={mockSetModalTodo}
+				setModalCreate={setModalCreate}
 			/>
 		);
 	});
@@ -47,5 +50,6 @@ describe("TodoElement component", () => {
 		userEvent.click(screen.getByRole("listitem"));
 		expect(mockSetIsOpen).toHaveBeenCalledWith(true);
 		expect(mockSetModalTodo).toHaveBeenCalledWith(mockTodo);
+		expect(setModalCreate).toHaveBeenCalledWith(false);
 	});
 });

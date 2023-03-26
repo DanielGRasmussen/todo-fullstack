@@ -6,9 +6,10 @@ import { ITodoData } from "../main/TodoList";
 interface IDatesProps {
 	todo: ITodoData;
 	dataChange;
+	create: boolean;
 }
 
-function Dates({ todo, dataChange }: IDatesProps) {
+function Dates({ todo, dataChange, create }: IDatesProps) {
 	/* This component renders an unordered list containing several list items for each date related to the "todo" item.
 	 * The list items include the created date, last updated date, planned start and end dates, and actual start and end
 	 * dates. The planned start and end dates are rendered as input fields that trigger the "dataChange" function when
@@ -21,17 +22,19 @@ function Dates({ todo, dataChange }: IDatesProps) {
 		<ul id="dates">
 			<li>
 				Created: <br />
-				{formatDate(todo.created)}
+				{create ? null : formatDate(todo.created)}
 			</li>
 			<li>
 				Last Updated: <br />
-				{formatDate(todo.lastUpdated)}
+				{create ? null : formatDate(todo.lastUpdated)}
 			</li>
 			<li>
 				Planned Start: <br />
 				<input
 					type="text"
-					defaultValue={formatDate(todo.proposedStartDate)}
+					defaultValue={
+						create ? null : formatDate(todo.proposedStartDate)
+					}
 					onBlur={(event) => {
 						dataChange(event.target.value, "proposedStartDate");
 					}}
@@ -47,7 +50,9 @@ function Dates({ todo, dataChange }: IDatesProps) {
 				Planned End: <br />
 				<input
 					type="text"
-					defaultValue={formatDate(todo.proposedEndDate)}
+					defaultValue={
+						create ? null : formatDate(todo.proposedEndDate)
+					}
 					onBlur={(event) => {
 						dataChange(event.target.value, "proposedEndDate");
 					}}

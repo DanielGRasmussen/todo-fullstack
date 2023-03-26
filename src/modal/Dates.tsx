@@ -38,6 +38,7 @@ function Dates({ todo, dataChange, create }: IDatesProps) {
 					onBlur={(event) => {
 						dataChange(event.target.value, "proposedStartDate");
 					}}
+					placeholder="ex. 1/1/2000, 12:00 AM"
 				/>
 			</li>
 			<li>
@@ -56,6 +57,7 @@ function Dates({ todo, dataChange, create }: IDatesProps) {
 					onBlur={(event) => {
 						dataChange(event.target.value, "proposedEndDate");
 					}}
+					placeholder="ex. 1/1/2000, 12:00 PM"
 				/>
 			</li>
 			<li>

@@ -40,20 +40,23 @@ export function Modal(
 	function dataChange(newValue, dataType: string, forceUpdate = false) {
 		// General dataChange function to reload the modal and pass on new data to db
 		let value = newValue;
+		// Validate data
 		if (dataType === "priority") {
 			if (!checkPriorityValid(newValue)) {
-				startNotice("error", "Invalid Priority Entry", 2000);
-				return;
+				return startNotice("error", "Invalid Priority Entry");
 			}
 		} else if (
 			dataType === "proposedStartDate" ||
 			dataType === "proposedEndDate"
 		) {
 			if (!isDateFormatValid(newValue)) {
-				startNotice("error", "Invalid Date", 2000);
-				return;
+				return startNotice("error", "Invalid Date");
 			}
 			value = new Date(value).toISOString();
+		} else if (dataType === "title" && newValue === "") {
+			return startNotice("error", "Invalid Title");
+		} else if (dataType === "type" && newValue === "") {
+			return startNotice("error", "Invalid Type");
 		}
 		if (todo[dataType] === value && !forceUpdate) return;
 
@@ -111,6 +114,16 @@ export function Modal(
 	}
 
 	function createTodo() {
+		if (
+			!(
+				todo.title &&
+				todo.priority &&
+				todo.proposedStartDate &&
+				todo.proposedEndDate
+			)
+		) {
+			return startNotice("error", "All fields are required");
+		}
 		saveTodo(todo).then(() => {
 			fetchTodoList();
 		});

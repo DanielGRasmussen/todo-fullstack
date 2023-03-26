@@ -24,7 +24,7 @@ function Main(): JSX.Element {
 		}
 	});
 
-	function startNotice(noticeType: string, noticeMessage: string) {
+	function startNotice(noticeType: string, noticeMessage: string): void {
 		setNoticeInfo({ type: noticeType, message: noticeMessage });
 		setShowNotice(true);
 		setTimeout(() => hideNotice(), 2000);

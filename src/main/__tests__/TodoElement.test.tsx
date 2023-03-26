@@ -17,6 +17,7 @@ describe("TodoElement component", () => {
 		type: "personal",
 		subTasks: [],
 		parentTask: "",
+		recurring: { isRecurring: false },
 		priority: "5",
 		status: "incomplete",
 		lastUpdated: new Date().toISOString()

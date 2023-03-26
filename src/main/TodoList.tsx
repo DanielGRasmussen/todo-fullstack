@@ -16,6 +16,15 @@ export interface ITodoData {
 	type: string;
 	subTasks: { name: string; link: boolean; id: string }[];
 	parentTask: string;
+	recurring: {
+		isRecurring: boolean;
+		// Ex. 1d = every day, 1w = every week, 1m = every month
+		frequency?: string;
+		// Stored in .toISOString format
+		duration?: { start: string; end: string };
+		// 0 = incomplete, 1 = in-progress, 2 = completed
+		completionStatus?: number[];
+	};
 	priority: string;
 	status: string;
 	lastUpdated: string;

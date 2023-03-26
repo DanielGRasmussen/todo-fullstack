@@ -25,6 +25,7 @@ let todos: ITodoData[] = [
 			}
 		],
 		parentTask: "",
+		recurring: { isRecurring: false },
 		priority: "4",
 		status: "complete",
 		lastUpdated: new Date("17 March 2023 19:25 UTC").toISOString()
@@ -41,6 +42,7 @@ let todos: ITodoData[] = [
 		type: "General",
 		subTasks: [],
 		parentTask: "1",
+		recurring: { isRecurring: false },
 		priority: "4",
 		status: "complete",
 		lastUpdated: new Date("17 March 2023 19:25 UTC").toISOString()
@@ -68,6 +70,7 @@ let todos: ITodoData[] = [
 			}
 		],
 		parentTask: "",
+		recurring: { isRecurring: false },
 		priority: "5",
 		status: "complete",
 		lastUpdated: new Date("17 March 2023 21:25 UTC").toISOString()
@@ -100,6 +103,7 @@ let todos: ITodoData[] = [
 			}
 		],
 		parentTask: "",
+		recurring: { isRecurring: false },
 		priority: "3",
 		status: "incomplete",
 		lastUpdated: new Date("04 March 2023 11:25 UTC").toISOString()
@@ -132,6 +136,7 @@ let todos: ITodoData[] = [
 			}
 		],
 		parentTask: "",
+		recurring: { isRecurring: false },
 		priority: "2",
 		status: "incomplete",
 		lastUpdated: new Date("04 March 2023 13:25 UTC").toISOString()
@@ -164,6 +169,7 @@ let todos: ITodoData[] = [
 			}
 		],
 		parentTask: "",
+		recurring: { isRecurring: false },
 		priority: "3",
 		status: "in-progress",
 		lastUpdated: new Date("06 March 2023 09:45 UTC").toISOString()
@@ -196,6 +202,7 @@ let todos: ITodoData[] = [
 			}
 		],
 		parentTask: "",
+		recurring: { isRecurring: false },
 		priority: "2",
 		status: "in-progress",
 		lastUpdated: new Date("08 March 2023 11:30 UTC").toISOString()
@@ -228,6 +235,7 @@ let todos: ITodoData[] = [
 			}
 		],
 		parentTask: "",
+		recurring: { isRecurring: false },
 		priority: "4",
 		status: "incomplete",
 		lastUpdated: new Date("11 March 2023 16:00 UTC").toISOString()
@@ -260,6 +268,7 @@ let todos: ITodoData[] = [
 			}
 		],
 		parentTask: "",
+		recurring: { isRecurring: false },
 		priority: "5",
 		status: "in-progress",
 		lastUpdated: new Date("12 March 2023 11:30 UTC").toISOString()
@@ -287,6 +296,12 @@ let todos: ITodoData[] = [
 			}
 		],
 		parentTask: "",
+		recurring: {
+			isRecurring: true,
+			frequency: "1d",
+			duration: { start: "3/26/23, 11:59 PM", end: "3/30/23, 11:59 PM" },
+			completionStatus: [2, 0, 0, 0, 0]
+		},
 		priority: "4",
 		status: "complete",
 		lastUpdated: new Date("17 March 2023 19:25 UTC").toISOString()
@@ -303,6 +318,7 @@ let todos: ITodoData[] = [
 		type: "General",
 		subTasks: [],
 		parentTask: "9",
+		recurring: { isRecurring: false },
 		priority: "4",
 		status: "complete",
 		lastUpdated: new Date("17 March 2023 19:25 UTC").toISOString()
@@ -330,6 +346,7 @@ let todos: ITodoData[] = [
 			}
 		],
 		parentTask: "",
+		recurring: { isRecurring: false },
 		priority: "5",
 		status: "complete",
 		lastUpdated: new Date("17 March 2023 21:25 UTC").toISOString()
@@ -362,6 +379,7 @@ let todos: ITodoData[] = [
 			}
 		],
 		parentTask: "",
+		recurring: { isRecurring: false },
 		priority: "3",
 		status: "incomplete",
 		lastUpdated: new Date("04 March 2023 11:25 UTC").toISOString()
@@ -394,6 +412,7 @@ let todos: ITodoData[] = [
 			}
 		],
 		parentTask: "",
+		recurring: { isRecurring: false },
 		priority: "2",
 		status: "incomplete",
 		lastUpdated: new Date("04 March 2023 13:25 UTC").toISOString()
@@ -426,6 +445,7 @@ let todos: ITodoData[] = [
 			}
 		],
 		parentTask: "",
+		recurring: { isRecurring: false },
 		priority: "3",
 		status: "in-progress",
 		lastUpdated: new Date("06 March 2023 09:45 UTC").toISOString()
@@ -458,6 +478,7 @@ let todos: ITodoData[] = [
 			}
 		],
 		parentTask: "",
+		recurring: { isRecurring: false },
 		priority: "2",
 		status: "in-progress",
 		lastUpdated: new Date("08 March 2023 11:30 UTC").toISOString()
@@ -490,6 +511,7 @@ let todos: ITodoData[] = [
 			}
 		],
 		parentTask: "",
+		recurring: { isRecurring: false },
 		priority: "4",
 		status: "incomplete",
 		lastUpdated: new Date("11 March 2023 16:00 UTC").toISOString()
@@ -522,6 +544,7 @@ let todos: ITodoData[] = [
 			}
 		],
 		parentTask: "",
+		recurring: { isRecurring: false },
 		priority: "5",
 		status: "in-progress",
 		lastUpdated: new Date("12 March 2023 11:30 UTC").toISOString()

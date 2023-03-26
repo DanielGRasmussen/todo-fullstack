@@ -23,8 +23,6 @@ function SubTask({
 		if (subTaskTodo) {
 			title = subTaskTodo.title;
 			subtask.name = title;
-		} else {
-			title = subtask.name;
 		}
 	}
 

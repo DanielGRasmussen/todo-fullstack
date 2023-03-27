@@ -2,32 +2,41 @@ import "./css/TodoList.css";
 import React, { Dispatch, SetStateAction, useState } from "react";
 import SearchMenu from "./SearchMenu";
 import TodoElement from "./TodoElement";
-import { filterTodosByDate } from "../utils";
+import { filterTodosByDate, stringTimeToMS } from "../utils";
+import ITodoData from "../ITodoData";
 
-export interface ITodoData {
-	id?: string;
-	created: string;
-	proposedStartDate: string;
-	actualStartDate: string;
-	proposedEndDate: string;
-	actualEndDate: string;
-	title: string;
-	description: string;
-	type: string;
-	subTasks: { name: string; link: boolean; id: string }[];
-	parentTask: string;
-	recurring: {
-		isRecurring: boolean;
-		// Ex. 1d = every day, 1w = every week, 1m = every month
-		frequency?: string;
-		// Stored in .toISOString format
-		duration?: { start: string; end: string };
-		// 0 = incomplete, 1 = in-progress, 2 = completed
-		completionStatus?: number[];
-	};
-	priority: string;
-	status: string;
-	lastUpdated: string;
+function useRecurring(todoList: ITodoData[]): ITodoData[] {
+	const recurringTodo = [];
+	for (const todo of todoList) {
+		if (!todo.recurring.isRecurring) recurringTodo.push(todo);
+		else {
+			const start: Date = new Date(todo.recurring.duration.start);
+			const end: Date = new Date(todo.recurring.duration.end);
+			const frequencyMs: number = stringTimeToMS(
+				todo.recurring.frequency
+			);
+			const timeTaken: number = todo.recurring.timeTaken;
+
+			let i = 0;
+			while (start <= end) {
+				recurringTodo.push({
+					...todo,
+					proposedStartDate: start.toISOString(),
+					proposedEndDate: new Date(
+						start.getTime() + timeTaken
+					).toISOString(),
+					actualStartDate:
+						todo.recurring.completionStatus[i].actualStart,
+					actualEndDate: todo.recurring.completionStatus[i].actualEnd,
+					status: todo.recurring.completionStatus[i].status,
+					index: i
+				});
+				start.setTime(start.getTime() + frequencyMs);
+				i++;
+			}
+		}
+	}
+	return recurringTodo;
 }
 
 interface ITodoListProps {
@@ -75,8 +84,10 @@ export function TodoList({
 	const [startDate, setStartDate] = useState(null);
 	const [endDate, setEndDate] = useState(null);
 
+	const recurringTodo: ITodoData[] = useRecurring(todoList);
+
 	// Gets the unique types from todoList
-	const filterOptions: { value: string; label: string }[] = todoList
+	const filterOptions: { value: string; label: string }[] = recurringTodo
 		.map((todo: ITodoData) => ({
 			value: todo.type.toLowerCase(),
 			label: todo.type.toLowerCase()
@@ -92,7 +103,7 @@ export function TodoList({
 		);
 
 	// Search query is in it, and it's type is in filters (if there are any)
-	const filteredTodoList = todoList.filter((todo: ITodoData) => {
+	const filteredTodoList = recurringTodo.filter((todo: ITodoData) => {
 		// Filter by searchQuery
 		if (
 			searchQuery &&

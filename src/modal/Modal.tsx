@@ -8,7 +8,7 @@ import {
 	getTodoByIdFromLocal,
 	saveTodo
 } from "../ExternalServices";
-import { ITodoData } from "../main/TodoList";
+import ITodoData from "../ITodoData";
 
 export function Modal(
 	isOpen: boolean,
@@ -58,12 +58,37 @@ export function Modal(
 		} else if (dataType === "type" && newValue === "") {
 			return startNotice("error", "Invalid Type");
 		}
-		if (todo[dataType] === value && !forceUpdate) return;
+		if (
+			todo[dataType] === value &&
+			!forceUpdate &&
+			!todo.recurring.isRecurring
+		)
+			return;
 
 		todo[dataType] = value;
 		todo.lastUpdated = new Date().toISOString();
 
 		if (create) return startNotice("success", "Updated");
+		if (todo.recurring.isRecurring) {
+			if (
+				dataType === "proposedStartDate" ||
+				dataType === "proposedEndDate"
+			)
+				return;
+
+			const realTodo = getTodoByIdFromLocal(todo.id);
+			realTodo[dataType] = value;
+			if (dataType === "status") {
+				realTodo.recurring.completionStatus[todo.index].status = value;
+				if (newValue === "in-progress")
+					realTodo.recurring.completionStatus[
+						todo.index
+					].actualStart = new Date().toISOString();
+				else if (newValue === "complete")
+					realTodo.recurring.completionStatus[todo.index].actualEnd =
+						new Date().toISOString();
+			}
+		}
 
 		// Here we should place a call to external services to update db
 		fetchTodoList();

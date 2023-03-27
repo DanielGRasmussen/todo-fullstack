@@ -1,5 +1,5 @@
-import { ITodoData } from "./main/TodoList";
-import { sleep } from "./utils";
+import { sleep, stringTimeToMS } from "./utils";
+import ITodoData from "./ITodoData";
 
 let todos: ITodoData[] = [
 	{
@@ -208,39 +208,6 @@ let todos: ITodoData[] = [
 		lastUpdated: new Date("08 March 2023 11:30 UTC").toISOString()
 	},
 	{
-		id: "7",
-		created: new Date("10 March 2023 16:45 UTC").toISOString(),
-		proposedStartDate: new Date("11 March 2023 14:00 UTC").toISOString(),
-		actualStartDate: "",
-		proposedEndDate: new Date("11 March 2023 16:00 UTC").toISOString(),
-		actualEndDate: "",
-		title: "Call mom",
-		description: "Catch up with mom on the phone",
-		type: "Personal",
-		subTasks: [
-			{
-				name: "Make the call",
-				link: false,
-				id: ""
-			},
-			{
-				name: "Ask about her day",
-				link: false,
-				id: ""
-			},
-			{
-				name: "Tell her about yours",
-				link: false,
-				id: ""
-			}
-		],
-		parentTask: "",
-		recurring: { isRecurring: false },
-		priority: "4",
-		status: "incomplete",
-		lastUpdated: new Date("11 March 2023 16:00 UTC").toISOString()
-	},
-	{
 		id: "8",
 		created: new Date("12 March 2023 08:00 UTC").toISOString(),
 		proposedStartDate: new Date("12 March 2023 10:00 UTC").toISOString(),
@@ -277,9 +244,9 @@ let todos: ITodoData[] = [
 		id: "9",
 		created: new Date("15 March 2023 19:30 UTC").toISOString(),
 		proposedStartDate: new Date("16 March 2023 19:00 UTC").toISOString(),
-		actualStartDate: new Date("16 March 2023 19:05 UTC").toISOString(),
+		actualStartDate: "",
 		proposedEndDate: new Date("16 March 2023 19:30 UTC").toISOString(),
-		actualEndDate: new Date("16 March 2023 19:25 UTC").toISOString(),
+		actualEndDate: "",
 		title: "Eat",
 		description: "Eat a sandwich",
 		type: "General",
@@ -296,14 +263,9 @@ let todos: ITodoData[] = [
 			}
 		],
 		parentTask: "",
-		recurring: {
-			isRecurring: true,
-			frequency: "1d",
-			duration: { start: "3/26/23, 11:59 PM", end: "3/30/23, 11:59 PM" },
-			completionStatus: [2, 0, 0, 0, 0]
-		},
+		recurring: { isRecurring: false },
 		priority: "4",
-		status: "complete",
+		status: "incomplete",
 		lastUpdated: new Date("17 March 2023 19:25 UTC").toISOString()
 	},
 	{
@@ -486,9 +448,9 @@ let todos: ITodoData[] = [
 	{
 		id: "15",
 		created: new Date("10 March 2023 16:45 UTC").toISOString(),
-		proposedStartDate: new Date("11 March 2023 14:00 UTC").toISOString(),
+		proposedStartDate: "",
 		actualStartDate: "",
-		proposedEndDate: new Date("11 March 2023 16:00 UTC").toISOString(),
+		proposedEndDate: "",
 		actualEndDate: "",
 		title: "Call mom",
 		description: "Catch up with mom on the phone",
@@ -511,7 +473,22 @@ let todos: ITodoData[] = [
 			}
 		],
 		parentTask: "",
-		recurring: { isRecurring: false },
+		recurring: {
+			isRecurring: true,
+			frequency: "1d",
+			duration: {
+				start: new Date("26 March 2023 23:59 UTC").toISOString(),
+				end: new Date("30 March 2023 23:59 UTC").toISOString()
+			},
+			timeTaken: stringTimeToMS("1h"),
+			completionStatus: [
+				{ status: "incomplete", actualStart: "", actualEnd: "" },
+				{ status: "incomplete", actualStart: "", actualEnd: "" },
+				{ status: "incomplete", actualStart: "", actualEnd: "" },
+				{ status: "incomplete", actualStart: "", actualEnd: "" },
+				{ status: "incomplete", actualStart: "", actualEnd: "" }
+			]
+		},
 		priority: "4",
 		status: "incomplete",
 		lastUpdated: new Date("11 March 2023 16:00 UTC").toISOString()

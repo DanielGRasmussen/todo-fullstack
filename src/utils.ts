@@ -133,3 +133,23 @@ export function filterTodosByDate(
 			return true;
 	}
 }
+
+export function stringTimeToMS(timeString: string): number {
+	// convert frequency string to milliseconds
+	let MS = 0;
+	switch (timeString.slice(-1)) {
+		case "h":
+			MS = parseInt(timeString) * 60 * 60 * 1000;
+			break;
+		case "d":
+			MS = parseInt(timeString) * 24 * 60 * 60 * 1000;
+			break;
+		case "w":
+			MS = parseInt(timeString) * 7 * 24 * 60 * 60 * 1000;
+			break;
+		case "m":
+			MS = parseInt(timeString) * 30 * 24 * 60 * 60 * 1000;
+			break;
+	}
+	return MS;
+}

@@ -1,7 +1,7 @@
 import "./css/TodoElement.css";
 import React from "react";
-import { ITodoData } from "./TodoList";
 import { formatDate } from "../utils";
+import ITodoData from "../ITodoData";
 
 interface ITodoElementProps {
 	todo: ITodoData;
@@ -35,13 +35,16 @@ function TodoElement({
 		!todo.actualEndDate &&
 		new Date() > new Date(todo.proposedEndDate);
 
-	// IDE and ESLint disagreed how it should be formatted
-	const actual = `Start date: ${formatDate(todo.actualStartDate)}`;
-	const planned = `Planned Start: ${formatDate(todo.proposedStartDate)}`;
+	const actualStart = `Start date: ${formatDate(todo.actualStartDate)}`;
+	const plannedStart = `Planned Start: ${formatDate(todo.proposedStartDate)}`;
+
+	const actualEnd = `Completion date: ${formatDate(todo.actualEndDate)}`;
+	const plannedEnd = `Planned Completion: ${formatDate(
+		todo.proposedEndDate
+	)}`;
 
 	return (
 		<li
-			key={todo.id}
 			className={`todo-item ${todo.status} ${todo.type} ${
 				behindStart || behindFinish ? "behind" : ""
 			}`}
@@ -54,14 +57,11 @@ function TodoElement({
 			<h3>{todo.title}</h3>
 			<p className="type">{todo.type}</p>
 			<p className="priority">Priority: {todo.priority}</p>
-			<p className="date">{todo.actualStartDate ? actual : planned}</p>
 			<p className="date">
-				Completion date:{" "}
-				{formatDate(
-					todo.actualEndDate
-						? todo.actualEndDate
-						: todo.proposedEndDate
-				)}
+				{todo.actualStartDate ? actualStart : plannedStart}
+			</p>
+			<p className="date">
+				{todo.actualEndDate ? actualEnd : plannedEnd}
 			</p>
 			<p className="description">{todo.description}</p>
 		</li>

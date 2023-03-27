@@ -1,7 +1,7 @@
 import "./css/Dates.css";
 import { formatDate } from "../utils";
 import React from "react";
-import { ITodoData } from "../main/TodoList";
+import ITodoData from "../ITodoData";
 
 interface IDatesProps {
 	todo: ITodoData;
@@ -30,16 +30,20 @@ function Dates({ todo, dataChange, create }: IDatesProps) {
 			</li>
 			<li>
 				Planned Start: <br />
-				<input
-					type="text"
-					defaultValue={
-						create ? null : formatDate(todo.proposedStartDate)
-					}
-					onBlur={(event) => {
-						dataChange(event.target.value, "proposedStartDate");
-					}}
-					placeholder="ex. 1/1/2000, 12:00 AM"
-				/>
+				{todo.recurring.isRecurring ? (
+					formatDate(todo.proposedStartDate)
+				) : (
+					<input
+						type="text"
+						defaultValue={
+							create ? null : formatDate(todo.proposedStartDate)
+						}
+						onBlur={(event) => {
+							dataChange(event.target.value, "proposedStartDate");
+						}}
+						placeholder="ex. 1/1/2000, 12:00 AM"
+					/>
+				)}
 			</li>
 			<li>
 				Actual Start: <br />
@@ -49,16 +53,20 @@ function Dates({ todo, dataChange, create }: IDatesProps) {
 			</li>
 			<li>
 				Planned End: <br />
-				<input
-					type="text"
-					defaultValue={
-						create ? null : formatDate(todo.proposedEndDate)
-					}
-					onBlur={(event) => {
-						dataChange(event.target.value, "proposedEndDate");
-					}}
-					placeholder="ex. 1/1/2000, 12:00 PM"
-				/>
+				{todo.recurring.isRecurring ? (
+					formatDate(todo.proposedEndDate)
+				) : (
+					<input
+						type="text"
+						defaultValue={
+							create ? null : formatDate(todo.proposedEndDate)
+						}
+						onBlur={(event) => {
+							dataChange(event.target.value, "proposedEndDate");
+						}}
+						placeholder="ex. 1/1/2000, 12:00 PM"
+					/>
+				)}
 			</li>
 			<li>
 				Actual End: <br />

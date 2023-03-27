@@ -1,7 +1,7 @@
 import "./css/SubTask.css";
 import React from "react";
 import { deleteTodoById, getTodoByIdFromLocal } from "../ExternalServices";
-import { ITodoData } from "../main/TodoList";
+import ITodoData from "../ITodoData";
 
 interface ISubTaskProps {
 	subtask: { name: string; link: boolean; id: string };

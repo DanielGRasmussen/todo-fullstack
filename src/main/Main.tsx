@@ -1,11 +1,12 @@
 import "./css/Main.css";
 import React, { useEffect, useState } from "react";
-import { ITodoData, TodoList } from "./TodoList";
+import { TodoList } from "./TodoList";
 import { Modal } from "../modal/Modal";
 import { getToDoList } from "../ExternalServices";
 import Notice from "./Notice";
 import { sleep } from "../utils";
 import Confirmation from "./Confirmation";
+import ITodoData from "../ITodoData";
 
 function Main(): JSX.Element {
 	const [todoList, setTodoList] = useState<ITodoData[]>([]);

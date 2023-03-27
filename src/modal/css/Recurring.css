@@ -1,0 +1,74 @@
+#recurring-overlay {
+	position: fixed;
+	top: 0;
+	right: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, 0.5);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	z-index: 12;
+	animation: overlayAppear 0.2s ease-in-out;
+}
+
+#recurring-overlay.close {
+	animation: overlayVanish 0.2s ease-in-out;
+}
+
+#recurring {
+	position: relative;
+	overflow: hidden;
+	cursor: default;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+
+	width: fit-content;
+
+	background: white;
+	padding: 10px 30px 70px 20px;
+
+	border: 1px solid black;
+	border-radius: 10px;
+
+	animation: recurringAppear 0.2s ease-in-out;
+}
+
+#recurring-overlay.close #recurring {
+	animation: recurringVanish 0.2s ease-in-out;
+}
+
+@keyframes recurringAppear {
+	from {
+		transform: translateY(-30vh);
+	}
+	to {
+		transform: translateY(0);
+	}
+}
+
+@keyframes recurringVanish {
+	from {
+		transform: translateY(0);
+	}
+	to {
+		transform: translateY(30vh);
+	}
+}
+
+@keyframes overlayAppear {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
+@keyframes overlayVanish {
+	from {
+		opacity: 1;
+	}
+	to {
+		opacity: 0;
+	}
+}

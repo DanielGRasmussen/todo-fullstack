@@ -12,8 +12,10 @@ export default interface ITodoData {
 	parentTask: string;
 	recurring: {
 		isRecurring: boolean;
-		// 1h = every hour, 1d = every day, 1w = every week, 1m = every month
-		frequency?: string;
+		// 1d = every day, 1w = every week, 1m = every month
+		frequencyAmount?: string;
+		// 1d = every day, 1w = every week, 1m = every month
+		frequencyUnit?: string;
 		// Stored in .toISOString format
 		duration?: { start: string; end: string };
 		// Time between planned start/end in milliseconds

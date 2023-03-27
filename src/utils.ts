@@ -150,6 +150,9 @@ export function stringTimeToMS(timeString: string): number {
 		case "m":
 			MS = parseInt(timeString) * 30 * 24 * 60 * 60 * 1000;
 			break;
+		case "y":
+			MS = parseInt(timeString) * 365 * 30 * 24 * 60 * 60 * 1000;
+			break;
 	}
 	return MS;
 }

@@ -9,6 +9,7 @@ import {
 	saveTodo
 } from "../ExternalServices";
 import ITodoData from "../ITodoData";
+import Recurring from "./Recurring";
 
 export function Modal(
 	isOpen: boolean,
@@ -21,6 +22,8 @@ export function Modal(
 	askConfirmation
 ) {
 	const [change, setChange] = useState(false);
+	const [recurringOpen, setRecurringOpen] = useState(false);
+	if (!isOpen) return;
 
 	function toggleModal() {
 		if (isOpen) {
@@ -65,9 +68,6 @@ export function Modal(
 		)
 			return;
 
-		todo[dataType] = value;
-		todo.lastUpdated = new Date().toISOString();
-
 		if (create) return startNotice("success", "Updated");
 		if (todo.recurring.isRecurring) {
 			if (
@@ -79,16 +79,29 @@ export function Modal(
 			const realTodo = getTodoByIdFromLocal(todo.id);
 			realTodo[dataType] = value;
 			if (dataType === "status") {
-				realTodo.recurring.completionStatus[todo.index].status = value;
-				if (newValue === "in-progress")
-					realTodo.recurring.completionStatus[
-						todo.index
-					].actualStart = new Date().toISOString();
+				const currentStatus =
+					realTodo.recurring.completionStatus[todo.index];
+				currentStatus.status = value;
+
+				if (newValue === "incomplete") {
+					currentStatus.actualStart = "";
+					currentStatus.actualEnd = "";
+				} else if (newValue === "in-progress")
+					currentStatus.actualStart = new Date().toISOString();
 				else if (newValue === "complete")
-					realTodo.recurring.completionStatus[todo.index].actualEnd =
-						new Date().toISOString();
+					currentStatus.actualEnd = new Date().toISOString();
+			} else if (dataType === "isRecurring") {
+				realTodo.recurring.isRecurring = value;
+				// TODO turn it into actual todo item without recurring
+			} else if (dataType === "timeTaken") {
+				realTodo.recurring.timeTaken = parseInt(value);
+			} else {
+				realTodo.recurring[dataType] = value;
 			}
+		} else {
+			todo[dataType] = value;
 		}
+		todo.lastUpdated = new Date().toISOString();
 
 		// Here we should place a call to external services to update db
 		fetchTodoList();
@@ -176,11 +189,31 @@ export function Modal(
 		complete: ["Restart?", "incomplete", "actualEndDate"]
 	};
 
-	if (!isOpen) return;
+	function toggleRecurring() {
+		if (recurringOpen) {
+			const recurringOverlay: Element =
+				document.getElementById("recurring-overlay");
+			recurringOverlay.classList.add("close");
+			sleep(190).then(() => {
+				setRecurringOpen(false);
+			});
+			// Using an event listener is better and more maintainable but makes the modal reappear for a split second.
+		} else {
+			setRecurringOpen(true);
+		}
+	}
+
 	document.querySelector("body").classList.add("freeze");
 	return (
 		<div id="modal-overlay" onClick={overlayClicked}>
 			<div id="modal" className={create ? "create" : null}>
+				<Recurring
+					todo={todo}
+					isOpen={recurringOpen}
+					toggleRecurring={toggleRecurring}
+					dataChange={dataChange}
+				/>
+				<button onClick={toggleRecurring}>Recurring settings</button>
 				<input
 					type="text"
 					defaultValue={todo.title}

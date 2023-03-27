@@ -13,7 +13,7 @@ function useRecurring(todoList: ITodoData[]): ITodoData[] {
 			const start: Date = new Date(todo.recurring.duration.start);
 			const end: Date = new Date(todo.recurring.duration.end);
 			const frequencyMs: number = stringTimeToMS(
-				todo.recurring.frequency
+				todo.recurring.frequencyAmount + todo.recurring.frequencyUnit
 			);
 			const timeTaken: number = todo.recurring.timeTaken;
 

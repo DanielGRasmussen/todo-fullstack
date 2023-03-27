@@ -40,7 +40,12 @@ export function Modal(
 		}
 	}
 
-	function dataChange(newValue, dataType: string, forceUpdate = false) {
+	function dataChange(
+		newValue,
+		dataType: string,
+		forceUpdate = false,
+		recurring = false
+	) {
 		// General dataChange function to reload the modal and pass on new data to db
 		let value = newValue;
 		// Validate data
@@ -69,32 +74,36 @@ export function Modal(
 			return;
 
 		if (create) return startNotice("success", "Updated");
-		if (todo.recurring.isRecurring) {
-			if (
-				dataType === "proposedStartDate" ||
-				dataType === "proposedEndDate"
-			)
-				return;
-
+		if (todo.recurring.isRecurring || recurring) {
 			const realTodo = getTodoByIdFromLocal(todo.id);
 			realTodo[dataType] = value;
-			if (dataType === "status") {
+			if (dataType === "isRecurring") {
+				if (value && !realTodo.recurring.completionStatus) {
+					realTodo.recurring.completionStatus = [
+						{
+							status: "incomplete",
+							actualStart: "",
+							actualEnd: ""
+						}
+					];
+				}
+				todo.recurring.isRecurring = value;
+			} else if (dataType === "status") {
 				const currentStatus =
 					realTodo.recurring.completionStatus[todo.index];
 				currentStatus.status = value;
 
+				// Updates the start/end dates for this recurring task
 				if (newValue === "incomplete") {
 					currentStatus.actualStart = "";
 					currentStatus.actualEnd = "";
-				} else if (newValue === "in-progress")
+				} else if (newValue === "in-progress") {
 					currentStatus.actualStart = new Date().toISOString();
-				else if (newValue === "complete")
+				} else if (newValue === "complete") {
 					currentStatus.actualEnd = new Date().toISOString();
-			} else if (dataType === "isRecurring") {
-				realTodo.recurring.isRecurring = value;
-				// TODO turn it into actual todo item without recurring
-			} else if (dataType === "timeTaken") {
-				realTodo.recurring.timeTaken = parseInt(value);
+				}
+			} else if (dataType === "duration") {
+				realTodo.recurring.duration = value;
 			} else {
 				realTodo.recurring[dataType] = value;
 			}
@@ -212,6 +221,7 @@ export function Modal(
 					isOpen={recurringOpen}
 					toggleRecurring={toggleRecurring}
 					dataChange={dataChange}
+					startNotice={startNotice}
 				/>
 				<button onClick={toggleRecurring}>Recurring settings</button>
 				<input

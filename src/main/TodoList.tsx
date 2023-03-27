@@ -10,12 +10,15 @@ function useRecurring(todoList: ITodoData[]): ITodoData[] {
 	for (const todo of todoList) {
 		if (!todo.recurring.isRecurring) recurringTodo.push(todo);
 		else {
-			const start: Date = new Date(todo.recurring.duration.start);
-			const end: Date = new Date(todo.recurring.duration.end);
 			const frequencyMs: number = stringTimeToMS(
 				todo.recurring.frequencyAmount + todo.recurring.frequencyUnit
 			);
-			const timeTaken: number = todo.recurring.timeTaken;
+			const timeTaken: number = parseInt(
+				todo.recurring.timeTaken.toString()
+			);
+			const start: Date = new Date(todo.recurring.duration.start);
+			const end: Date = new Date(todo.recurring.duration.end);
+			const proposedEndDate = new Date(start.getTime() + timeTaken);
 
 			let i = 0;
 			while (start <= end) {
@@ -34,15 +37,14 @@ function useRecurring(todoList: ITodoData[]): ITodoData[] {
 				recurringTodo.push({
 					...todo,
 					proposedStartDate: start.toISOString(),
-					proposedEndDate: new Date(
-						start.getTime() + timeTaken
-					).toISOString(),
+					proposedEndDate: proposedEndDate.toISOString(),
 					actualStartDate: completionStatus[i].actualStart,
 					actualEndDate: completionStatus[i].actualEnd,
 					status: completionStatus[i].status,
 					index: i
 				});
 				start.setTime(start.getTime() + frequencyMs);
+				proposedEndDate.setTime(start.getTime() + timeTaken);
 				i++;
 			}
 		}

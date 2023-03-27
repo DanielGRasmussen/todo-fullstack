@@ -9,22 +9,87 @@ interface IRecurringProps {
 	isOpen: boolean;
 	toggleRecurring: () => void;
 	dataChange;
+	startNotice;
 }
 
 export default function Recurring({
 	todo,
 	isOpen,
 	toggleRecurring,
-	dataChange
+	dataChange,
+	startNotice
 }: IRecurringProps): JSX.Element {
 	if (!isOpen) return;
+	const [checked, setChecked] = useState(todo.recurring.isRecurring);
 	const [startDate, setStartDate] = useState(
-		new Date(todo.recurring.duration.start)
+		todo.recurring.isRecurring
+			? new Date(todo.recurring.duration.start)
+			: ""
 	);
 	const [endDate, setEndDate] = useState(
-		new Date(todo.recurring.duration.end)
+		todo.recurring.isRecurring ? new Date(todo.recurring.duration.end) : ""
 	);
-	const [timeTaken, setTimeTaken] = useState(todo.recurring.timeTaken);
+	const [frequencyAmount, setFrequencyAmount] = useState(
+		todo.recurring.isRecurring ? todo.recurring.frequencyAmount : ""
+	);
+	const [frequencyUnit, setFrequencyUnit] = useState(
+		todo.recurring.isRecurring ? todo.recurring.frequencyUnit : ""
+	);
+	const [timeTaken, setTimeTaken] = useState(
+		todo.recurring.isRecurring ? todo.recurring.timeTaken / 60 / 1000 : ""
+	);
+
+	function saveRecurring() {
+		if (!checked) {
+			// TODO fix this basically deleting the todo from the list
+			dataChange(false, "isRecurring", false, true);
+			return toggleRecurring();
+		}
+		if (
+			!startDate ||
+			!endDate ||
+			!frequencyUnit ||
+			!frequencyAmount ||
+			!timeTaken
+		)
+			return startNotice("error", "Field is missing");
+		if (frequencyAmount === "0") {
+			return startNotice("error", "Frequency amount cannot be 0");
+		}
+		// TODO: recalculate proposed end date for todo
+		const duration = {
+			start: new Date(startDate).toISOString(),
+			end: new Date(endDate).toISOString()
+		};
+		dataChange(true, "isRecurring", false, true);
+		dataChange(duration, "duration", false, true);
+		dataChange(frequencyAmount, "frequencyAmount", false, true);
+		dataChange(frequencyUnit, "frequencyUnit", false, true);
+		dataChange(
+			(parseInt(timeTaken.toString()) * 1000 * 60).toString(),
+			"timeTaken",
+			false,
+			true
+		);
+		return toggleRecurring();
+	}
+
+	if (!checked) {
+		return (
+			<div id="recurring-overlay" onClick={overlayClicked}>
+				<div id="recurring">
+					<label htmlFor="recurring-checkbox">Reoccurring: </label>
+					<input
+						type="checkbox"
+						id="recurring-checkbox"
+						checked={checked}
+						onChange={(event) => setChecked(event.target.checked)}
+					/>
+					<button onClick={saveRecurring}>Save!</button>
+				</div>
+			</div>
+		);
+	}
 
 	function overlayClicked(event) {
 		if (event.target.id === "recurring-overlay") toggleRecurring();
@@ -34,16 +99,6 @@ export default function Recurring({
 		const [start, end]: Date[] = dates;
 		setStartDate(start);
 		setEndDate(end);
-		if (start && end) {
-			dataChange(
-				{ start: start.toISOString(), end: end.toISOString() },
-				"duration"
-			);
-		}
-	}
-
-	function recurringCheckbox(event) {
-		dataChange(event.target.checked, "isRecurring");
 	}
 
 	return (
@@ -53,85 +108,50 @@ export default function Recurring({
 				<input
 					type="checkbox"
 					id="recurring-checkbox"
-					checked={todo.recurring.isRecurring}
-					onChange={recurringCheckbox}
+					checked={checked}
+					onChange={(event) => setChecked(event.target.checked)}
 				/>
-				{todo.recurring.isRecurring ? (
-					<>
-						<div id="datepicker-wrapper">
-							{/* For the clearing element. */}
-							<label htmlFor="datepicker">
-								Start/end recurring:
-							</label>
-							<DatePicker
-								selected={startDate}
-								onChange={dateSelectionChange}
-								startDate={startDate}
-								endDate={endDate}
-								selectsRange
-								showIcon
-								isClearable
-								placeholderText="Select date range"
-								id="datepicker"
-							/>
-						</div>
-						<label htmlFor="frequencyAmount">
-							Reoccurs once every:{" "}
-						</label>
-						<input
-							type="number"
-							id="frequencyAmount"
-							value={todo.recurring.frequencyAmount}
-							onChange={(event) =>
-								dataChange(
-									event.target.value,
-									"frequencyAmount"
-								)
-							}
-						/>
-						<select
-							value={todo.recurring.frequencyUnit}
-							onChange={(event) =>
-								dataChange(event.target.value, "frequencyUnit")
-							}
-						>
-							<option value="d">Days</option>
-							<option value="w">Weeks</option>
-							<option value="m">Months</option>
-							<option value="y">Years</option>
-						</select>
-						<label htmlFor="time-taken">Time taken:</label>
-						<input
-							type="number"
-							id="timeTaken"
-							value={
-								timeTaken === 0
-									? ""
-									: Number(timeTaken / 60 / 1000)
-							}
-							onChange={(event) => {
-								if (
-									parseInt(event.target.value) &&
-									parseInt(event.target.value) > 0
-								) {
-									dataChange(
-										(
-											parseInt(event.target.value) *
-											1000 *
-											60
-										).toString(),
-										"timeTaken"
-									);
-									setTimeTaken(
-										parseInt(event.target.value) * 1000 * 60
-									);
-								} else {
-									setTimeTaken(0);
-								}
-							}}
-						/>
-					</>
-				) : null}
+				<div id="datepicker-wrapper">
+					{/* For the clearing element. */}
+					<label htmlFor="datepicker">Start/end recurring:</label>
+					<DatePicker
+						selected={startDate}
+						onChange={dateSelectionChange}
+						startDate={startDate}
+						endDate={endDate}
+						selectsRange
+						showIcon
+						isClearable
+						placeholderText="Select date range"
+						id="datepicker"
+						autoComplete="off"
+					/>
+				</div>
+				<label htmlFor="frequencyAmount">Reoccurs once every: </label>
+				<input
+					type="number"
+					id="frequencyAmount"
+					value={frequencyAmount}
+					onChange={(event) => setFrequencyAmount(event.target.value)}
+				/>
+				<select
+					value={frequencyUnit}
+					onChange={(event) => setFrequencyUnit(event.target.value)}
+				>
+					<option value="">Select unit</option>
+					<option value="d">Days</option>
+					<option value="w">Weeks</option>
+					<option value="m">Months</option>
+					<option value="y">Years</option>
+				</select>
+				<label htmlFor="time-taken">Task length (minutes):</label>
+				<input
+					type="number"
+					id="timeTaken"
+					value={timeTaken}
+					onChange={(event) => setTimeTaken(event.target.value)}
+				/>
+				<button onClick={saveRecurring}>Save!</button>
 			</div>
 		</div>
 	);

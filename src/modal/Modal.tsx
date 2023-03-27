@@ -223,8 +223,9 @@ export function Modal(
 				<Dates todo={todo} dataChange={dataChange} create={create} />
 				<h3>Subtasks:</h3>
 				<ul id="subtasks">
-					{todo.subTasks.map((subtask) => (
+					{todo.subTasks.map((subtask, index) => (
 						<SubTask
+							key={index}
 							subtask={subtask}
 							setModalTodo={setModalTodo}
 							dataChange={dataChange}

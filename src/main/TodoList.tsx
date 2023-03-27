@@ -19,16 +19,27 @@ function useRecurring(todoList: ITodoData[]): ITodoData[] {
 
 			let i = 0;
 			while (start <= end) {
+				const completionStatus: {
+					status: string;
+					actualStart: string;
+					actualEnd: string;
+				}[] = todo.recurring.completionStatus;
+				if (completionStatus.length < i + 1) {
+					completionStatus.push({
+						status: "incomplete",
+						actualStart: "",
+						actualEnd: ""
+					});
+				}
 				recurringTodo.push({
 					...todo,
 					proposedStartDate: start.toISOString(),
 					proposedEndDate: new Date(
 						start.getTime() + timeTaken
 					).toISOString(),
-					actualStartDate:
-						todo.recurring.completionStatus[i].actualStart,
-					actualEndDate: todo.recurring.completionStatus[i].actualEnd,
-					status: todo.recurring.completionStatus[i].status,
+					actualStartDate: completionStatus[i].actualStart,
+					actualEndDate: completionStatus[i].actualEnd,
+					status: completionStatus[i].status,
 					index: i
 				});
 				start.setTime(start.getTime() + frequencyMs);
@@ -229,8 +240,9 @@ export function TodoList({
 					alt="Create todo"
 					id="create-todo"
 				/>
-				{sortedTodoList.map((todo) => (
+				{sortedTodoList.map((todo, index) => (
 					<TodoElement
+						key={index}
 						todo={todo}
 						setIsOpen={setIsOpen}
 						setModalTodo={setModalTodo}

@@ -53,13 +53,14 @@ input::-webkit-inner-spin-button {
 }
 
 /* Firefox */
-#recurring input[type=number] {
+#recurring input[type="number"] {
 	-moz-appearance: textfield;
 }
 
 #recurring-buttons {
 	display: flex;
 	justify-content: space-between;
+	margin-top: 10px;
 }
 
 #recurring-buttons button {
@@ -83,14 +84,15 @@ input::-webkit-inner-spin-button {
 	font-size: 12pt;
 	margin-left: 5px;
 	border-radius: 5px;
+	outline: 1px solid black;
+	border: none;
 }
 
 #recurring div select option {
-	border-radius: 10px
+	border-radius: 10px;
 }
 
 #recurring div input:focus {
-	outline: 1px solid black;
 	border: none;
 }
 
@@ -136,6 +138,10 @@ input::-webkit-inner-spin-button {
 
 	#recurring #datepicker-wrapper {
 		flex-direction: column;
+		width: 100%;
+	}
+
+	#recurring #datepicker-wrapper input {
 		width: 100%;
 	}
 }

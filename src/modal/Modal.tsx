@@ -234,8 +234,8 @@ export function Modal(
 					toggleRecurring={toggleRecurring}
 					dataChange={dataChange}
 					startNotice={startNotice}
+					askConfirmation={askConfirmation}
 				/>
-				<button onClick={toggleRecurring}>Recurring settings</button>
 				<input
 					type="text"
 					defaultValue={todo.title}
@@ -276,6 +276,9 @@ export function Modal(
 					/>
 				</p>
 				<Dates todo={todo} dataChange={dataChange} create={create} />
+				<h3 onClick={toggleRecurring} id="recurring-settings">
+					Recurring Settings
+				</h3>
 				<h3>Subtasks:</h3>
 				<ul id="subtasks">
 					{todo.subTasks.map((subtask, index) => (

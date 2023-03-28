@@ -18,23 +18,126 @@
 
 #recurring {
 	position: relative;
-	overflow: hidden;
+	overflow: visible;
 	cursor: default;
 	box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 
 	width: fit-content;
 
 	background: white;
-	padding: 10px 30px 70px 20px;
+	padding: 10px 30px 10px 30px;
 
-	border: 1px solid black;
 	border-radius: 10px;
 
 	animation: recurringAppear 0.2s ease-in-out;
+	z-index: 13;
 }
 
 #recurring-overlay.close #recurring {
 	animation: recurringVanish 0.2s ease-in-out;
+}
+
+#recurring #isRecurring {
+	width: fit-content;
+	margin: 0 auto 10px auto;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+}
+
+/* Chrome, Safari, Edge, Opera */
+#recurring input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
+}
+
+/* Firefox */
+#recurring input[type=number] {
+	-moz-appearance: textfield;
+}
+
+#recurring-buttons {
+	display: flex;
+	justify-content: space-between;
+}
+
+#recurring-buttons button {
+	width: 100px;
+	height: 40px;
+	font-size: 18pt;
+	border-radius: 10px;
+	cursor: pointer;
+	display: block;
+	background: #d8d8d8;
+	margin: 0 5px;
+}
+
+#recurring-buttons button:hover {
+	background: #d0d0d0;
+}
+
+#recurring div input,
+#recurring div select {
+	height: 35px;
+	font-size: 12pt;
+	margin-left: 5px;
+	border-radius: 5px;
+}
+
+#recurring div select option {
+	border-radius: 10px
+}
+
+#recurring div input:focus {
+	outline: 1px solid black;
+	border: none;
+}
+
+#recurring div label {
+	margin-top: 5px;
+}
+
+#recurring #datepicker-wrapper {
+	display: flex;
+	flex-direction: row;
+	width: 355px;
+}
+
+#recurring #datepicker-wrapper label {
+	width: 230px;
+}
+
+#recurring #datepicker-wrapper input {
+	width: 200px;
+}
+
+#recurring #frequency-wrapper {
+	margin-top: 6px;
+}
+
+#recurring #frequency-wrapper input {
+	width: 30px;
+	margin-right: 5px;
+}
+
+#recurring #time-taken-wrapper {
+	margin-top: 6px;
+}
+
+@media screen and (max-width: 425px) {
+	#recurring div label {
+		display: block;
+	}
+
+	#recurring div input {
+		margin-left: 0;
+	}
+
+	#recurring #datepicker-wrapper {
+		flex-direction: column;
+		width: 100%;
+	}
 }
 
 @keyframes recurringAppear {

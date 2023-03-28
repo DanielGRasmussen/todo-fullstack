@@ -133,6 +133,11 @@ body.freeze header {
 	color: white;
 }
 
+#modal #recurring-settings {
+	cursor: pointer;
+
+}
+
 #modal #description {
 	width: calc(100% - 40px);
 	height: 100px;
@@ -157,6 +162,11 @@ body.freeze header {
 	cursor: pointer;
 	display: block;
 	margin: 10px auto 0 auto;
+	background: #d8d8d8;
+}
+
+#modal #progress:hover {
+	background: #d0d0d0;
 }
 
 @keyframes modalAppear {

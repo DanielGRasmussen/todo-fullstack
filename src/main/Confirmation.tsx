@@ -37,7 +37,7 @@ function Confirmation({
 			<div id="confirmation">
 				{confirmationInfo.message}
 				<button onClick={hideConfirmation} id="cancel">
-					Cancel
+					No
 				</button>
 				<button
 					onClick={() => {

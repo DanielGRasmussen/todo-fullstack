@@ -18,6 +18,40 @@ function Dates({ todo, dataChange, create }: IDatesProps) {
 	 * todo: Object following ITodoData. Used for the dates.
 	 * dataChange: A function to be called when a date input field is blurred with the current info in the field.
 	 */
+	let plannedStart;
+	let plannedEnd;
+	if (todo.recurring.isRecurring) {
+		plannedStart = formatDate(todo.proposedStartDate);
+		plannedEnd = formatDate(todo.proposedEndDate);
+		if (create) {
+			plannedStart = "TBD";
+			plannedEnd = "TBD";
+		}
+	} else {
+		plannedStart = (
+			<input
+				type="text"
+				defaultValue={
+					create ? null : formatDate(todo.proposedStartDate)
+				}
+				onBlur={(event) => {
+					dataChange(event.target.value, "proposedStartDate");
+				}}
+				placeholder="ex. 1/1/2000, 12:00 AM"
+			/>
+		);
+		plannedEnd = (
+			<input
+				type="text"
+				defaultValue={create ? null : formatDate(todo.proposedEndDate)}
+				onBlur={(event) => {
+					dataChange(event.target.value, "proposedEndDate");
+				}}
+				placeholder="ex. 1/1/2000, 12:00 PM"
+			/>
+		);
+	}
+
 	return (
 		<ul id="dates">
 			<li>
@@ -30,20 +64,7 @@ function Dates({ todo, dataChange, create }: IDatesProps) {
 			</li>
 			<li>
 				Planned Start: <br />
-				{todo.recurring.isRecurring ? (
-					formatDate(todo.proposedStartDate)
-				) : (
-					<input
-						type="text"
-						defaultValue={
-							create ? null : formatDate(todo.proposedStartDate)
-						}
-						onBlur={(event) => {
-							dataChange(event.target.value, "proposedStartDate");
-						}}
-						placeholder="ex. 1/1/2000, 12:00 AM"
-					/>
-				)}
+				{plannedStart}
 			</li>
 			<li>
 				Actual Start: <br />
@@ -53,20 +74,7 @@ function Dates({ todo, dataChange, create }: IDatesProps) {
 			</li>
 			<li>
 				Planned End: <br />
-				{todo.recurring.isRecurring ? (
-					formatDate(todo.proposedEndDate)
-				) : (
-					<input
-						type="text"
-						defaultValue={
-							create ? null : formatDate(todo.proposedEndDate)
-						}
-						onBlur={(event) => {
-							dataChange(event.target.value, "proposedEndDate");
-						}}
-						placeholder="ex. 1/1/2000, 12:00 PM"
-					/>
-				)}
+				{plannedEnd}
 			</li>
 			<li>
 				Actual End: <br />

@@ -73,9 +73,10 @@ export function Modal(
 		)
 			return;
 
-		if (create) return startNotice("success", "Updated");
 		if (todo.recurring.isRecurring || recurring) {
-			const realTodo = getTodoByIdFromLocal(todo.id);
+			let realTodo = getTodoByIdFromLocal(todo.id);
+			if (create) realTodo = todo;
+
 			realTodo[dataType] = value;
 			if (dataType === "isRecurring") {
 				if (value && !realTodo.recurring.completionStatus) {
@@ -110,6 +111,7 @@ export function Modal(
 		} else {
 			todo[dataType] = value;
 		}
+		if (create) return startNotice("success", "Updated");
 		todo.lastUpdated = new Date().toISOString();
 
 		// Here we should place a call to external services to update db
@@ -165,8 +167,8 @@ export function Modal(
 			!(
 				todo.title &&
 				todo.priority &&
-				todo.proposedStartDate &&
-				todo.proposedEndDate
+				(todo.recurring.isRecurring || todo.proposedStartDate) &&
+				(todo.recurring.isRecurring || todo.proposedEndDate)
 			)
 		) {
 			return startNotice("error", "All fields are required");

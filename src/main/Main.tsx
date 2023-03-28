@@ -74,6 +74,9 @@ function Main(): JSX.Element {
 			type: "",
 			subTasks: [],
 			parentTask: "",
+			recurring: {
+				isRecurring: false
+			},
 			priority: "",
 			status: "incomplete",
 			lastUpdated: ""

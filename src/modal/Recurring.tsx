@@ -41,8 +41,7 @@ export default function Recurring({
 
 	function saveRecurring() {
 		if (!checked) {
-			// TODO fix this basically deleting the todo from the list
-			dataChange(false, "isRecurring", false, true);
+			dataChange(false, "isRecurring", false, true); // Toggles modal in here
 			return toggleRecurring();
 		}
 		if (
@@ -56,7 +55,6 @@ export default function Recurring({
 		if (frequencyAmount === "0") {
 			return startNotice("error", "Frequency amount cannot be 0");
 		}
-		// TODO: recalculate proposed end date for todo
 		const duration = {
 			start: new Date(startDate).toISOString(),
 			end: new Date(endDate).toISOString()
@@ -65,12 +63,13 @@ export default function Recurring({
 		dataChange(duration, "duration", false, true);
 		dataChange(frequencyAmount, "frequencyAmount", false, true);
 		dataChange(frequencyUnit, "frequencyUnit", false, true);
-		dataChange(
-			(parseInt(timeTaken.toString()) * 1000 * 60).toString(),
-			"timeTaken",
-			false,
-			true
+		const newTimeTaken = parseInt(timeTaken.toString()) * 1000 * 60;
+		dataChange(newTimeTaken.toString(), "timeTaken", false, true);
+		const newEnd = new Date(
+			new Date(todo.proposedStartDate).getTime() + newTimeTaken
 		);
+		todo.proposedEndDate = newEnd.toISOString();
+		dataChange("proposedEndDate", newEnd.toISOString());
 		return toggleRecurring();
 	}
 

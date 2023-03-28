@@ -476,7 +476,7 @@ let todos: ITodoData[] = [
 		recurring: {
 			isRecurring: true,
 			frequencyAmount: "1",
-			frequencyUnit: "m",
+			frequencyUnit: "d",
 			duration: {
 				start: new Date("26 March 2023 23:59 UTC").toISOString(),
 				end: new Date("30 March 2023 23:59 UTC").toISOString()

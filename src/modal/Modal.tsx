@@ -88,7 +88,17 @@ export function Modal(
 						}
 					];
 				}
+				if (todo.recurring.isRecurring !== value) toggleModal();
 				todo.recurring.isRecurring = value;
+
+				if (!value) {
+					realTodo.proposedStartDate =
+						realTodo.recurring.duration.start;
+					realTodo.proposedStartDate = new Date(
+						new Date(realTodo.recurring.duration.start).getTime() +
+							parseInt(realTodo.recurring.timeTaken.toString())
+					).toISOString();
+				}
 			} else if (dataType === "status") {
 				const currentStatus =
 					realTodo.recurring.completionStatus[todo.index];

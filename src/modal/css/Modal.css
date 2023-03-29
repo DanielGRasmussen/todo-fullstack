@@ -135,7 +135,6 @@ body.freeze header {
 
 #modal #recurring-settings {
 	cursor: pointer;
-
 }
 
 #modal #description {
@@ -145,9 +144,8 @@ body.freeze header {
 	border-radius: 7px;
 	resize: none;
 	font-size: 11pt;
-	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
-	"Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
-	"Helvetica Neue", sans-serif;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans",
+	"Droid Sans", "Helvetica Neue", sans-serif;
 }
 
 #modal.create #description {

@@ -1,5 +1,9 @@
 {
-	"plugins": ["import", "react", "@typescript-eslint"],
+	"plugins": [
+		"import",
+		"react",
+		"@typescript-eslint"
+	],
 	"extends": [
 		"plugin:@typescript-eslint/recommended",
 		"plugin:import/errors",

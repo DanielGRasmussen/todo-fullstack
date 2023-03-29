@@ -10,22 +10,14 @@ export function formatDate(ISOstring: string): string {
 	});
 }
 
-export function clickAnywhere(
-	elements: Element[],
-	next,
-	querySelectors: string[] = []
-): void {
+export function clickAnywhere(elements: Element[], next, querySelectors: string[] = []): void {
 	window.addEventListener("click", (event) => {
 		for (let i = 0; i < querySelectors.length; i++) {
 			const selectedItem = document.querySelector(querySelectors[i]);
 			elements.push(selectedItem);
 		}
 
-		if (
-			!elements.some(
-				(element) => element && element.contains(event.target as Node)
-			)
-		) {
+		if (!elements.some((element) => element && element.contains(event.target as Node))) {
 			next();
 		}
 	});
@@ -41,8 +33,7 @@ export function checkPriorityValid(priority: string): boolean {
 }
 
 export function isDateFormatValid(dateString: string): boolean {
-	const dateRegex =
-		/^(0?[1-9]|1[012])\/(0?[1-9]|[12][0-9]|3[01])\/\d{4},\s([1-9]|1[0-2]):([0-5][0-9])\s(AM|PM)$/;
+	const dateRegex = /^(0?[1-9]|1[012])\/(0?[1-9]|[12][0-9]|3[01])\/\d{4},\s([1-9]|1[0-2]):([0-5][0-9])\s(AM|PM)$/;
 	/* Forgot how annoying regex is, thank you ChatGPT:
 	 * (0?[1-9]|1[012]) matches the month, allowing for a leading zero if the month is between 1 and 9.
 	 * (0?[1-9]|[12][0-9]|3[01]) matches the day of the month, allowing for a leading zero if the day is between 1 and 9, and restricting the day to be between 1 and 31.
@@ -70,10 +61,7 @@ export function getCurrentTimeInUserTimezone(): string {
 	return now.toLocaleTimeString(undefined, options);
 }
 
-export function filterTodosByDate(
-	datesToCheck: string[],
-	currentTimeframe: string
-): boolean {
+export function filterTodosByDate(datesToCheck: string[], currentTimeframe: string): boolean {
 	const now = new Date();
 
 	switch (currentTimeframe) {
@@ -111,11 +99,7 @@ export function filterTodosByDate(
 				return date <= endOfWeek;
 			});
 		case "month":
-			const endOfMonth = new Date(
-				now.getFullYear(),
-				now.getMonth() + 1,
-				0
-			);
+			const endOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0);
 			endOfMonth.setHours(23, 59, 59, 999);
 			return datesToCheck.some((dateToCheck) => {
 				if (!dateToCheck) return false;

@@ -1,21 +1,29 @@
 import "./css/SubTask.css";
-import React from "react";
+import React, { useState } from "react";
 import { deleteTodoById, getTodoByIdFromLocal } from "../ExternalServices";
 import ITodoData from "../ITodoData";
 
 interface ISubTaskProps {
 	subtask: { name: string; link: boolean; id: string };
+	index: number;
 	setModalTodo: React.Dispatch<React.SetStateAction<ITodoData>>;
 	dataChange;
 	startNotice;
+	setAddingSubtask?;
+	newSubtask?: boolean;
 }
 
 function SubTask({
 	subtask,
+	index,
 	setModalTodo,
 	dataChange,
-	startNotice
+	startNotice,
+	setAddingSubtask,
+	newSubtask
 }: ISubTaskProps): JSX.Element {
+	const [editing, setEditing] = useState(newSubtask);
+
 	let title = subtask.name;
 	let subTaskTodo;
 	if (subtask.link) {
@@ -28,11 +36,11 @@ function SubTask({
 
 	function linkedClick(event) {
 		if (event.target.checked) {
-			// Will eventually move to create to do page.
 			return;
 		}
 		subtask.link = false;
 		subtask.name = subTaskTodo.title;
+		subtask.id = "";
 		startNotice("notice", "Deleting linked subtask.");
 		dataChange("", "", true); // Updates the checkbox uncheck.
 		deleteTodoById(subTaskTodo.id).then(() => {
@@ -40,27 +48,45 @@ function SubTask({
 		});
 	}
 
+	function editSubtask() {
+		if (editing) {
+			const subtaskTitle: HTMLInputElement = document.getElementById(`subtaskTitle${index}`) as HTMLInputElement;
+			if (subtaskTitle.value.length === 0) return startNotice("error", "Subtask title cannot be empty.");
+			subtask.name = subtaskTitle.value;
+			dataChange(subtask, "subtask", false, false, index);
+		} else if (subtask.link) {
+			setModalTodo(subTaskTodo);
+		}
+		setEditing(!editing);
+		if (newSubtask) setAddingSubtask(false);
+	}
+
+	function deleteSubtask() {
+		if (subtask.link) {
+			return deleteTodoById(subtask.id);
+		}
+		dataChange("", "deleteSubtask", false, false, index);
+	}
+
 	return (
-		<li
-			onClick={(event) => {
-				const clickedElement = event.target as HTMLElement;
-				if (
-					subTaskTodo &&
-					clickedElement.tagName.toLowerCase() === "li"
-				) {
-					setModalTodo(subTaskTodo);
-				}
-			}}
-			key={title}
-			className={subtask.link ? "clickable" : null}
-		>
-			<span className="linked">{"Linked: "}</span>
-			<input
-				type="checkbox"
-				checked={subtask.link}
-				onChange={linkedClick}
-			/>
-			{title}
+		<li>
+			<>
+				<span className="linked">{"Linked: "}</span>
+				<input type="checkbox" checked={subtask.link} onChange={linkedClick} />
+				{editing ? <input type="text" defaultValue={subtask.name} id={`subtaskTitle${index}`} /> : title}
+				<img
+					onClick={editSubtask}
+					src={process.env.PUBLIC_URL + (editing ? "assets/save.svg" : "/assets/pencil.svg")}
+					alt={editing ? "Save subtask" : "Edit subtask"}
+					id="edit-subtask"
+				/>
+				<img
+					onClick={deleteSubtask}
+					src={process.env.PUBLIC_URL + "/assets/trash.svg"}
+					alt={editing ? "Save subtask" : "Edit subtask"}
+					id="delete-subtask"
+				/>
+			</>
 		</li>
 	);
 }

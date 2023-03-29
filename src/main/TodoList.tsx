@@ -10,12 +10,8 @@ function useRecurring(todoList: ITodoData[]): ITodoData[] {
 	for (const todo of todoList) {
 		if (!todo.recurring.isRecurring) recurringTodo.push(todo);
 		else {
-			const frequencyMs: number = stringTimeToMS(
-				todo.recurring.frequencyAmount + todo.recurring.frequencyUnit
-			);
-			const timeTaken: number = parseInt(
-				todo.recurring.timeTaken.toString()
-			);
+			const frequencyMs: number = stringTimeToMS(todo.recurring.frequencyAmount + todo.recurring.frequencyUnit);
+			const timeTaken: number = parseInt(todo.recurring.timeTaken.toString());
 			const start: Date = new Date(todo.recurring.duration.start);
 			const end: Date = new Date(todo.recurring.duration.end);
 			const proposedEndDate = new Date(start.getTime() + timeTaken);
@@ -108,28 +104,18 @@ export function TodoList({
 		.filter(
 			(todo, index: number, self) =>
 				// Checks if current index is the same as the first occurrence of this item.
-				index ===
-				self.findIndex(
-					(item) =>
-						item.value.toLowerCase() === todo.value.toLowerCase()
-				)
+				index === self.findIndex((item) => item.value.toLowerCase() === todo.value.toLowerCase())
 		);
 
 	// Search query is in it, and it's type is in filters (if there are any)
 	const filteredTodoList = recurringTodo.filter((todo: ITodoData) => {
 		// Filter by searchQuery
-		if (
-			searchQuery &&
-			!todo.title.toLowerCase().includes(searchQuery.toLowerCase())
-		) {
+		if (searchQuery && !todo.title.toLowerCase().includes(searchQuery.toLowerCase())) {
 			return false;
 		}
 
 		// Filter by filters
-		if (
-			filters.length > 0 &&
-			!filters.some((filter) => filter.value === todo.type.toLowerCase())
-		) {
+		if (filters.length > 0 && !filters.some((filter) => filter.value === todo.type.toLowerCase())) {
 			return false;
 		}
 
@@ -138,49 +124,25 @@ export function TodoList({
 			return false;
 		}
 
-		if (
-			currentStatusFilters.length > 0 &&
-			!currentStatusFilters.some((filter) => filter.value === todo.status)
-		) {
+		if (currentStatusFilters.length > 0 && !currentStatusFilters.some((filter) => filter.value === todo.status)) {
 			return false;
 		}
 
 		// Filter by start/end date
-		const datesToCheck = [
-			todo.proposedStartDate,
-			todo.actualStartDate,
-			todo.proposedEndDate,
-			todo.actualEndDate
-		];
+		const datesToCheck = [todo.proposedStartDate, todo.actualStartDate, todo.proposedEndDate, todo.actualEndDate];
 
 		const remove = datesToCheck.some((dateToCheck) => {
 			if (!dateToCheck) return false;
 			const date = new Date(dateToCheck);
 			if (startDate && endDate) {
-				const start = new Date(
-					startDate.getFullYear(),
-					startDate.getMonth(),
-					startDate.getDate() + 1
-				);
-				const end = new Date(
-					endDate.getFullYear(),
-					endDate.getMonth(),
-					endDate.getDate() + 1
-				);
+				const start = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate() + 1);
+				const end = new Date(endDate.getFullYear(), endDate.getMonth(), endDate.getDate() + 1);
 				return start < date && date < end;
 			} else if (startDate) {
-				const start = new Date(
-					startDate.getFullYear(),
-					startDate.getMonth(),
-					startDate.getDate() + 1
-				);
+				const start = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate() + 1);
 				return start < date;
 			} else if (endDate) {
-				const end = new Date(
-					endDate.getFullYear(),
-					endDate.getMonth(),
-					endDate.getDate() + 1
-				);
+				const end = new Date(endDate.getFullYear(), endDate.getMonth(), endDate.getDate() + 1);
 				return date < end;
 			}
 			return true;

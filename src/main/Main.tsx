@@ -50,9 +50,7 @@ function Main(): JSX.Element {
 	}
 
 	function hideConfirmation() {
-		const confirmationOverlay = document.getElementById(
-			"confirmation-overlay"
-		);
+		const confirmationOverlay = document.getElementById("confirmation-overlay");
 		if (confirmationOverlay) {
 			confirmationOverlay.classList.add("close");
 			sleep(190).then(() => {
@@ -96,26 +94,22 @@ function Main(): JSX.Element {
 	return (
 		<main tabIndex={-1}>
 			<h1>Todo</h1>
-			<Notice
-				noticeInfo={noticeInfo}
-				hideNotice={hideNotice}
-				showNotice={showNotice}
-			/>
+			<Notice noticeInfo={noticeInfo} hideNotice={hideNotice} showNotice={showNotice} />
 			<Confirmation
 				confirmationInfo={confirmationInfo}
 				hideConfirmation={hideConfirmation}
 				showConfirmation={showConfirmation}
 			/>
-			{Modal(
-				isOpen,
-				setIsOpen,
-				modalCreate,
-				modalTodo,
-				setModalTodo,
-				fetchTodoList,
-				startNotice,
-				askConfirmation
-			)}
+			<Modal
+				isOpen={isOpen}
+				setIsOpen={setIsOpen}
+				create={modalCreate}
+				todo={modalTodo}
+				setModalTodo={setModalTodo}
+				fetchTodoList={fetchTodoList}
+				startNotice={startNotice}
+				askConfirmation={askConfirmation}
+			/>
 			<TodoList
 				setIsOpen={setIsOpen}
 				setModalTodo={setModalTodo}

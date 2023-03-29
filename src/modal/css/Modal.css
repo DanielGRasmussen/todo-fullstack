@@ -137,6 +137,24 @@ body.freeze header {
 	cursor: pointer;
 }
 
+#subtasks-wrapper {
+	position: relative;
+	width: 415px;
+}
+
+#add-subtask {
+	width: 30px;
+	cursor: pointer;
+	position: absolute;
+	top: 0;
+	right: 0;
+}
+
+#add-subtask:hover {
+	background-color: #f0f0f0;
+	border-radius: 5px;
+}
+
 #modal #description {
 	width: calc(100% - 40px);
 	height: 100px;

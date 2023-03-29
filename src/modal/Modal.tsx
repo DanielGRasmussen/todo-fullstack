@@ -3,16 +3,23 @@ import React, { useState } from "react";
 import Dates from "./Dates";
 import { checkPriorityValid, isDateFormatValid, sleep } from "../utils";
 import SubTask from "./SubTask";
-import {
-	deleteTodoById,
-	getTodoByIdFromLocal,
-	saveTodo
-} from "../ExternalServices";
+import { deleteTodoById, getTodoByIdFromLocal, saveTodo } from "../ExternalServices";
 import ITodoData from "../ITodoData";
 import Recurring from "./Recurring";
 
-export function Modal(
-	isOpen: boolean,
+interface IModalProps {
+	isOpen: boolean;
+	setIsOpen;
+	create;
+	todo;
+	setModalTodo;
+	fetchTodoList;
+	startNotice;
+	askConfirmation;
+}
+
+export function Modal({
+	isOpen,
 	setIsOpen,
 	create,
 	todo,
@@ -20,15 +27,15 @@ export function Modal(
 	fetchTodoList,
 	startNotice,
 	askConfirmation
-) {
+}: IModalProps) {
 	const [change, setChange] = useState(false);
 	const [recurringOpen, setRecurringOpen] = useState(false);
+	const [addingSubtask, setAddingSubtask] = useState(false);
 	if (!isOpen) return;
 
 	function toggleModal() {
 		if (isOpen) {
-			const modalOverlay: Element =
-				document.getElementById("modal-overlay");
+			const modalOverlay: Element = document.getElementById("modal-overlay");
 			modalOverlay.classList.add("close");
 			sleep(190).then(() => {
 				document.querySelector("body").classList.remove("freeze");
@@ -40,12 +47,7 @@ export function Modal(
 		}
 	}
 
-	function dataChange(
-		newValue,
-		dataType: string,
-		forceUpdate = false,
-		recurring = false
-	) {
+	function dataChange(newValue, dataType: string, forceUpdate = false, recurring = false, subtaskIndex = -1) {
 		// General dataChange function to reload the modal and pass on new data to db
 		let value = newValue;
 		// Validate data
@@ -53,10 +55,7 @@ export function Modal(
 			if (!checkPriorityValid(newValue)) {
 				return startNotice("error", "Invalid Priority Entry");
 			}
-		} else if (
-			dataType === "proposedStartDate" ||
-			dataType === "proposedEndDate"
-		) {
+		} else if (dataType === "proposedStartDate" || dataType === "proposedEndDate") {
 			if (!isDateFormatValid(newValue)) {
 				return startNotice("error", "Invalid Date");
 			}
@@ -66,14 +65,12 @@ export function Modal(
 		} else if (dataType === "type" && newValue === "") {
 			return startNotice("error", "Invalid Type");
 		}
-		if (
-			todo[dataType] === value &&
-			!forceUpdate &&
-			!todo.recurring.isRecurring
-		)
-			return;
+		if (todo[dataType] === value && !forceUpdate && !todo.recurring.isRecurring) return;
 
-		if (todo.recurring.isRecurring || recurring) {
+		if (dataType === "subtask") todo.subTasks[subtaskIndex] = value;
+		else if (dataType === "deleteSubtask") todo.subTasks.splice(subtaskIndex, 1);
+		else if (todo.recurring.isRecurring || recurring) {
+			// Gets real todo data since the current todo would be a generated version
 			let realTodo = getTodoByIdFromLocal(todo.id);
 			if (create) realTodo = todo;
 
@@ -92,16 +89,14 @@ export function Modal(
 				todo.recurring.isRecurring = value;
 
 				if (!value) {
-					realTodo.proposedStartDate =
-						realTodo.recurring.duration.start;
+					realTodo.proposedStartDate = realTodo.recurring.duration.start;
 					realTodo.proposedStartDate = new Date(
 						new Date(realTodo.recurring.duration.start).getTime() +
 							parseInt(realTodo.recurring.timeTaken.toString())
 					).toISOString();
 				}
 			} else if (dataType === "status") {
-				const currentStatus =
-					realTodo.recurring.completionStatus[todo.index];
+				const currentStatus = realTodo.recurring.completionStatus[todo.index];
 				currentStatus.status = value;
 
 				// Updates the start/end dates for this recurring task
@@ -116,6 +111,7 @@ export function Modal(
 			} else if (dataType === "duration") {
 				realTodo.recurring.duration = value;
 			} else {
+				if (realTodo[dataType] === value) return;
 				realTodo.recurring[dataType] = value;
 			}
 		} else {
@@ -172,13 +168,12 @@ export function Modal(
 		askConfirmation(question, askNext);
 	}
 
-	function createTodo() {
+	function saveNewTodo() {
 		if (
 			!(
 				todo.title &&
 				todo.priority &&
-				(todo.recurring.isRecurring || todo.proposedStartDate) &&
-				(todo.recurring.isRecurring || todo.proposedEndDate)
+				(todo.recurring.isRecurring || (todo.proposedStartDate && todo.proposedEndDate))
 			)
 		) {
 			return startNotice("error", "All fields are required");
@@ -212,8 +207,7 @@ export function Modal(
 
 	function toggleRecurring() {
 		if (recurringOpen) {
-			const recurringOverlay: Element =
-				document.getElementById("recurring-overlay");
+			const recurringOverlay: Element = document.getElementById("recurring-overlay");
 			recurringOverlay.classList.add("close");
 			sleep(190).then(() => {
 				setRecurringOpen(false);
@@ -279,18 +273,40 @@ export function Modal(
 				<h3 onClick={toggleRecurring} id="recurring-settings">
 					Recurring Settings
 				</h3>
-				<h3>Subtasks:</h3>
-				<ul id="subtasks">
-					{todo.subTasks.map((subtask, index) => (
-						<SubTask
-							key={index}
-							subtask={subtask}
-							setModalTodo={setModalTodo}
-							dataChange={dataChange}
-							startNotice={startNotice}
-						/>
-					))}
-				</ul>
+				<div id="subtasks-wrapper">
+					<h3>Subtasks:</h3>
+					<img
+						onClick={() => {
+							setAddingSubtask(true);
+						}}
+						src={process.env.PUBLIC_URL + "/assets/create_plus.svg"}
+						alt="Create subtask"
+						id="add-subtask"
+					/>
+					<ul id="subtasks">
+						{todo.subTasks.map((subtask, index) => (
+							<SubTask
+								key={index}
+								subtask={subtask}
+								index={index}
+								setModalTodo={setModalTodo}
+								dataChange={dataChange}
+								startNotice={startNotice}
+							/>
+						))}
+						{addingSubtask ? (
+							<SubTask
+								subtask={{ name: "", link: false, id: "" }}
+								index={todo.subTasks.length}
+								setModalTodo={setModalTodo}
+								dataChange={dataChange}
+								startNotice={startNotice}
+								setAddingSubtask={setAddingSubtask}
+								newSubtask={true}
+							/>
+						) : null}
+					</ul>
+				</div>
 				<h3>Description:</h3>
 				<textarea
 					defaultValue={todo.description}
@@ -302,7 +318,7 @@ export function Modal(
 				<button
 					onClick={() => {
 						if (create) {
-							createTodo();
+							saveNewTodo();
 							return;
 						}
 						changeStatus(buttonTextOpts[todo.status][1]);

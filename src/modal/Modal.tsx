@@ -292,6 +292,7 @@ export function Modal({
 								setModalTodo={setModalTodo}
 								dataChange={dataChange}
 								startNotice={startNotice}
+								askConfirmation={askConfirmation}
 							/>
 						))}
 						{addingSubtask ? (
@@ -301,6 +302,7 @@ export function Modal({
 								setModalTodo={setModalTodo}
 								dataChange={dataChange}
 								startNotice={startNotice}
+								askConfirmation={askConfirmation}
 								setAddingSubtask={setAddingSubtask}
 								newSubtask={true}
 							/>

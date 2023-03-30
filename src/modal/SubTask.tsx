@@ -9,6 +9,7 @@ interface ISubTaskProps {
 	setModalTodo: React.Dispatch<React.SetStateAction<ITodoData>>;
 	dataChange;
 	startNotice;
+	askConfirmation;
 	setAddingSubtask?;
 	newSubtask?: boolean;
 }
@@ -19,6 +20,7 @@ function SubTask({
 	setModalTodo,
 	dataChange,
 	startNotice,
+	askConfirmation,
 	setAddingSubtask,
 	newSubtask
 }: ISubTaskProps): JSX.Element {
@@ -62,10 +64,14 @@ function SubTask({
 	}
 
 	function deleteSubtask() {
-		if (subtask.link) {
-			return deleteTodoById(subtask.id);
+		function next() {
+			if (subtask.link) {
+				return deleteTodoById(subtask.id);
+			}
+			dataChange("", "deleteSubtask", false, false, index);
 		}
-		dataChange("", "deleteSubtask", false, false, index);
+
+		askConfirmation("Are you sure you want to delete this subtask?", next);
 	}
 
 	return (

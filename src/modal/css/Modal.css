@@ -139,7 +139,14 @@ body.freeze header {
 
 #subtasks-wrapper {
 	position: relative;
-	width: 405px;
+	width: 105%;
+	max-width: 374px;
+}
+
+@media screen and (min-width: 450px) {
+	#subtasks-wrapper {
+		max-width: 404px;
+	}
 }
 
 #add-subtask {

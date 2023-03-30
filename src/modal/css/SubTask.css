@@ -14,7 +14,7 @@
 #subtasks li {
 	position: relative;
 	width: calc(100vw - 110px);
-	max-width: 300px;
+	max-width: 290px;
 	height: 30px;
 }
 

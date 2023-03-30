@@ -24,21 +24,15 @@ export default function Recurring({
 	if (!isOpen) return;
 	const [checked, setChecked] = useState(todo.recurring.isRecurring);
 	const [startDate, setStartDate] = useState(
-		todo.recurring.isRecurring
-			? new Date(todo.recurring.duration.start)
-			: ""
+		todo.recurring.isRecurring ? new Date(todo.recurring.duration.start) : ""
 	);
-	const [endDate, setEndDate] = useState(
-		todo.recurring.isRecurring ? new Date(todo.recurring.duration.end) : ""
-	);
+	const [endDate, setEndDate] = useState(todo.recurring.isRecurring ? new Date(todo.recurring.duration.end) : "");
 	const [frequencyAmount, setFrequencyAmount] = useState(
-		todo.recurring.isRecurring ? todo.recurring.frequencyAmount : ""
+		todo.recurring.isRecurring ? todo.recurring.frequencyAmount : undefined
 	);
-	const [frequencyUnit, setFrequencyUnit] = useState(
-		todo.recurring.isRecurring ? todo.recurring.frequencyUnit : ""
-	);
+	const [frequencyUnit, setFrequencyUnit] = useState(todo.recurring.isRecurring ? todo.recurring.frequencyUnit : "");
 	const [timeTaken, setTimeTaken] = useState(
-		todo.recurring.isRecurring ? todo.recurring.timeTaken / 60 / 1000 : ""
+		todo.recurring.isRecurring ? todo.recurring.timeTaken / 60 / 1000 : undefined
 	);
 
 	function saveRecurring() {
@@ -46,30 +40,24 @@ export default function Recurring({
 			dataChange(false, "isRecurring", false, true); // Toggles modal in here
 			return toggleRecurring();
 		}
-		if (
-			!startDate ||
-			!endDate ||
-			!frequencyUnit ||
-			!frequencyAmount ||
-			!timeTaken
-		)
+		if (!startDate || !endDate || !frequencyUnit || !frequencyAmount || !timeTaken)
 			return startNotice("error", "Field is missing");
-		if (frequencyAmount === "0") {
+		if (frequencyAmount === 0) {
 			return startNotice("error", "Frequency amount cannot be 0");
 		}
 		const duration = {
 			start: new Date(startDate).toISOString(),
 			end: new Date(endDate).toISOString()
 		};
+		const newTimeTaken = timeTaken * 1000 * 60;
+		// For some reason dataChange is not affecting the data
+		todo.recurring.frequencyAmount = frequencyAmount;
+		todo.recurring.frequencyUnit = frequencyUnit;
+		todo.recurring.timeTaken = newTimeTaken;
 		dataChange(true, "isRecurring", false, true);
 		dataChange(duration, "duration", false, true);
-		dataChange(frequencyAmount, "frequencyAmount", false, true);
-		dataChange(frequencyUnit, "frequencyUnit", false, true);
-		const newTimeTaken = parseInt(timeTaken.toString()) * 1000 * 60;
 		dataChange(newTimeTaken.toString(), "timeTaken", false, true);
-		const newEnd = new Date(
-			new Date(todo.proposedStartDate).getTime() + newTimeTaken
-		);
+		const newEnd = new Date(new Date(todo.proposedStartDate).getTime() + newTimeTaken);
 		todo.proposedEndDate = newEnd.toISOString();
 		dataChange("proposedEndDate", newEnd.toISOString());
 		return toggleRecurring();
@@ -80,16 +68,12 @@ export default function Recurring({
 			<div id="recurring-overlay">
 				<div id="recurring">
 					<section id="isRecurring">
-						<label htmlFor="recurring-checkbox">
-							Reoccurring:{" "}
-						</label>
+						<label htmlFor="recurring-checkbox">Reoccurring: </label>
 						<input
 							type="checkbox"
 							id="recurring-checkbox"
 							checked={checked}
-							onChange={(event) =>
-								setChecked(event.target.checked)
-							}
+							onChange={(event) => setChecked(event.target.checked)}
 						/>
 					</section>
 					<div id="recurring-buttons">
@@ -111,19 +95,13 @@ export default function Recurring({
 			(todo.recurring.isRecurring === checked &&
 				todo.recurring.frequencyAmount === frequencyAmount &&
 				todo.recurring.frequencyUnit === frequencyUnit &&
-				todo.recurring.duration.start ===
-					new Date(startDate).toISOString() &&
-				todo.recurring.duration.end ===
-					new Date(endDate).toISOString() &&
-				todo.recurring.timeTaken ===
-					parseInt(timeTaken.toString()) * 1000 * 60)
+				todo.recurring.duration.start === new Date(startDate).toISOString() &&
+				todo.recurring.duration.end === new Date(endDate).toISOString() &&
+				todo.recurring.timeTaken === parseInt(timeTaken.toString()) * 1000 * 60)
 		) {
 			return toggleRecurring();
 		}
-		askConfirmation(
-			"Are you sure you want to close without saving your changes?",
-			toggleRecurring
-		);
+		askConfirmation("Are you sure you want to close without saving your changes?", toggleRecurring);
 	}
 
 	function dateSelectionChange(dates) {
@@ -138,11 +116,7 @@ export default function Recurring({
 				{/* To separate the css for this from the other divs*/}
 				<section id="isRecurring">
 					<label htmlFor="recurring-checkbox">Reoccurring: </label>
-					<input
-						type="checkbox"
-						checked={checked}
-						onChange={(event) => setChecked(event.target.checked)}
-					/>
+					<input type="checkbox" checked={checked} onChange={(event) => setChecked(event.target.checked)} />
 				</section>
 				<div id="datepicker-wrapper">
 					{/* For the clearing element. */}
@@ -161,23 +135,14 @@ export default function Recurring({
 					/>
 				</div>
 				<div id="frequency-wrapper">
-					<label htmlFor="frequencyAmount">
-						Reoccurs once every:{" "}
-					</label>
+					<label htmlFor="frequencyAmount">Reoccurs once every: </label>
 					<input
 						type="number"
 						id="frequencyAmount"
-						value={frequencyAmount}
-						onChange={(event) =>
-							setFrequencyAmount(event.target.value)
-						}
+						value={frequencyAmount ? frequencyAmount : ""}
+						onChange={(event) => setFrequencyAmount(parseInt(event.target.value))}
 					/>
-					<select
-						value={frequencyUnit}
-						onChange={(event) =>
-							setFrequencyUnit(event.target.value)
-						}
-					>
+					<select value={frequencyUnit} onChange={(event) => setFrequencyUnit(event.target.value)}>
 						<option value="">Select unit</option>
 						<option value="d">Days</option>
 						<option value="w">Weeks</option>
@@ -190,8 +155,8 @@ export default function Recurring({
 					<input
 						type="number"
 						id="timeTaken"
-						value={timeTaken}
-						onChange={(event) => setTimeTaken(event.target.value)}
+						value={timeTaken ? timeTaken : ""}
+						onChange={(event) => setTimeTaken(parseInt(event.target.value))}
 					/>
 				</div>
 				<div id="recurring-buttons">

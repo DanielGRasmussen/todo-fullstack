@@ -13,7 +13,7 @@ export default interface ITodoData {
 	recurring: {
 		isRecurring: boolean;
 		// 1d = every day, 1w = every week, 1m = every month
-		frequencyAmount?: string;
+		frequencyAmount?: number;
 		// 1d = every day, 1w = every week, 1m = every month
 		frequencyUnit?: string;
 		// Stored in .toISOString format

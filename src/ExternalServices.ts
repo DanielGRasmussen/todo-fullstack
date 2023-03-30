@@ -475,7 +475,7 @@ let todos: ITodoData[] = [
 		parentTask: "",
 		recurring: {
 			isRecurring: true,
-			frequencyAmount: "1",
+			frequencyAmount: 1,
 			frequencyUnit: "d",
 			duration: {
 				start: new Date("26 March 2023 23:59 UTC").toISOString(),

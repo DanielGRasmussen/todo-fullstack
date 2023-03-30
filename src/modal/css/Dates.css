@@ -10,10 +10,6 @@
 		top: 53px;
 		right: 10px;
 	}
-
-	#modal #dates br {
-		display: none;
-	}
 }
 
 #modal #dates input {

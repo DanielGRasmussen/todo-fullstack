@@ -31,9 +31,7 @@ function Dates({ todo, dataChange, create }: IDatesProps) {
 		plannedStart = (
 			<input
 				type="text"
-				defaultValue={
-					create ? null : formatDate(todo.proposedStartDate)
-				}
+				defaultValue={create ? null : formatDate(todo.proposedStartDate)}
 				onBlur={(event) => {
 					dataChange(event.target.value, "proposedStartDate");
 				}}
@@ -54,32 +52,12 @@ function Dates({ todo, dataChange, create }: IDatesProps) {
 
 	return (
 		<ul id="dates">
-			<li>
-				Created: <br />
-				{create ? null : formatDate(todo.created)}
-			</li>
-			<li>
-				Last Updated: <br />
-				{create ? null : formatDate(todo.lastUpdated)}
-			</li>
-			<li>
-				Planned Start: <br />
-				{plannedStart}
-			</li>
-			<li>
-				Actual Start: <br />
-				{todo.actualStartDate
-					? formatDate(todo.actualStartDate)
-					: "TBD"}
-			</li>
-			<li>
-				Planned End: <br />
-				{plannedEnd}
-			</li>
-			<li>
-				Actual End: <br />
-				{todo.actualEndDate ? formatDate(todo.actualEndDate) : "TBD"}
-			</li>
+			<li>Created: {create ? null : formatDate(todo.created)}</li>
+			<li>Last Updated: {create ? null : formatDate(todo.lastUpdated)}</li>
+			<li>Planned Start: {plannedStart}</li>
+			<li>Actual Start: {todo.actualStartDate ? formatDate(todo.actualStartDate) : "TBD"}</li>
+			<li>Planned End: {plannedEnd}</li>
+			<li>Actual End: {todo.actualEndDate ? formatDate(todo.actualEndDate) : "TBD"}</li>
 		</ul>
 	);
 }

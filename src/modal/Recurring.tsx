@@ -37,6 +37,7 @@ export default function Recurring({
 
 	function saveRecurring() {
 		if (!checked) {
+			if (!todo.recurring.isRecurring) return toggleRecurring();
 			dataChange(false, "isRecurring", false, true); // Toggles modal in here
 			return toggleRecurring();
 		}
@@ -57,9 +58,11 @@ export default function Recurring({
 		dataChange(true, "isRecurring", false, true);
 		dataChange(duration, "duration", false, true);
 		dataChange(newTimeTaken.toString(), "timeTaken", false, true);
-		const newEnd = new Date(new Date(todo.proposedStartDate).getTime() + newTimeTaken);
-		todo.proposedEndDate = newEnd.toISOString();
-		dataChange("proposedEndDate", newEnd.toISOString());
+		if (todo.proposedStartDate !== "") {
+			const newEnd = new Date(new Date(todo.proposedStartDate).getTime() + newTimeTaken);
+			todo.proposedEndDate = newEnd.toISOString();
+			dataChange("proposedEndDate", newEnd.toISOString());
+		}
 		return toggleRecurring();
 	}
 

@@ -85,7 +85,7 @@ export function Modal({
 						}
 					];
 				}
-				if (todo.recurring.isRecurring !== value) toggleModal();
+				if (todo.recurring.isRecurring !== value && !create) toggleModal();
 				todo.recurring.isRecurring = value;
 
 				if (!value) {

@@ -19,15 +19,15 @@ interface IModalProps {
 }
 
 export function Modal({
-	isOpen,
-	setIsOpen,
-	create,
-	todo,
-	setModalTodo,
-	fetchTodoList,
-	startNotice,
-	askConfirmation
-}: IModalProps) {
+						  isOpen,
+						  setIsOpen,
+						  create,
+						  todo,
+						  setModalTodo,
+						  fetchTodoList,
+						  startNotice,
+						  askConfirmation
+					  }: IModalProps) {
 	const [change, setChange] = useState(false);
 	const [recurringOpen, setRecurringOpen] = useState(false);
 	const [addingSubtask, setAddingSubtask] = useState(false);
@@ -91,21 +91,28 @@ export function Modal({
 					realTodo.proposedStartDate = realTodo.recurring.duration.start;
 					realTodo.proposedStartDate = new Date(
 						new Date(realTodo.recurring.duration.start).getTime() +
-							realTodo.recurring.timeTaken
+						realTodo.recurring.timeTaken
 					).toISOString();
 				}
 			} else if (dataType === "status") {
 				const currentStatus = realTodo.recurring.completionStatus[todo.index];
+				const todoStatus = todo.recurring.completionStatus[todo.index];
 				currentStatus.status = value;
+				todoStatus.status = value;
+				todo.status = value;
 
 				// Updates the start/end dates for this recurring task
 				if (newValue === "incomplete") {
 					currentStatus.actualStart = "";
 					currentStatus.actualEnd = "";
+					todoStatus.actualStart = "";
+					todoStatus.actualEnd = "";
 				} else if (newValue === "in-progress") {
 					currentStatus.actualStart = new Date().toISOString();
+					todoStatus.actualStart = new Date().toISOString();
 				} else if (newValue === "complete") {
 					currentStatus.actualEnd = new Date().toISOString();
+					todoStatus.actualEnd = new Date().toISOString();
 				}
 			} else if (["frequencyAmount", "frequencyUnit", "duration", "timeTaken", "completionStatus"].includes(dataType)) {
 				if (realTodo.recurring[dataType] === value) return;
@@ -113,7 +120,9 @@ export function Modal({
 			} else {
 				if (realTodo[dataType] === value) return;
 				realTodo[dataType] = value;
-				saveTodo(realTodo).then(() => { fetchTodoList(); })
+				saveTodo(realTodo).then(() => {
+					fetchTodoList();
+				});
 				if (!forceUpdate) {
 					startNotice("success", "Data Updated");
 				}
@@ -126,7 +135,9 @@ export function Modal({
 		if (create) return startNotice("success", "Updated");
 		todo.lastUpdated = new Date().toISOString();
 
-		saveTodo(todo).then(() => { fetchTodoList(); })
+		saveTodo(todo).then(() => {
+			fetchTodoList();
+		});
 		if (!forceUpdate) {
 			startNotice("success", "Data Updated");
 		}

@@ -13,7 +13,7 @@ export async function getToDoList(): Promise<ITodoData[]> {
 
 export function getTodoByIdFromLocal(id: string): ITodoData {
 	for (const todoData of todos) {
-		if (todoData.id === id) return todoData;
+		if (todoData._id === id) return todoData;
 	}
 }
 

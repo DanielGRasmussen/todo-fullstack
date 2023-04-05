@@ -1,3 +1,4 @@
+const cookieParser = require("cookie-parser");
 const express = require("express");
 const session = require("express-session");
 const passport = require("passport");
@@ -7,24 +8,29 @@ const MongoStore = require("connect-mongo");
 const swaggerUi = require("swagger-ui-express");
 const swaggerDocument = require("./swagger.json");
 require("dotenv").config();
-const mongoStore = new MongoStore({
-	mongoUrl: process.env.MONGODB_URI,
-	collectionName: "sessions"
-});
 const app = express();
 
 // Set up middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
 
 // Set up session middleware
+const mongoStore = new MongoStore({
+	mongoUrl: process.env.MONGODB_URI,
+	collectionName: "sessions"
+});
 app.use(
 	session({
-		// Unfortunately, session secret has to be static for persistent memory.
 		secret: process.env.SESSION_SECRET,
 		resave: false,
 		saveUninitialized: false,
-		store: mongoStore
+		store: mongoStore,
+		cookie: {
+			maxAge: 1000 * 60 * 60 * 24 * 30, // 30 days
+			sameSite: true,
+			secure: process.env.NODE_ENV === "production" // cookies over https only when in production
+		}
 	})
 );
 

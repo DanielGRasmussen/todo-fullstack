@@ -177,7 +177,6 @@ exports.deleteTodoItem = async function (req, res) {
 	try {
 		const todoId = req.params.id;
 		const userId = req.user._id;
-		console.log(todoId);
 
 		// find the user and remove the todo item from their todoList
 		const user = await User.findByIdAndUpdate(

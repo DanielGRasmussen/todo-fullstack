@@ -25,10 +25,10 @@ function Header() : JSX.Element {
 	const [isOpen, setIsOpen] = useState(false);
 	const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 	const [userInfo, setUserInfo] = useState<IUserInfo>({
-		"googleId": "1",
+		"googleId": "",
 		"_id": "",
-		"name": "12",
-		"email": "12",
+		"name": "",
+		"email": "",
 		"picture": process.env.PUBLIC_URL + "/assets/default-profile-picture.svg",
 	});
 	const loggedIn = userInfo.googleId !== "";

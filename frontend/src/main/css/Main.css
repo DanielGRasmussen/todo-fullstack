@@ -1,0 +1,122 @@
+/* Main */
+main {
+	width: 80%;
+	min-width: 800px;
+	max-width: 1100px;
+	background: white;
+	margin: 80px auto 0 auto;
+	border-radius: 20px;
+	padding-bottom: 5px;
+	flex-grow: 1; /* Take up the remaining space */
+	position: relative;
+}
+
+@media only screen and (max-width: 815px) {
+	main {
+		width: 100%;
+		min-width: 100%;
+	}
+}
+
+h1 {
+	text-align: center;
+	margin-bottom: 0;
+	cursor: default;
+}
+
+/* Google info */
+@media only screen and (max-width: 800px) {
+	main #login-info {
+		display: none;
+	}
+}
+
+main #login-info {
+	position: fixed;
+	top: 20px;
+	right: 70px;
+	width: 40px;
+	z-index: 2;
+}
+
+main #login-info.logged-in {
+	right: 10px;
+	border-radius: 25px;
+	padding: 5px;
+	background-color: #fff;
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+
+	transition: all 0.3s ease-in-out;
+}
+
+main #login-info.logged-in:hover {
+	width: 250px;
+	height: 90px;
+}
+
+main #login-info img {
+	display: inline-block;
+	vertical-align: middle;
+	height: 40px;
+	width: 40px;
+	border-radius: 50%;
+	transition: transform 0.3s ease-in-out;
+}
+
+main #login-info:hover img {
+	transform: translateX(210px);
+}
+
+main #login-info #profile-info {
+	display: none;
+	margin-top: -40px;
+}
+
+main #login-info:hover #profile-info {
+	display: block;
+	animation: slide-in-right 0.3s ease-out;
+}
+
+@keyframes slide-in-right {
+	0% {
+		opacity: 0;
+		transform: translateX(250px);
+	}
+	100% {
+		opacity: 1;
+		transform: translateX(0);
+	}
+}
+
+#profile-info #user-name {
+	display: block;
+	font-weight: bold;
+	margin-bottom: 5px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+#profile-info #user-email {
+	color: #666;
+	font-size: 14px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.signing {
+	display: block;
+	width: 100px;
+	margin-top: -5px;
+	padding: 10px 0;
+	text-align: center;
+	background: #6a7884;
+	border-radius: 10px;
+	color: white;
+	text-decoration: none;
+}
+
+.signing:hover {
+	background: #5b6771;
+}

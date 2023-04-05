@@ -1,0 +1,55 @@
+/* Background */
+html {
+	background: linear-gradient(90deg, #3a364d, #6d6980) fixed;
+	background-size: cover;
+}
+
+html:before {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	mask-image: linear-gradient(to bottom, transparent, black);
+	background: linear-gradient(90deg, #5a5770, #484460);
+}
+
+code {
+	font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+}
+
+body {
+	margin: 0;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans",
+		"Droid Sans", "Helvetica Neue", sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+#root > div {
+	margin: 0;
+	padding: 0;
+	height: 100vh; /* To make the page take up the entire height */
+	display: flex;
+	flex-direction: column;
+}
+
+/* Skip to content button */
+/* Hide the link by default */
+#skip-link {
+	position: absolute;
+	top: -50px;
+	left: 0;
+	background-color: #444e60;
+	color: white;
+	padding: 10px;
+	z-index: 1;
+	border-radius: 10px;
+}
+
+/* Show the link when it receives focus */
+#skip-link:focus {
+	top: 10px;
+	left: 10px;
+}

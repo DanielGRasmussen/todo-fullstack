@@ -1,0 +1,211 @@
+/* body.freeze {
+	overflow: hidden;
+	padding-right: 15px;
+}
+
+body.freeze header {
+	left: -7.5px;
+} */
+
+#modal-overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, 0.5);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	z-index: 10;
+	animation: overlayAppear 0.2s ease-in-out;
+}
+
+#modal-overlay.close {
+	animation: overlayVanish 0.2s ease-in-out;
+}
+
+#modal {
+	width: calc(100% - 40px);
+	height: fit-content;
+	max-height: 90%;
+	background: white;
+	padding: 20px;
+	position: relative;
+	animation: modalAppear 0.2s ease-in-out;
+	overflow-y: auto;
+	overflow-x: hidden;
+}
+
+@media screen and (min-width: 635px) {
+	#modal {
+		width: calc(60% - 40px);
+		min-width: 635px;
+		max-width: 785px;
+	}
+}
+
+@media screen and (min-width: 675px) {
+	#modal {
+		border-radius: 20px;
+	}
+}
+
+#modal-overlay.close #modal {
+	animation: modalVanish 0.2s ease-in-out;
+}
+
+#close-modal {
+	position: absolute;
+	top: 15px;
+	right: 10px;
+	width: 30px;
+	cursor: pointer;
+}
+
+#close-modal:hover,
+#delete-todo:hover {
+	background-color: #f0f0f0;
+	border-radius: 5px;
+}
+
+#delete-todo {
+	position: absolute;
+	top: 15px;
+	right: 50px;
+	height: 30px;
+	cursor: pointer;
+}
+
+#modal p,
+#modal li,
+#modal h3 {
+	cursor: default;
+}
+
+#modal input {
+	border: 0;
+	border-radius: 7px;
+	height: 20px;
+	font-size: 11pt;
+}
+
+#modal.create input {
+	border: 1px solid lightgray;
+}
+
+#modal .title {
+	width: calc(100% - 80px);
+	height: 40px;
+	font-size: 18pt;
+	margin-top: -10px;
+}
+
+#modal .space {
+	height: 40px;
+	display: block;
+}
+
+#modal .priority {
+	color: #e60000;
+	margin-top: -5px;
+}
+
+#modal .priority input {
+	width: 1ch;
+	padding: 0 5px;
+	color: #e60000;
+}
+
+#modal .type {
+	font-size: 10pt;
+	background: #444e60;
+	padding: 5px 10px;
+	border-radius: 50px;
+	color: white;
+	width: fit-content;
+	margin-top: 3px;
+}
+
+#modal .type input {
+	width: 100px;
+	background: #444e60;
+	color: white;
+}
+
+#modal #recurring-settings {
+	cursor: pointer;
+}
+
+#subtasks-wrapper {
+	position: relative;
+	width: 105%;
+	max-width: 374px;
+}
+
+@media screen and (min-width: 450px) {
+	#subtasks-wrapper {
+		max-width: 404px;
+	}
+}
+
+#add-subtask {
+	width: 30px;
+	cursor: pointer;
+	position: absolute;
+	top: 0;
+	right: 0;
+}
+
+#add-subtask:hover {
+	background-color: #f0f0f0;
+	border-radius: 5px;
+}
+
+#modal #description {
+	width: calc(100% - 40px);
+	height: 100px;
+	border: 0;
+	border-radius: 7px;
+	resize: none;
+	font-size: 11pt;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans",
+		"Droid Sans", "Helvetica Neue", sans-serif;
+}
+
+#modal.create #description {
+	border: 1px solid lightgray;
+}
+
+#modal #progress {
+	width: 250px;
+	height: 50px;
+	font-size: 20pt;
+	border-radius: 10px;
+	cursor: pointer;
+	display: block;
+	margin: 10px auto 0 auto;
+	background: #d8d8d8;
+}
+
+#modal #progress:hover {
+	background: #d0d0d0;
+}
+
+@keyframes modalAppear {
+	from {
+		transform: translateY(-30vh);
+	}
+	to {
+		transform: translateY(0);
+	}
+}
+
+@keyframes modalVanish {
+	from {
+		transform: translateY(0);
+	}
+	to {
+		transform: translateY(30vh);
+	}
+}

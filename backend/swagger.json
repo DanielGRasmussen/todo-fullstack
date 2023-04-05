@@ -1,0 +1,233 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "My API",
+    "description": "Description",
+    "version": "1.0.0"
+  },
+  "host": "todo-backend-of0v.onrender.com",
+  "basePath": "/",
+  "schemes": [
+    "https"
+  ],
+  "paths": {
+    "/api/user/": {
+      "get": {
+        "description": "Get information about the currently logged in user.",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/todos": {
+      "get": {
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "post": {
+        "description": "Add a new Todo item to the currently logged in user's Todo list.",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "example": "Call mom"
+                },
+                "description": {
+                  "example": "Her phone number is (760) 706-7425"
+                },
+                "type": {
+                  "example": "Personal"
+                },
+                "subTasks": {
+                  "example" : [
+                    {
+                      "name": "Find phone",
+                      "link": false,
+                      "id": ""
+                    }
+                  ]
+                },
+                "parentTask": {
+                  "example": "6175a5e3a16f5e9a033a8c5f"
+                },
+                "recurring": {
+                  "example": {
+                    "isRecurring": true,
+                    "frequencyAmount": 1,
+                    "frequencyUnit": "w",
+                    "duration": {
+                      "start": "2023-04-01T00:00:00.000Z",
+                      "end": "2023-04-30T00:00:00.000Z"
+                    },
+                    "timeTaken": 3600000,
+                    "completionStatus": [
+                      {
+                        "status": "incomplete",
+                        "actualStart": "",
+                        "actualEnd": ""
+                      }
+                    ]
+                  }
+                },
+                "priority": {
+                  "example": "9"
+                },
+                "proposedStartDate": {
+                  "example": "2023-04-30T12:00:00.000Z"
+                },
+                "proposedEndDate": {
+                  "example": "2023-04-30T13:00:00.000Z"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/todos/{id}": {
+      "put": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "example": "Call mom"
+                },
+                "description": {
+                  "example": "Her phone number is (760) 706-7425"
+                },
+                "type": {
+                  "example": "Personal"
+                },
+                "subTasks": {
+                  "example" : [
+                    {
+                      "name": "Find phone",
+                      "link": false,
+                      "id": ""
+                    }
+                  ]
+                },
+                "parentTask": {
+                  "example": "6175a5e3a16f5e9a033a8c5f"
+                },
+                "recurring": {
+                  "example": {
+                    "isRecurring": true,
+                    "frequencyAmount": 1,
+                    "frequencyUnit": "w",
+                    "duration": {
+                      "start": "2023-04-01T00:00:00.000Z",
+                      "end": "2023-04-30T00:00:00.000Z"
+                    },
+                    "timeTaken": 3600000,
+                    "completionStatus": [
+                      {
+                        "status": "in-progress",
+                        "actualStart": "2023-04-01T00:00:00.000Z",
+                        "actualEnd": ""
+                      }
+                    ]
+                  }
+                },
+                "priority": {
+                  "example": "9"
+                },
+                "status": {
+                  "example": "incomplete"
+                },
+                "proposedStartDate": {
+                  "example": "2023-04-30T12:00:00.000Z"
+                },
+                "actualStartDate": {
+                  "example": ""
+                },
+                "proposedEndDate": {
+                  "example": "2023-04-30T13:00:00.000Z"
+                },
+                "actualEndDate": {
+                  "example": ""
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a Todo item from the currently logged in user's Todo list.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    }
+  }
+}

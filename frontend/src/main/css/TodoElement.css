@@ -1,0 +1,70 @@
+.todo-item {
+	border-radius: 10px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+	padding: 20px;
+	position: relative;
+	cursor: pointer;
+}
+
+.todo-item h3 {
+	margin: 5px 0 0 0;
+	font-size: 1.4rem;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.todo-item .type {
+	position: absolute;
+	top: -10px;
+	right: 5px;
+	font-size: 10pt;
+	background: #444e60;
+	padding: 5px 10px;
+	border-radius: 50px;
+	color: white;
+}
+
+.todo-item .priority,
+.todo-item .date {
+	font-size: 12px;
+	margin: 0;
+}
+
+.todo-item .description {
+	margin: 0;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+/* Style the completion date */
+.todo-item .date {
+	color: #666;
+}
+
+/* Style the priority */
+.todo-item .priority {
+	color: #e60000;
+}
+
+/* Completion Status */
+.todo-item.complete {
+	border-left: 7px solid green;
+}
+
+.todo-item.in-progress.behind {
+	border-left: 7px solid orange;
+}
+
+.todo-item.in-progress {
+	border-left: 7px solid lightgreen;
+}
+
+.todo-item.incomplete.behind {
+	border-left: 7px solid red;
+}
+
+.todo-item.incomplete {
+	border-left: 7px solid grey;
+}

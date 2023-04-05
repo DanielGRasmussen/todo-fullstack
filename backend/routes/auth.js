@@ -15,6 +15,6 @@ router.get(
 router.get("/logout", isAuthenticated, logout);
 
 // Google OAuth callback
-router.get("/callback", passport.authenticate("google", { failureRedirect: "/login" }), callback);
+router.get("/callback", passport.authenticate("google", { failureRedirect: "/auth" }), callback);
 
 module.exports = router;

@@ -20,6 +20,7 @@ app.use(express.urlencoded({ extended: false }));
 // Set up session middleware
 app.use(
 	session({
+		// Unfortunately, session secret has to be static for persistent memory.
 		secret: process.env.SESSION_SECRET,
 		resave: false,
 		saveUninitialized: false,

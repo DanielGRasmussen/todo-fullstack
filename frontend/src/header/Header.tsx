@@ -25,11 +25,11 @@ function Header() : JSX.Element {
 	const [isOpen, setIsOpen] = useState(false);
 	const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 	const [userInfo, setUserInfo] = useState<IUserInfo>({
-		"googleId": "",
+		"googleId": "1",
 		"_id": "",
-		"name": "",
-		"email": "",
-		"picture": process.env.PUBLIC_URL + "/images/default-profile-picture.png",
+		"name": "12",
+		"email": "12",
+		"picture": process.env.PUBLIC_URL + "/assets/default-profile-picture.svg",
 	});
 	const loggedIn = userInfo.googleId !== "";
 
@@ -126,7 +126,7 @@ function Header() : JSX.Element {
 			{/* Wrapper so that user can click on right without it triggering modal */}
 			<div className={`${isOpen ? "open" : null} wrapper`}>
 				<nav className={isOpen ? "open" : null}>
-					<div id="login-info" className={loggedIn ? "logged-in" : null}>
+					<div id="login-info" className={loggedIn ? "logged-in" : "logged-out"}>
 						{loggedIn ? (
 							<>
 								<img src={`${userInfo.picture}`} alt="Google profile picture" />

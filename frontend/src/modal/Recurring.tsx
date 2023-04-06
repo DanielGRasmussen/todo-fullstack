@@ -1,8 +1,9 @@
 import "./css/Recurring.css";
 import ITodoData from "../DataInterfaces";
 import React, { useState } from "react";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
+import DatePicker from "react-date-picker";
+import "react-date-picker/dist/DatePicker.css";
+import "react-calendar/dist/Calendar.css";
 
 interface IRecurringProps {
 	todo: ITodoData;
@@ -23,10 +24,10 @@ export default function Recurring({
 }: IRecurringProps): JSX.Element {
 	if (!isOpen) return;
 	const [checked, setChecked] = useState(todo.recurring.isRecurring);
-	const [startDate, setStartDate] = useState(
-		todo.recurring.isRecurring ? new Date(todo.recurring.duration.start) : ""
-	);
-	const [endDate, setEndDate] = useState(todo.recurring.isRecurring ? new Date(todo.recurring.duration.end) : "");
+	const [recurringDates, setRecurringDates] = useState<[Date | null, Date | null]>([
+		todo.recurring.isRecurring ? new Date(todo.recurring.duration.start) : null,
+		todo.recurring.isRecurring ? new Date(todo.recurring.duration.end) : null
+	]);
 	const [frequencyAmount, setFrequencyAmount] = useState(
 		todo.recurring.isRecurring ? todo.recurring.frequencyAmount : undefined
 	);
@@ -36,6 +37,7 @@ export default function Recurring({
 	);
 
 	function saveRecurring() {
+		const [startDate, endDate] = recurringDates;
 		if (!checked) {
 			if (!todo.recurring.isRecurring) return toggleRecurring();
 			dataChange(false, "isRecurring", false, true); // Toggles modal in here
@@ -98,8 +100,8 @@ export default function Recurring({
 			(todo.recurring.isRecurring === checked &&
 				todo.recurring.frequencyAmount === frequencyAmount &&
 				todo.recurring.frequencyUnit === frequencyUnit &&
-				todo.recurring.duration.start === new Date(startDate).toISOString() &&
-				todo.recurring.duration.end === new Date(endDate).toISOString() &&
+				todo.recurring.duration.start === new Date(recurringDates[0]).toISOString() &&
+				todo.recurring.duration.end === new Date(recurringDates[1]).toISOString() &&
 				todo.recurring.timeTaken === parseInt(timeTaken.toString()) * 1000 * 60)
 		) {
 			return toggleRecurring();
@@ -107,10 +109,8 @@ export default function Recurring({
 		askConfirmation("Are you sure you want to close without saving your changes?", toggleRecurring);
 	}
 
-	function dateSelectionChange(dates) {
-		const [start, end]: Date[] = dates;
-		setStartDate(start);
-		setEndDate(end);
+	function dateSelectionChange(dates): void {
+		setRecurringDates(dates); // Such a function is kinda stupid but just "setRecurringDates" pops up with a TS error
 	}
 
 	return (
@@ -125,15 +125,11 @@ export default function Recurring({
 					{/* For the clearing element. */}
 					<label htmlFor="datepicker">Start/end recurring:</label>
 					<DatePicker
-						selected={startDate}
+						value={recurringDates}
 						onChange={dateSelectionChange}
-						startDate={startDate}
-						endDate={endDate}
-						selectsRange
-						isClearable
-						placeholderText="Select date range"
-						id="datepicker"
-						autoComplete="off"
+						selectRange
+						format="MM/dd/yyyy"
+						id="recurring-datepicker"
 					/>
 				</div>
 				<div id="frequency-wrapper">

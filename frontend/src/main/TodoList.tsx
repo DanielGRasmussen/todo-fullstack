@@ -91,8 +91,7 @@ export function TodoList({
 		value: string;
 		label: string;
 	}>({ value: "all", label: "All" });
-	const [startDate, setStartDate] = useState(null);
-	const [endDate, setEndDate] = useState(null);
+	const [searchDates, setSearchDates] = useState([null, null]);
 
 	const recurringTodo: ITodoData[] = useRecurring(todoList);
 
@@ -135,6 +134,7 @@ export function TodoList({
 		const remove = datesToCheck.some((dateToCheck) => {
 			if (!dateToCheck) return false;
 			const date = new Date(dateToCheck);
+			const [startDate, endDate] = searchDates[0];
 			if (startDate && endDate) {
 				const start = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate() + 1);
 				const end = new Date(endDate.getFullYear(), endDate.getMonth(), endDate.getDate() + 1);
@@ -192,10 +192,8 @@ export function TodoList({
 				setFilters={setFilters}
 				currentTimeframe={currentTimeframe}
 				setCurrentTimeframe={setCurrentTimeframe}
-				startDate={startDate}
-				setStartDate={setStartDate}
-				endDate={endDate}
-				setEndDate={setEndDate}
+				searchDates={searchDates}
+				setSearchDates={setSearchDates}
 			/>
 
 			<ul id="todos">

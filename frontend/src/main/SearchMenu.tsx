@@ -2,8 +2,9 @@ import "./css/SearchMenu.css";
 import React, { useEffect, useState } from "react";
 import makeAnimated from "react-select/animated";
 import Select, { components } from "react-select";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
+import DatePicker from "react-date-picker";
+import "react-date-picker/dist/DatePicker.css";
+import "react-calendar/dist/Calendar.css";
 import SortButton from "./SortButton";
 
 const animatedComponents = makeAnimated();
@@ -45,10 +46,8 @@ interface ISearchMenu {
 	setFilters;
 	currentTimeframe: { value: string; label: string };
 	setCurrentTimeframe;
-	startDate;
-	setStartDate;
-	endDate;
-	setEndDate;
+	searchDates;
+	setSearchDates;
 }
 
 function SearchMenu({
@@ -66,10 +65,8 @@ function SearchMenu({
 	setFilters,
 	currentTimeframe,
 	setCurrentTimeframe,
-	startDate,
-	setStartDate,
-	endDate,
-	setEndDate
+	searchDates,
+	setSearchDates
 }: ISearchMenu): JSX.Element {
 	/* This renders the search menu with options to filter for the TodoList
 	 *
@@ -150,12 +147,6 @@ function SearchMenu({
 		})
 	};
 
-	function dateSelectionChange(dates) {
-		const [start, end] = dates;
-		setStartDate(start);
-		setEndDate(end);
-	}
-
 	const statusOptions = [
 		{ value: "incomplete", label: "Incomplete" },
 		{ value: "in-progress", label: "In-Progress" },
@@ -209,14 +200,11 @@ function SearchMenu({
 				{/* For the clearing element. */}
 				<label htmlFor="datepicker">Date range:</label>
 				<DatePicker
-					selected={startDate}
-					onChange={dateSelectionChange}
-					startDate={startDate}
-					endDate={endDate}
-					selectsRange
-					isClearable
-					placeholderText="Select date range"
-					id="datepicker"
+					value={searchDates}
+					onChange={setSearchDates}
+					selectRange
+					format="MM/dd/yyyy"
+					id="search-datepicker"
 				/>
 			</div>
 			<div id="time">

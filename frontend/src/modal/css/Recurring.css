@@ -78,22 +78,23 @@ input::-webkit-inner-spin-button {
 	background: #d0d0d0;
 }
 
-#recurring div input,
-#recurring div select {
+#recurring > div > input,
+#recurring > div > select {
 	height: 35px;
 	font-size: 12pt;
 	margin-left: 5px;
 	border-radius: 5px;
-	outline: 1px solid black;
-	border: none;
+	border: 1px solid lightgrey;
+	outline: none;
+}
+
+#recurring > div > input:focus,
+#recurring > div > select:focus {
+	border: 1px solid black;
 }
 
 #recurring div select option {
 	border-radius: 10px;
-}
-
-#recurring div input:focus {
-	border: none;
 }
 
 #recurring div label {
@@ -107,11 +108,28 @@ input::-webkit-inner-spin-button {
 }
 
 #recurring #datepicker-wrapper label {
-	width: 230px;
+	width: 140px;
 }
 
-#recurring #datepicker-wrapper input {
-	width: 200px;
+#recurring #recurring-datepicker {
+	height: 35px;
+	font-size: 12pt;
+}
+
+#recurring #recurring-datepicker > div {
+	height: 33px;
+	padding-bottom: 2px;
+	border: 1px solid lightgrey;
+	border-radius: 5px;
+}
+
+#recurring #recurring-datepicker > div:focus-within {
+	border: 1px solid black;
+}
+
+#recurring #recurring-datepicker input {
+	border: 0;
+	height: 100%;
 }
 
 #recurring #frequency-wrapper {

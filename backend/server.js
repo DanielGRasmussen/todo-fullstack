@@ -29,7 +29,7 @@ app.use(
 		cookie: {
 			maxAge: 1000 * 60 * 60 * 24 * 30, // 30 days
 			sameSite: true,
-			secure: process.env.NODE_ENV === "production" // cookies over https only when in production
+			secure: false
 		}
 	})
 );

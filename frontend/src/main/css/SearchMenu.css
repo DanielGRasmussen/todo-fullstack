@@ -182,16 +182,40 @@
 	.dropdown-item-content {
 		transition: all 0.3s ease-in-out;
 		height: 0;
-		overflow: hidden;
+		overflow: clip;
 	}
 
 	/* fit-content doesn't show the animation for whatever reason */
 	.dropdown-item-content.filters.show {
+		animation: filter-appear 0.3s ease-in-out;
 		height: 324px;
+		overflow: visible;
+	}
+
+	@keyframes filter-appear {
+		from {
+			height: 0;
+			overflow: clip;
+		}
+		to {
+			height: 324px;
+		}
 	}
 
 	.dropdown-item-content.sorts.show {
+		animation: sorts-appear 0.3s ease-in-out;
 		height: 50px;
+		overflow: visible;
+	}
+
+	@keyframes sorts-appear {
+		from {
+			height: 0;
+			overflow: clip;
+		}
+		to {
+			height: 50px;
+		}
 	}
 }
 

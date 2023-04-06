@@ -134,7 +134,7 @@ export function TodoList({
 		const remove = datesToCheck.some((dateToCheck) => {
 			if (!dateToCheck) return false;
 			const date = new Date(dateToCheck);
-			const [startDate, endDate] = searchDates[0];
+			const [startDate, endDate] = searchDates;
 			if (startDate && endDate) {
 				const start = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate() + 1);
 				const end = new Date(endDate.getFullYear(), endDate.getMonth(), endDate.getDate() + 1);

@@ -49,18 +49,6 @@ export function isDateFormatValid(dateString: string): boolean {
 	return dateRegex.test(dateString);
 }
 
-export function getCurrentTimeInUserTimezone(): string {
-	const now = new Date();
-	const options: Intl.DateTimeFormatOptions = {
-		hour: "numeric",
-		minute: "numeric",
-		second: "numeric",
-		hour12: false,
-		timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone
-	};
-	return now.toLocaleTimeString(undefined, options);
-}
-
 export function filterTodosByDate(datesToCheck: string[], currentTimeframe: string): boolean {
 	const now = new Date();
 
@@ -139,4 +127,19 @@ export function stringTimeToMS(timeString: string): number {
 			break;
 	}
 	return MS;
+}
+
+export function millisecondsToMTime(ms: number): string {
+	// Milliseconds to 24h time. Ex. 14:50
+	const date = new Date(ms);
+	const hours = date.getHours().toString().padStart(2, "0");
+	const minutes = date.getMinutes().toString().padStart(2, "0");
+	return `${hours}:${minutes}`;
+}
+
+export function MTimeToMilliseconds(timeString: string): number {
+	const [hours, minutes] = timeString.split(":").map(Number);
+	const date = new Date(1970, 0, 1, hours, minutes, 0, 0);
+	const tzOffset = -date.getTimezoneOffset(); // offset from UTC in hours (UTC-7)
+	return date.getTime() + tzOffset * 60 * 1000;
 }

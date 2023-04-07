@@ -4,11 +4,17 @@ import React, { useState } from "react";
 import DatePicker from "react-date-picker";
 import "react-date-picker/dist/DatePicker.css";
 import "react-calendar/dist/Calendar.css";
+import TimePicker from "react-time-picker";
+import "react-time-picker/dist/TimePicker.css";
+import "react-clock/dist/Clock.css";
+import { millisecondsToMTime, MTimeToMilliseconds } from "../utils";
 
 interface IRecurringProps {
 	todo: ITodoData;
 	isOpen: boolean;
+	modalCreate: boolean;
 	toggleRecurring: () => void;
+	toggleModal: () => void;
 	dataChange;
 	startNotice;
 	askConfirmation;
@@ -17,7 +23,9 @@ interface IRecurringProps {
 export default function Recurring({
 	todo,
 	isOpen,
+	modalCreate,
 	toggleRecurring,
+	toggleModal,
 	dataChange,
 	startNotice,
 	askConfirmation
@@ -28,6 +36,16 @@ export default function Recurring({
 		todo.recurring.isRecurring ? new Date(todo.recurring.duration.start) : null,
 		todo.recurring.isRecurring ? new Date(todo.recurring.duration.end) : null
 	]);
+	// Either the start time in 24h string format or "00:00"
+	const time = recurringDates[0] !== null
+		? millisecondsToMTime(
+			recurringDates[0].getUTCHours() *
+			3600000 + // 60 * 60 * 1000 | hours - ms
+			recurringDates[0].getUTCMinutes() *
+			60000 // 60 * 1000 | minutes - ms
+		)
+		: "00:00";
+	const [timeOfDay, setTimeOfDay] = useState<string>(time);
 	const [frequencyAmount, setFrequencyAmount] = useState(
 		todo.recurring.isRecurring ? todo.recurring.frequencyAmount : undefined
 	);
@@ -48,9 +66,11 @@ export default function Recurring({
 		if (frequencyAmount === 0) {
 			return startNotice("error", "Frequency amount cannot be 0");
 		}
+		const timeOffset = MTimeToMilliseconds(timeOfDay) - MTimeToMilliseconds(time);
 		const duration = {
-			start: new Date(startDate).toISOString(),
-			end: new Date(endDate).toISOString()
+			// Both fields because #1 is used for proposed start/end dates and #2 is so it does an extra task at end of date.
+			start: new Date(startDate.getTime() + timeOffset).toISOString(),
+			end: new Date(endDate.getTime() + timeOffset).toISOString()
 		};
 		const newTimeTaken = timeTaken * 1000 * 60;
 		// For some reason dataChange is not affecting the data
@@ -59,13 +79,14 @@ export default function Recurring({
 		todo.recurring.timeTaken = newTimeTaken;
 		dataChange(true, "isRecurring", false, true);
 		dataChange(duration, "duration", false, true);
-		dataChange(newTimeTaken.toString(), "timeTaken", false, true);
+		dataChange(newTimeTaken, "timeTaken", false, true);
 		if (todo.proposedStartDate !== "") {
 			const newEnd = new Date(new Date(todo.proposedStartDate).getTime() + newTimeTaken);
 			todo.proposedEndDate = newEnd.toISOString();
 			dataChange("proposedEndDate", newEnd.toISOString());
 		}
-		return toggleRecurring();
+		toggleRecurring();
+		if (!modalCreate) toggleModal();
 	}
 
 	if (!checked) {
@@ -147,6 +168,14 @@ export default function Recurring({
 						<option value="m">Months</option>
 						<option value="y">Years</option>
 					</select>
+				</div>
+				<div id="timepicker-wrapper">
+					<label htmlFor="timepicker">Time of day:</label>
+					<TimePicker
+						value={timeOfDay}
+						onChange={setTimeOfDay}
+						id="start-timepicker"
+					/>
 				</div>
 				<div id="time-taken-wrapper">
 					<label htmlFor="time-taken">Task length (minutes):</label>

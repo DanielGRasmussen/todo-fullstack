@@ -19,15 +19,15 @@ interface IModalProps {
 }
 
 export function Modal({
-						  isOpen,
-						  setIsOpen,
-						  create,
-						  todo,
-						  setModalTodo,
-						  fetchTodoList,
-						  startNotice,
-						  askConfirmation
-					  }: IModalProps) {
+	isOpen,
+	setIsOpen,
+	create,
+	todo,
+	setModalTodo,
+	fetchTodoList,
+	startNotice,
+	askConfirmation
+}: IModalProps) {
 	const [change, setChange] = useState(false);
 	const [recurringOpen, setRecurringOpen] = useState(false);
 	const [addingSubtask, setAddingSubtask] = useState(false);
@@ -46,7 +46,7 @@ export function Modal({
 		}
 	}
 
-	function dataChange(newValue, dataType: string, forceUpdate = false, recurring = false, subtaskIndex = -1) {
+	function dataChange(newValue, dataType, forceUpdate = false, recurring = false, subtaskIndex = -1) {
 		// General dataChange function to reload the modal and pass on new data to db
 		let value = newValue;
 		// Validate data
@@ -238,6 +238,8 @@ export function Modal({
 				<Recurring
 					todo={todo}
 					isOpen={recurringOpen}
+					modalCreate={create}
+					toggleModal={toggleModal}
 					toggleRecurring={toggleRecurring}
 					dataChange={dataChange}
 					startNotice={startNotice}

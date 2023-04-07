@@ -71,7 +71,7 @@ function Header() : JSX.Element {
 			setIsOpen(false);
 		}
 
-		clickAnywhere([], clickedElsewhere, ["nav", "#hamburger"]);
+		clickAnywhere([], clickedElsewhere, ["nav", "#hamburger", "#login-info"]);
 
 		function handleResize() {
 			setWindowWidth(window.innerWidth);
@@ -121,6 +121,8 @@ function Header() : JSX.Element {
 				src={`${process.env.PUBLIC_URL}/assets/hamburger_button.svg`}
 				id="hamburger"
 				alt="Hamburger Button"
+				width={20}
+				height={20}
 				onClick={() => setIsOpen(!isOpen)}
 			/>
 			{/* Wrapper so that user can click on right without it triggering modal */}

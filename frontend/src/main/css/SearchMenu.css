@@ -38,13 +38,11 @@
 
 /* Datepicker */
 #datepicker-wrapper {
-	width: 372px;
 	grid-column: 2 / 3;
 	grid-row: 2 / 3;
 }
 
 #search-datepicker {
-	width: 370px;
 	height: 50px;
 	font-size: 12pt;
 	border-radius: 5px;
@@ -116,6 +114,14 @@
 	#menu #search-bar-container-container.hide {
 		/* This is -200px instead of -100px so the animation speed stays the same and the containers don't block the nav */
 		top: -200px;
+	}
+
+	#datepicker-wrapper {
+		width: 372px;
+	}
+
+	#search-datepicker {
+		width: 370px;
 	}
 }
 

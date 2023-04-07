@@ -44,6 +44,8 @@
 	outline: 0;
 }
 
-#modal-proposedEndDate {
-	margin-left: 0.6ch;
+@media (min-width: 635px) {
+	#modal-proposedEndDate {
+		margin-left: 0.6ch;
+	}
 }

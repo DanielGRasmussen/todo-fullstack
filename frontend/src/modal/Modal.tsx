@@ -35,8 +35,8 @@ export function Modal({
 
 	function toggleModal() {
 		if (isOpen) {
-			const modalOverlay: Element = document.getElementById("modal-overlay");
-			modalOverlay.classList.add("close");
+			document.getElementById("modal-overlay").classList.add("close");
+			document.querySelector("html").classList.remove("freeze");
 			sleep(190).then(() => {
 				setIsOpen(false);
 			});
@@ -227,6 +227,7 @@ export function Modal({
 		}
 	}
 
+	document.querySelector("html").classList.add("freeze");
 	return (
 		<div id="modal-overlay" onClick={overlayClicked}>
 			<div id="modal" className={create ? "create" : null}>

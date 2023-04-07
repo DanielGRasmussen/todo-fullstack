@@ -1,7 +1,7 @@
 import "./css/Modal.css";
 import React, { useState } from "react";
 import Dates from "./Dates";
-import { checkPriorityValid, isDateFormatValid, sleep } from "../utils";
+import { checkPriorityValid, sleep } from "../utils";
 import SubTask from "./SubTask";
 import { deleteTodoById, getTodoByIdFromLocal, saveNewTodo, saveTodo } from "../ExternalServices";
 import ITodoData from "../DataInterfaces";
@@ -48,17 +48,12 @@ export function Modal({
 
 	function dataChange(newValue, dataType, forceUpdate = false, recurring = false, subtaskIndex = -1) {
 		// General dataChange function to reload the modal and pass on new data to db
-		let value = newValue;
+		const value = newValue;
 		// Validate data
 		if (dataType === "priority") {
 			if (!checkPriorityValid(newValue)) {
 				return startNotice("error", "Invalid Priority Entry");
 			}
-		} else if (dataType === "proposedStartDate" || dataType === "proposedEndDate") {
-			if (!isDateFormatValid(newValue)) {
-				return startNotice("error", "Invalid Date");
-			}
-			value = new Date(value).toISOString();
 		} else if (dataType === "title" && newValue === "") {
 			return startNotice("error", "Invalid Title");
 		} else if (dataType === "type" && newValue === "") {

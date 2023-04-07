@@ -103,7 +103,7 @@
 }
 
 #modal .priority input {
-	width: 1ch;
+	width: 1.5ch;
 	padding: 0 5px;
 	color: #e60000;
 }
@@ -131,12 +131,21 @@
 #subtasks-wrapper {
 	position: relative;
 	width: 105%;
-	max-width: 374px;
+	max-width: 400px;
 }
 
-@media screen and (min-width: 450px) {
+@media screen and (min-width: 635px) {
+	#modal .priority {
+		margin-top: 27px;
+	}
+
+	#modal #recurring-settings {
+		margin-top: 27px;
+		width: fit-content;
+	}
+
 	#subtasks-wrapper {
-		max-width: 404px;
+		margin-top: 27px;
 	}
 }
 
@@ -154,7 +163,7 @@
 }
 
 #modal #description {
-	width: calc(100% - 40px);
+	width: calc(100% - 6px);
 	height: 100px;
 	border: 0;
 	border-radius: 7px;

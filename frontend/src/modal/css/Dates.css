@@ -14,5 +14,36 @@
 
 #modal #dates input {
 	color: #666;
-	padding: 0;
+}
+
+.modal-proposedDates {
+	width: 250px;
+	height: 35px;
+	font-size: 12pt;
+	border-radius: 5px;
+	border: 1px solid #9e9e9e;
+	padding-left: 7px;
+
+	grid-column: 2 / 3;
+	display: block;
+}
+
+.modal-proposedDates:focus-within {
+	border: 1px solid black;
+}
+
+#modal #dates .modal-proposedDates input {
+	border: none;
+	outline: none;
+}
+
+.modal-proposedDates > div {
+	height: 35px;
+	padding-bottom: 2px;
+	border: 0;
+	outline: 0;
+}
+
+#modal-proposedEndDate {
+	margin-left: 0.6ch;
 }

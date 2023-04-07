@@ -1,6 +1,10 @@
 import "./css/Dates.css";
+import React, { useState } from "react";
+import DateTimePicker from "react-datetime-picker";
+import "react-datetime-picker/dist/DateTimePicker.css";
+import "react-calendar/dist/Calendar.css";
+import "react-clock/dist/Clock.css";
 import { formatDate } from "../utils";
-import React from "react";
 import ITodoData from "../DataInterfaces";
 
 interface IDatesProps {
@@ -18,45 +22,44 @@ function Dates({ todo, dataChange, create }: IDatesProps) {
 	 * todo: Object following DataInterfaces. Used for the dates.
 	 * dataChange: A function to be called when a date input field is blurred with the current info in the field.
 	 */
-	let plannedStart;
-	let plannedEnd;
-	if (todo.recurring.isRecurring) {
-		plannedStart = formatDate(todo.proposedStartDate);
-		plannedEnd = formatDate(todo.proposedEndDate);
-		if (create) {
-			plannedStart = "TBD";
-			plannedEnd = "TBD";
-		}
-	} else {
-		plannedStart = (
-			<input
-				type="text"
-				defaultValue={create ? null : formatDate(todo.proposedStartDate)}
-				onBlur={(event) => {
-					dataChange(event.target.value, "proposedStartDate");
-				}}
-				placeholder="ex. 1/1/2000, 12:00 AM"
-			/>
-		);
-		plannedEnd = (
-			<input
-				type="text"
-				defaultValue={create ? null : formatDate(todo.proposedEndDate)}
-				onBlur={(event) => {
-					dataChange(event.target.value, "proposedEndDate");
-				}}
-				placeholder="ex. 1/1/2000, 12:00 PM"
-			/>
-		);
-	}
+	const [plannedStart, setPlannedStart] = useState(todo.proposedStartDate
+		? new Date(todo.proposedStartDate)
+		: null
+	);
+	const [plannedEnd, setPlannedEnd] = useState(todo.proposedEndDate
+		? new Date(todo.proposedEndDate)
+		: null
+	);
+
+	const plannedStartElement = todo.recurring.isRecurring
+		? formatDate(todo.proposedStartDate)
+		: (<DateTimePicker
+			value={plannedStart}
+			onChange={(value) => {
+				setPlannedStart(value);
+				dataChange(value.toISOString(), "proposedStartDate");
+			}}
+			className="modal-proposedDates"
+		/>);
+	const plannedEndElement = todo.recurring.isRecurring
+		? formatDate(todo.proposedEndDate)
+		: (<DateTimePicker
+			value={plannedEnd}
+			onChange={(value) => {
+				setPlannedEnd(value);
+				dataChange(value.toISOString(), "proposedEndDate");
+			}}
+			className="modal-proposedDates"
+			id="modal-proposedEndDate"
+		/>);
 
 	return (
 		<ul id="dates">
 			<li>Created: {create ? null : formatDate(todo.created)}</li>
 			<li>Last Updated: {create ? null : formatDate(todo.lastUpdated)}</li>
-			<li>Planned Start: {plannedStart}</li>
+			<li>Planned Start: {plannedStartElement}</li>
 			<li>Actual Start: {todo.actualStartDate ? formatDate(todo.actualStartDate) : "TBD"}</li>
-			<li>Planned End: {plannedEnd}</li>
+			<li>Planned End: {plannedEndElement}</li>
 			<li>Actual End: {todo.actualEndDate ? formatDate(todo.actualEndDate) : "TBD"}</li>
 		</ul>
 	);

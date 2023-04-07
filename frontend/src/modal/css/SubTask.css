@@ -42,6 +42,7 @@
 	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans",
 		"Droid Sans", "Helvetica Neue", sans-serif;
 	font-size: 12pt;
+	width: calc(100% - 60px);
 }
 
 #subtasks img {
@@ -49,6 +50,7 @@
 	padding: 2px;
 	height: 22px;
 	cursor: pointer;
+	margin-top: -1px;
 }
 
 #subtasks #edit-subtask {

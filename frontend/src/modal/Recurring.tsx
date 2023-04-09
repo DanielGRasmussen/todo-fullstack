@@ -37,7 +37,8 @@ export default function Recurring({
 		todo.recurring.isRecurring ? new Date(todo.recurring.duration.end) : null
 	]);
 	// Either the start time in 24h string format or "00:00"
-	const time = recurringDates[0] !== null
+	// Datepicker sets the entire list to null when the clear button is clicked
+	const time = recurringDates && recurringDates[0] instanceof Date
 		? millisecondsToMTime(
 			recurringDates[0].getUTCHours() *
 			3600000 + // 60 * 60 * 1000 | hours - ms

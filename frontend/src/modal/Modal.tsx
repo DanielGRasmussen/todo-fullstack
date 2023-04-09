@@ -114,7 +114,7 @@ export function Modal({
 			} else {
 				if (realTodo[dataType] === value) return;
 				realTodo[dataType] = value;
-				saveTodo(realTodo).then(() => {
+				if (!create) saveTodo(realTodo).then(() => {
 					fetchTodoList();
 				});
 				if (!forceUpdate) {

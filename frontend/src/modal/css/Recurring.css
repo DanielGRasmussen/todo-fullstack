@@ -132,6 +132,16 @@ input::-webkit-inner-spin-button {
 	height: 100%;
 }
 
+@media only screen and (max-width: 425px) {
+	#recurring .react-date-picker__inputGroup__input--hasLeadingZero {
+		padding-left: 0;
+	}
+
+	#recurring .react-time-picker__inputGroup__input--hasLeadingZero {
+		padding-left: 0;
+	}
+}
+
 #recurring #frequency-wrapper {
 	margin-top: 6px;
 }

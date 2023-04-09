@@ -90,7 +90,7 @@ export function TodoList({
 	const [currentTimeframe, setCurrentTimeframe] = useState<{
 		value: string;
 		label: string;
-	}>({ value: "all", label: "All" });
+	}>({ value: "today", label: "Today" });
 	const [searchDates, setSearchDates] = useState([null, null]);
 
 	const recurringTodo: ITodoData[] = useRecurring(todoList);

@@ -259,7 +259,7 @@ export function Modal({
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					viewBox="0 0 20 20"
-					onClick={() => toggleModal} // This is because toggleModal takes a boolean parameter, don't need event.
+					onClick={() => toggleModal()} // toggleModal takes a boolean parameter, don't need event.
 					id="close-modal"
 				>
 					<line x1="4" y1="4" x2="16" y2="16" stroke="black" />

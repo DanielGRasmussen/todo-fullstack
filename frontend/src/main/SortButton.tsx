@@ -44,18 +44,47 @@ function SortButton({
 			id="sort-direction"
 			className={(sortOrder ? "ascending" : "descending") + " tooltip"}
 		>
+			{/* public/assets/up_arrow.svg */}
 			{sortOrder ? (
-				<img
-					src={process.env.PUBLIC_URL + "/assets/up_arrow.svg"}
-					alt="Ascending order"
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					enableBackground="new 0 0 50 150"
+					viewBox="0 0 50 150"
 					style={first ? blankStyle : arrowStyle}
-				/>
+				>
+					<g>
+						<line
+							y2="24.964"
+							x1="23.871"
+							x2="23.871"
+							stroke="#000"
+							strokeMiterlimit="10"
+							y1="149"
+							strokeWidth="6"
+						/>
+						<polygon points="42.292 25.87 3.969 25.87 24.885 1.917" />
+					</g>
+				</svg>
 			) : (
-				<img
-					src={process.env.PUBLIC_URL + "/assets/up_arrow.svg"}
-					alt="Descending order"
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					enableBackground="new 0 0 50 150"
+					viewBox="0 0 50 150"
 					style={arrowStyle}
-				/>
+				>
+					<g>
+						<line
+							y2="24.964"
+							x1="23.871"
+							x2="23.871"
+							stroke="#000"
+							strokeMiterlimit="10"
+							y1="149"
+							strokeWidth="6"
+						/>
+						<polygon points="42.292 25.87 3.969 25.87 24.885 1.917" />
+					</g>
+				</svg>
 			)}
 		</div>
 	);

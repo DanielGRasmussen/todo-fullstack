@@ -12,9 +12,7 @@ import { millisecondsToMTime, MTimeToMilliseconds } from "../utils";
 interface IRecurringProps {
 	todo: ITodoData;
 	isOpen: boolean;
-	modalCreate: boolean;
 	toggleRecurring: () => void;
-	toggleModal: () => void;
 	dataChange;
 	startNotice;
 	askConfirmation;
@@ -23,9 +21,7 @@ interface IRecurringProps {
 export default function Recurring({
 	todo,
 	isOpen,
-	modalCreate,
 	toggleRecurring,
-	toggleModal,
 	dataChange,
 	startNotice,
 	askConfirmation
@@ -59,9 +55,10 @@ export default function Recurring({
 		const [startDate, endDate] = recurringDates;
 		if (!checked) {
 			if (!todo.recurring.isRecurring) return toggleRecurring();
-			dataChange(false, "isRecurring", false, true); // Toggles modal in here
+			todo.recurring.isRecurring = checked;
 			return toggleRecurring();
 		}
+
 		if (!startDate || !endDate || !frequencyUnit || !frequencyAmount || !timeTaken)
 			return startNotice("error", "Field is missing");
 		if (frequencyAmount === 0) {
@@ -74,20 +71,27 @@ export default function Recurring({
 			end: new Date(endDate.getTime() + timeOffset).toISOString()
 		};
 		const newTimeTaken = timeTaken * 1000 * 60;
-		// For some reason dataChange is not affecting the data
-		todo.recurring.frequencyAmount = frequencyAmount;
-		todo.recurring.frequencyUnit = frequencyUnit;
-		todo.recurring.timeTaken = newTimeTaken;
-		dataChange(true, "isRecurring", false, true);
-		dataChange(duration, "duration", false, true);
-		dataChange(newTimeTaken, "timeTaken", false, true);
-		if (todo.proposedStartDate !== "") {
+		// Update todo with proper data
+		dataChange("isRecurring", checked, true);
+		dataChange("frequencyAmount", frequencyAmount, true);
+		dataChange("frequencyUnit", frequencyUnit, true);
+		dataChange("timeTaken", timeTaken, true);
+		dataChange("duration", duration, true);
+		if (checked && !todo.recurring.completionStatus) {
+			dataChange("completionStatus", [
+				{
+					status: "incomplete",
+					actualStart: "",
+					actualEnd: ""
+				}
+			], true);
+		}
+
+		if (todo.proposedStartDate) {
 			const newEnd = new Date(new Date(todo.proposedStartDate).getTime() + newTimeTaken);
 			todo.proposedEndDate = newEnd.toISOString();
-			dataChange("proposedEndDate", newEnd.toISOString());
 		}
 		toggleRecurring();
-		if (!modalCreate) toggleModal();
 	}
 
 	if (!checked) {

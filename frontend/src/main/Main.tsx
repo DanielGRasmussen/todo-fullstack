@@ -9,17 +9,13 @@ import Confirmation from "./Confirmation";
 import ITodoData, { IUserInfo } from "../DataInterfaces";
 
 function Main(): JSX.Element {
-	const [todoList, setTodoList] = useState<ITodoData[]>([]);
+	const [todoList, setTodoList] = useState<ITodoData[]>(JSON.parse(sessionStorage.getItem("todos") || "[]"));
 	const [isOpen, setIsOpen] = useState(false); 	// Modal isOpen
 	const [modalTodo, setModalTodo] = useState({});
 	const [modalCreate, setModalCreate] = useState(false);
-	const [userInfo, setUserInfo] = useState<IUserInfo>({
-		"googleId": "",
-		"_id": "",
-		"name": "",
-		"email": "",
-		"picture": process.env.PUBLIC_URL + "/images/default-profile-picture.png",
-	});
+	const [userInfo, setUserInfo] = useState<IUserInfo>(JSON.parse(sessionStorage.getItem("userInfo") ||
+		"{ \"googleId\": \"\", \"_id\": \"\", \"name\": \"\", \"email\": \"\", \"picture\": \"/assets/default-profile-picture.svg\" }"
+	));
 	const [showNotice, setShowNotice] = useState(false);
 	const [noticeInfo, setNoticeInfo] = useState({ type: "", message: "" });
 	const [showConfirmation, setShowConfirmation] = useState(false);
@@ -69,6 +65,7 @@ function Main(): JSX.Element {
 	function createTodo(): void {
 		setModalCreate(true);
 		setModalTodo({
+			_id: "",
 			created: "",
 			proposedStartDate: "",
 			actualStartDate: "",
@@ -90,15 +87,29 @@ function Main(): JSX.Element {
 	}
 
 	async function fetchTodoList(): Promise<void> {
-		const fetchedList: ITodoData[] = await getToDoList();
-		setTodoList(fetchedList);
+		try {
+			const fetchedList: ITodoData[] = await getToDoList();
+			setTodoList(fetchedList);
+		} catch (error) {
+			if (error.response.status === 404) startNotice("error", "Something went wrong...");
+			else {
+				console.error(error);
+				startNotice("error", error.message);
+			}
+		}
 	}
-
+	try {
 	useEffect(() => {
 		fetchTodoList();
-		getUserInfo().then((data) => {
-			setUserInfo(data);
-		});
+		try {
+			getUserInfo().then(setUserInfo);
+		} catch (error) {
+			if (error.response.status === 404) startNotice("error", "Something went wrong...");
+			else {
+				console.log(error);
+				startNotice("error", error.message);
+			}
+		}
 	}, []);
 
 	return (
@@ -130,7 +141,7 @@ function Main(): JSX.Element {
 				isOpen={isOpen}
 				setIsOpen={setIsOpen}
 				create={modalCreate}
-				todo={modalTodo}
+				originalTodo={modalTodo}
 				setModalTodo={setModalTodo}
 				fetchTodoList={fetchTodoList}
 				startNotice={startNotice}
@@ -145,6 +156,13 @@ function Main(): JSX.Element {
 			/>
 		</main>
 	);
+	} catch (error) {
+		if (error.response.status === 404) startNotice("error", "Something went wrong...");
+		else {
+			console.error(error);
+			startNotice("error", error.message);
+		}
+	}
 }
 
 export default Main;

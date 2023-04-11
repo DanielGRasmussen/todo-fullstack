@@ -30,6 +30,7 @@ export default interface ITodoData {
 	priority: string;
 	status: string;
 	lastUpdated: string;
+	index?: number;
 }
 
 export interface IUserInfo {

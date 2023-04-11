@@ -197,12 +197,16 @@ export function TodoList({
 			/>
 
 			<ul id="todos">
-				<img
+				{/* public/assets/create_plus.svg */}
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					viewBox="0 0 20 20"
 					onClick={createTodo}
-					src={process.env.PUBLIC_URL + "/assets/create_plus.svg"}
-					alt="Create todo"
 					id="create-todo"
-				/>
+				>
+					<line x1="10" y1="2" x2="10" y2="18" stroke="black" strokeWidth="1"/>
+					<line x1="2" y1="10" x2="18" y2="10" stroke="black" strokeWidth="1"/>
+				</svg>
 				{sortedTodoList.map((todo, index) => (
 					<TodoElement
 						key={index}

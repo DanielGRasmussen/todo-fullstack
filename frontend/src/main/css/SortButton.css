@@ -10,7 +10,7 @@
 	padding: 5px;
 }
 
-#sort-direction img {
+#sort-direction svg {
 	position: absolute;
 	width: 26px;
 	height: 26px;

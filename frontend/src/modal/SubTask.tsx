@@ -6,8 +6,8 @@ import ITodoData from "../DataInterfaces";
 interface ISubTaskProps {
 	subtask: { name: string; link: boolean; id: string };
 	index: number;
+	modalTodo;
 	setModalTodo: React.Dispatch<React.SetStateAction<ITodoData>>;
-	dataChange;
 	startNotice;
 	askConfirmation;
 	setAddingSubtask?;
@@ -17,8 +17,8 @@ interface ISubTaskProps {
 function SubTask({
 	subtask,
 	index,
+	modalTodo,
 	setModalTodo,
-	dataChange,
 	startNotice,
 	askConfirmation,
 	setAddingSubtask,
@@ -44,10 +44,7 @@ function SubTask({
 		subtask.name = subTaskTodo.title;
 		subtask.id = "";
 		startNotice("notice", "Deleting linked subtask.");
-		dataChange("", "", true); // Updates the checkbox uncheck.
-		deleteTodoById(subTaskTodo.id).then(() => {
-			dataChange("", "", true); // Removes subtask from TodoList.
-		});
+		deleteTodoById(subTaskTodo.id);
 	}
 
 	function editSubtask() {
@@ -55,7 +52,7 @@ function SubTask({
 			const subtaskTitle: HTMLInputElement = document.getElementById(`subtaskTitle${index}`) as HTMLInputElement;
 			if (subtaskTitle.value.length === 0) return startNotice("error", "Subtask title cannot be empty.");
 			subtask.name = subtaskTitle.value;
-			dataChange(subtask, "subtask", false, false, index);
+			modalTodo.subTasks[index] = subtask;
 		} else if (subtask.link) {
 			setModalTodo(subTaskTodo);
 		}
@@ -65,10 +62,8 @@ function SubTask({
 
 	function deleteSubtask() {
 		function next() {
-			if (subtask.link) {
-				return deleteTodoById(subtask.id);
-			}
-			dataChange("", "deleteSubtask", false, false, index);
+			if (subtask.link) return deleteTodoById(subtask.id);
+			modalTodo.subTasks.splice(index, 1);
 		}
 
 		askConfirmation("Are you sure you want to delete this subtask?", next);
@@ -76,23 +71,39 @@ function SubTask({
 
 	return (
 		<li>
-			<>
-				<span className="linked">{"Linked: "}</span>
-				<input type="checkbox" checked={subtask.link} onChange={linkedClick} />
-				{editing ? <input type="text" defaultValue={subtask.name} id={`subtaskTitle${index}`} autoComplete="off" /> : title}
-				<img
-					onClick={editSubtask}
-					src={process.env.PUBLIC_URL + (editing ? "assets/save.svg" : "/assets/pencil.svg")}
-					alt={editing ? "Save subtask" : "Edit subtask"}
-					id="edit-subtask"
-				/>
-				<img
-					onClick={deleteSubtask}
-					src={process.env.PUBLIC_URL + "/assets/trash.svg"}
-					alt={editing ? "Save subtask" : "Edit subtask"}
-					id="delete-subtask"
-				/>
-			</>
+			<span className="linked">{"Linked: "}</span>
+			<input type="checkbox" checked={subtask.link} onChange={linkedClick} />
+			{editing ? <input type="text" defaultValue={subtask.name} id={`subtaskTitle${index}`} autoComplete="off" /> : title}
+			{/* public/assets/pencil.svg or save.svg */}
+			<svg
+				onClick={editSubtask}
+				id="edit-subtask"
+				fill="#000000"
+				xmlns="http://www.w3.org/2000/svg"
+				width="26px"
+				height="26px"
+				viewBox="0 0 26 26"
+				xmlSpace="preserve"
+			>
+				{ editing
+					? (<>
+						<path d="M 25.683594 5.367188 L 20.632812 0.316406 C 20.429688 0.113281 20.15625 0 19.867188 0 L 1.085938 0 C 0.484375 0 0 0.484375 0 1.085938 L 0 24.914062 C 0 25.515625 0.484375 26 1.085938 26 L 24.914062 26 C 25.515625 26 26 25.515625 26 24.914062 L 26 6.132812 C 26 5.84375 25.886719 5.570312 25.683594 5.367188 Z M 19.203125 10.445312 L 4.289062 10.445312 L 4.289062 2.480469 L 19.203125 2.480469 Z M 19.203125 10.445312 " />
+						<path d="M 13.671875 9.460938 L 16.421875 9.460938 C 16.621094 9.460938 16.785156 9.300781 16.785156 9.101562 L 16.785156 3.804688 C 16.785156 3.605469 16.621094 3.445312 16.421875 3.445312 L 13.671875 3.445312 C 13.472656 3.445312 13.308594 3.605469 13.308594 3.804688 L 13.308594 9.101562 C 13.308594 9.300781 13.472656 9.460938 13.671875 9.460938 Z M 13.671875 9.460938 " />
+					</>)
+					: (<path d="M 16.167969 4.382812 L 21.457031 9.671875 L 8.070312 23.058594 L 2.78125 17.769531 Z M 25.46875 3.105469 L 23.109375 0.746094 C 22.199219 -0.164062 20.71875 -0.164062 19.804688 0.746094 L 17.546875 3.007812 L 22.835938 8.296875 L 25.46875 5.660156 C 26.175781 4.953125 26.175781 3.8125 25.46875 3.105469 Z M 0.015625 25.203125 C -0.0820312 25.636719 0.308594 26.023438 0.742188 25.917969 L 6.636719 24.488281 L 1.351562 19.203125 Z M 0.015625 25.203125 "/>)
+				}
+			</svg>
+			{/* public/assets/trash.svg */}
+			<svg
+				width="19px"
+				height="22px"
+				viewBox="0 0 19 21"
+				xmlns="http://www.w3.org/2000/svg"
+				onClick={deleteSubtask}
+				id="delete-subtask"
+			>
+				<path d="M 0 5.90625 L 0 4.472656 C 0.0273438 3.953125 0.242188 3.515625 0.636719 3.160156 C 1.03125 2.804688 1.5 2.625 2.035156 2.625 L 4.070312 2.625 L 4.070312 1.96875 C 4.070312 1.421875 4.269531 0.957031 4.664062 0.574219 C 5.0625 0.191406 5.542969 0 6.105469 0 L 12.890625 0 C 13.457031 0 13.9375 0.191406 14.332031 0.574219 C 14.730469 0.957031 14.925781 1.421875 14.925781 1.96875 L 14.925781 2.625 L 16.964844 2.625 C 17.5 2.625 17.96875 2.804688 18.363281 3.160156 C 18.757812 3.515625 18.96875 3.953125 19 4.472656 L 19 5.90625 C 19 6.261719 18.863281 6.570312 18.597656 6.828125 C 18.328125 7.089844 18.007812 7.21875 17.640625 7.21875 L 17.640625 18.375 C 17.640625 19.113281 17.378906 19.734375 16.855469 20.242188 C 16.335938 20.746094 15.691406 21 14.925781 21 L 4.070312 21 C 3.308594 21 2.664062 20.746094 2.140625 20.242188 C 1.617188 19.734375 1.355469 19.113281 1.355469 18.375 L 1.355469 7.21875 C 0.988281 7.21875 0.671875 7.089844 0.402344 6.828125 C 0.132812 6.570312 0 6.261719 0 5.90625 Z M 1.355469 5.90625 L 17.640625 5.90625 L 17.640625 4.59375 C 17.640625 4.402344 17.578125 4.246094 17.449219 4.125 C 17.324219 4 17.160156 3.9375 16.964844 3.9375 L 2.035156 3.9375 C 1.835938 3.9375 1.675781 4 1.546875 4.125 C 1.421875 4.246094 1.355469 4.402344 1.355469 4.59375 Z M 2.714844 18.375 C 2.714844 18.730469 2.847656 19.039062 3.117188 19.296875 C 3.386719 19.558594 3.703125 19.6875 4.070312 19.6875 L 14.925781 19.6875 C 15.296875 19.6875 15.613281 19.558594 15.882812 19.296875 C 16.152344 19.039062 16.285156 18.730469 16.285156 18.375 L 16.285156 7.21875 L 2.714844 7.21875 Z M 4.070312 17.71875 L 4.070312 9.1875 C 4.070312 8.996094 4.136719 8.839844 4.261719 8.714844 C 4.390625 8.59375 4.550781 8.53125 4.75 8.53125 L 6.105469 8.53125 C 6.304688 8.53125 6.46875 8.59375 6.59375 8.714844 C 6.722656 8.839844 6.785156 8.996094 6.785156 9.1875 L 6.785156 17.71875 C 6.785156 17.910156 6.722656 18.066406 6.59375 18.191406 C 6.46875 18.3125 6.304688 18.375 6.105469 18.375 L 4.75 18.375 C 4.550781 18.375 4.390625 18.3125 4.261719 18.191406 C 4.136719 18.066406 4.070312 17.910156 4.070312 17.71875 Z M 4.75 17.71875 L 6.105469 17.71875 L 6.105469 9.1875 L 4.75 9.1875 Z M 5.429688 2.625 L 13.570312 2.625 L 13.570312 1.96875 C 13.570312 1.777344 13.507812 1.621094 13.378906 1.5 C 13.253906 1.375 13.089844 1.3125 12.890625 1.3125 L 6.105469 1.3125 C 5.910156 1.3125 5.746094 1.375 5.617188 1.5 C 5.492188 1.621094 5.429688 1.777344 5.429688 1.96875 Z M 8.140625 17.71875 L 8.140625 9.1875 C 8.140625 8.996094 8.207031 8.839844 8.332031 8.714844 C 8.460938 8.59375 8.621094 8.53125 8.820312 8.53125 L 10.179688 8.53125 C 10.375 8.53125 10.539062 8.59375 10.664062 8.714844 C 10.792969 8.839844 10.855469 8.996094 10.855469 9.1875 L 10.855469 17.71875 C 10.855469 17.910156 10.792969 18.066406 10.664062 18.191406 C 10.539062 18.3125 10.375 18.375 10.179688 18.375 L 8.820312 18.375 C 8.621094 18.375 8.460938 18.3125 8.332031 18.191406 C 8.207031 18.066406 8.140625 17.910156 8.140625 17.71875 Z M 8.820312 17.71875 L 10.179688 17.71875 L 10.179688 9.1875 L 8.820312 9.1875 Z M 12.214844 17.71875 L 12.214844 9.1875 C 12.214844 8.996094 12.277344 8.839844 12.40625 8.714844 C 12.53125 8.59375 12.695312 8.53125 12.890625 8.53125 L 14.25 8.53125 C 14.445312 8.53125 14.609375 8.59375 14.738281 8.714844 C 14.863281 8.839844 14.925781 8.996094 14.925781 9.1875 L 14.925781 17.71875 C 14.925781 17.910156 14.863281 18.066406 14.738281 18.191406 C 14.609375 18.3125 14.445312 18.375 14.25 18.375 L 12.890625 18.375 C 12.695312 18.375 12.53125 18.3125 12.40625 18.191406 C 12.277344 18.066406 12.214844 17.910156 12.214844 17.71875 Z M 12.890625 17.71875 L 14.25 17.71875 L 14.25 9.1875 L 12.890625 9.1875 Z M 12.890625 17.71875 "/>
+			</svg>
 		</li>
 	);
 }

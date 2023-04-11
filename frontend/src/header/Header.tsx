@@ -24,13 +24,10 @@ function Header() : JSX.Element {
 	const [active] = useState("todo");
 	const [isOpen, setIsOpen] = useState(false);
 	const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-	const [userInfo, setUserInfo] = useState<IUserInfo>({
-		"googleId": "",
-		"_id": "",
-		"name": "",
-		"email": "",
-		"picture": process.env.PUBLIC_URL + "/assets/default-profile-picture.svg",
-	});
+
+	const [userInfo, setUserInfo] = useState<IUserInfo>(JSON.parse(sessionStorage.getItem("userInfo") ||
+		"{ \"googleId\": \"\", \"_id\": \"\", \"name\": \"\", \"email\": \"\", \"picture\": \"/assets/default-profile-picture.svg\" }"
+	));
 	const loggedIn = userInfo.googleId !== "";
 
 	function toggleHeader(header: HTMLElement, search_bar: HTMLElement, down_arrow: HTMLElement, show: boolean) {
@@ -97,12 +94,18 @@ function Header() : JSX.Element {
 	if (windowWidth > 800) {
 		return (
 			<header>
-				<img
-					src={`${process.env.PUBLIC_URL}/assets/drag_down_arrow.svg`}
-					alt="Down arrow to bring down header"
+				{/* public/assets/drag_down_arrow.svg */}
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					width="24"
+					height="12"
+					viewBox="0 0 24 12"
 					id="down_arrow"
 					className="hide"
-				/>
+				>
+					<line x1="4" y1="4" x2="12.5" y2="10" stroke="white" strokeWidth="2"/>
+					<line x1="11.5" y1="10" x2="20" y2="4" stroke="white" strokeWidth="2"/>
+				</svg>
 				<div className="container">
 					<nav>{NavUl}</nav>
 				</div>
@@ -117,14 +120,18 @@ function Header() : JSX.Element {
 			<a href="/" className="icon">
 				<img src={`${process.env.PUBLIC_URL}/assets/icon.svg`} alt="Logo" />
 			</a>
-			<img
-				src={`${process.env.PUBLIC_URL}/assets/hamburger_button.svg`}
+			<svg
+				xmlns="http://www.w3.org/2000/svg"
+				viewBox="0 0 20 20"
+				width="20"
+				height="20"
 				id="hamburger"
-				alt="Hamburger Button"
-				width={20}
-				height={20}
 				onClick={() => setIsOpen(!isOpen)}
-			/>
+			>
+				<line x1="0" y1="4" x2="20" y2="4" stroke="white" strokeWidth="2"/>
+				<line x1="0" y1="10" x2="20" y2="10" stroke="white" strokeWidth="2"/>
+				<line x1="0" y1="16" x2="20" y2="16" stroke="white" strokeWidth="2"/>
+			</svg>
 			{/* Wrapper so that user can click on right without it triggering modal */}
 			<div className={`${isOpen ? "open" : null} wrapper`}>
 				<nav className={isOpen ? "open" : null}>

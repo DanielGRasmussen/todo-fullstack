@@ -37,7 +37,7 @@ function Dates({ todo, dataChange, create }: IDatesProps) {
 			value={plannedStart}
 			onChange={(value) => {
 				setPlannedStart(value);
-				dataChange(value.toISOString(), "proposedStartDate");
+				dataChange("proposedStartDate", value.toISOString());
 			}}
 			className="modal-proposedDates"
 		/>);
@@ -47,7 +47,7 @@ function Dates({ todo, dataChange, create }: IDatesProps) {
 			value={plannedEnd}
 			onChange={(value) => {
 				setPlannedEnd(value);
-				dataChange(value.toISOString(), "proposedEndDate");
+				dataChange("proposedEndDate", value.toISOString());
 			}}
 			className="modal-proposedDates"
 			id="modal-proposedEndDate"

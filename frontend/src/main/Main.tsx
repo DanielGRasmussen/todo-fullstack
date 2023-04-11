@@ -10,23 +10,26 @@ import ITodoData, { IUserInfo } from "../DataInterfaces";
 
 function Main(): JSX.Element {
 	const [todoList, setTodoList] = useState<ITodoData[]>(JSON.parse(sessionStorage.getItem("todos") || "[]"));
-	const [isOpen, setIsOpen] = useState(false); 	// Modal isOpen
-	const [modalTodo, setModalTodo] = useState({});
-	const [modalCreate, setModalCreate] = useState(false);
+	const [isOpen, setIsOpen] = useState<boolean>(false); 	// Modal isOpen
+	const [modalTodo, setModalTodo] = useState<ITodoData | Record<string, never>>({}); // Record<string, never> = empty object
+	const [modalCreate, setModalCreate] = useState<boolean>(false);
 	const [userInfo, setUserInfo] = useState<IUserInfo>(JSON.parse(sessionStorage.getItem("userInfo") ||
 		"{ \"googleId\": \"\", \"_id\": \"\", \"name\": \"\", \"email\": \"\", \"picture\": \"/assets/default-profile-picture.svg\" }"
 	));
-	const [showNotice, setShowNotice] = useState(false);
-	const [noticeInfo, setNoticeInfo] = useState({ type: "", message: "" });
-	const [showConfirmation, setShowConfirmation] = useState(false);
-	const [confirmationInfo, setConfirmationInfo] = useState({
+	const [showNotice, setShowNotice] = useState<boolean>(false);
+	const [noticeInfo, setNoticeInfo] = useState<{type: string, message: string}>({ type: "", message: "" });
+	const [showConfirmation, setShowConfirmation] = useState<boolean>(false);
+	const [confirmationInfo, setConfirmationInfo] = useState<{
+		message: string;
+		next(): void;
+	}>({
 		message: "",
 		// Typing stuffs
 		next: function () {
-			return 1 + 2;
+			0;
 		}
 	});
-	const loggedIn = userInfo.googleId !== "";
+	const loggedIn: boolean = userInfo.googleId !== "";
 
 	function startNotice(noticeType: string, noticeMessage: string): void {
 		setNoticeInfo({ type: noticeType, message: noticeMessage });
@@ -34,17 +37,17 @@ function Main(): JSX.Element {
 		setTimeout(() => hideNotice(), 2000);
 	}
 
-	function hideNotice() {
-		const notice = document.getElementById("notice");
+	function hideNotice(): void {
+		const notice: HTMLElement = document.getElementById("notice");
 		if (notice) {
 			notice.classList.add("close");
-			sleep(500).then(() => {
+			sleep(700).then(() => {
 				setShowNotice(false);
 			});
 		}
 	}
 
-	function askConfirmation(noticeMessage: string, confirmationNext) {
+	function askConfirmation(noticeMessage: string, confirmationNext: () => void): void {
 		setConfirmationInfo({
 			message: noticeMessage,
 			next: confirmationNext
@@ -52,8 +55,8 @@ function Main(): JSX.Element {
 		setShowConfirmation(true);
 	}
 
-	function hideConfirmation() {
-		const confirmationOverlay = document.getElementById("confirmation-overlay");
+	function hideConfirmation(): void {
+		const confirmationOverlay: HTMLElement = document.getElementById("confirmation-overlay");
 		if (confirmationOverlay) {
 			confirmationOverlay.classList.add("close");
 			sleep(190).then(() => {

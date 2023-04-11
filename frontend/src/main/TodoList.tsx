@@ -6,8 +6,9 @@ import { filterTodosByDate, stringTimeToMS } from "../utils";
 import ITodoData from "../DataInterfaces";
 
 function useRecurring(todoList: ITodoData[]): ITodoData[] {
-	const recurringTodo = [];
+	const recurringTodo: ITodoData[] = [];
 	if (!todoList.length) return recurringTodo;
+
 	for (const todo of todoList) {
 		if (!todo.recurring.isRecurring) recurringTodo.push(todo);
 		else {
@@ -15,7 +16,7 @@ function useRecurring(todoList: ITodoData[]): ITodoData[] {
 			const timeTaken: number = parseInt(todo.recurring.timeTaken.toString());
 			const start: Date = new Date(todo.recurring.duration.start);
 			const end: Date = new Date(todo.recurring.duration.end);
-			const proposedEndDate = new Date(start.getTime() + timeTaken);
+			const proposedEndDate: Date = new Date(start.getTime() + timeTaken);
 
 			let i = 0;
 			while (start <= end) {
@@ -53,7 +54,7 @@ interface ITodoListProps {
 	setIsOpen: Dispatch<SetStateAction<boolean>>;
 	setModalTodo: Dispatch<SetStateAction<ITodoData>>;
 	todoList: ITodoData[];
-	createTodo: () => void;
+	createTodo(): void;
 	setModalCreate: Dispatch<SetStateAction<boolean>>;
 }
 
@@ -79,14 +80,14 @@ export function TodoList({
 	];
 
 	// Create the elements for the search and functions to update them
-	const [searchQuery, setSearchQuery] = useState("");
+	const [searchQuery, setSearchQuery] = useState<string>("");
 	const [selectedSortingOption, setSelectedSortingOption]: [
 		{ value: string; label: string }[],
 		Dispatch<SetStateAction<{ value: string; label: string }[]>>
-	] = useState([sortingOptions[0]]);
-	const [sortOrder, setSortOrder] = useState(true);
-	const [filters, setFilters] = useState([]);
-	const [currentStatusFilters, setStatusFilter] = useState([]);
+	] = useState<{ value: string; label: string }[]>([sortingOptions[0]]);
+	const [sortOrder, setSortOrder] = useState<boolean>(true);
+	const [filters, setFilters] = useState<{ value: string; label: string }[]>([]);
+	const [currentStatusFilters, setStatusFilter] = useState<{ value: string; label: string }[]>([]);
 	const [currentTimeframe, setCurrentTimeframe] = useState<{
 		value: string;
 		label: string;
@@ -108,7 +109,7 @@ export function TodoList({
 		);
 
 	// Search query is in it, and it's type is in filters (if there are any)
-	const filteredTodoList = recurringTodo.filter((todo: ITodoData) => {
+	const filteredTodoList: ITodoData[] = recurringTodo.filter((todo: ITodoData) => {
 		// Filter by searchQuery
 		if (searchQuery && !todo.title.toLowerCase().includes(searchQuery.toLowerCase())) {
 			return false;

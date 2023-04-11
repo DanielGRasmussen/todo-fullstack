@@ -42,7 +42,7 @@ interface ISearchMenu {
 	currentStatusFilters: { value: string; label: string }[];
 	setStatusFilter;
 	filterOptions: { value: string; label: string }[];
-	filters: string[];
+	filters: { value: string; label: string }[];
 	setFilters;
 	currentTimeframe: { value: string; label: string };
 	setCurrentTimeframe;
@@ -90,11 +90,11 @@ function SearchMenu({
 	 * filters, a select dropdown for type filters, and a select dropdown for sorting options. The form also includes a
 	 * button to toggle the sort order.
 	 */
-	const [filterOpen, setfilterOpen] = useState(false);
-	const [sortOpen, setsortOpen] = useState(false);
-	const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+	const [filterOpen, setfilterOpen] = useState<boolean>(false);
+	const [sortOpen, setsortOpen] = useState<boolean>(false);
+	const [windowWidth, setWindowWidth] = useState<number>(window.innerWidth);
 
-	function toggleFilters() {
+	function toggleFilters(): void {
 		setfilterOpen(!filterOpen);
 	}
 
@@ -172,7 +172,7 @@ function SearchMenu({
 					id="status-filter"
 					options={statusOptions}
 					value={currentStatusFilters}
-					onChange={(options) => setStatusFilter(options)}
+					onChange={(options: { value: string; label: string }[]) => setStatusFilter(options)}
 					styles={selectStyles}
 					isMulti
 					components={{ ...animatedComponents, ...customComponents }}
@@ -187,7 +187,7 @@ function SearchMenu({
 					id="type-filter"
 					options={filterOptions}
 					value={filters}
-					onChange={(options) => setFilters(options)}
+					onChange={(options: string[]) => setFilters(options)}
 					styles={selectStyles}
 					isMulti
 					components={{ ...animatedComponents, ...customComponents }}
@@ -213,7 +213,7 @@ function SearchMenu({
 					id="timeframe"
 					options={timeframeOptions}
 					value={currentTimeframe}
-					onChange={(option) => setCurrentTimeframe(option)}
+					onChange={(option: { value: string; label: string }) => setCurrentTimeframe(option)}
 					styles={selectStyles}
 					isSearchable={false}
 					components={{ ...animatedComponents, ...customComponents }}
@@ -249,7 +249,7 @@ function SearchMenu({
 				id="sort-select"
 				options={sortingOptions}
 				value={selectedSortingOption}
-				onChange={(options) => setSelectedSortingOption(options)}
+				onChange={(options: { value: string; label: string }) => setSelectedSortingOption(options)}
 				styles={selectStyles}
 				isMulti
 				components={{ ...animatedComponents, ...customComponents }}

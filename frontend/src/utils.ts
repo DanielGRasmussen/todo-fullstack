@@ -10,7 +10,7 @@ export function formatDate(ISOstring: string): string {
 	});
 }
 
-export function clickAnywhere(elements: Element[], next, querySelectors: string[] = []): void {
+export function clickAnywhere(elements: Element[], next: () => void, querySelectors: string[] = []): void {
 	window.addEventListener("click", (event) => {
 		for (let i = 0; i < querySelectors.length; i++) {
 			const selectedItem = document.querySelector(querySelectors[i]);
@@ -23,12 +23,12 @@ export function clickAnywhere(elements: Element[], next, querySelectors: string[
 	});
 }
 
-export function sleep(ms): Promise<void> {
+export function sleep(ms: number): Promise<void> {
 	return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 export function checkPriorityValid(priority: string): boolean {
-	const num = parseInt(priority);
+	const num: number = parseInt(priority);
 	return !isNaN(num) && num >= 0 && num <= 9 && priority.length === 1;
 }
 
@@ -123,6 +123,7 @@ export function millisecondsToMTime(ms: number): string {
 export function MTimeToMilliseconds(timeString: string): number {
 	const [hours, minutes] = timeString.split(":").map(Number);
 	const date = new Date(1970, 0, 1, hours, minutes, 0, 0);
-	const tzOffset = -date.getTimezoneOffset(); // offset from UTC in hours (UTC-7)
+	// offset from UTC in hours (I do not know how well it works on the other side of the world)
+	const tzOffset = -date.getTimezoneOffset();
 	return date.getTime() + tzOffset * 60 * 1000;
 }

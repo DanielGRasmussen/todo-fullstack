@@ -20,15 +20,15 @@ function SortButton({
 	 * the sort order. The div contains an img element with the up arrow icon, which changes based on the current sort
 	 * order.
 	 */
-	const [first, isFirst] = useState(true);
+	const [first, isFirst] = useState<boolean>(true);
 
 	// up arrow   = ascending  = a to z
 	// down arrow = descending = z to a
-	const handleOnClick = (): void => {
+	function handleOnClick(): void {
 		const newSortOrder = !sortOrder;
-		isFirst(false);
+		if (first) isFirst(false);
 		setSortOrder(newSortOrder);
-	};
+	}
 
 	const arrowStyle: { animation: string } = {
 		animation: sortOrder

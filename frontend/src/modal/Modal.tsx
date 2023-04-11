@@ -10,12 +10,12 @@ import Recurring from "./Recurring";
 interface IModalProps {
 	isOpen: boolean;
 	setIsOpen;
-	create;
-	originalTodo;
+	create: boolean;
+	originalTodo: ITodoData | Record<string, never>; // Record<string, never> = empty object
 	setModalTodo;
-	fetchTodoList;
-	startNotice;
-	askConfirmation;
+	fetchTodoList(_local?: boolean): Promise<void>;
+	startNotice(_noticeType: string, _noticeMessage: string): void;
+	askConfirmation(_noticeMessage: string, _confirmationNext: () => void): void;
 }
 
 export function Modal({
@@ -28,9 +28,9 @@ export function Modal({
 	startNotice,
 	askConfirmation
 }: IModalProps) {
-	const [recurringOpen, setRecurringOpen] = useState(false);
-	const [addingSubtask, setAddingSubtask] = useState(false);
-	const [todo, setTodo] = useState(JSON.parse(JSON.stringify(originalTodo)));
+	const [recurringOpen, setRecurringOpen] = useState<boolean>(false);
+	const [addingSubtask, setAddingSubtask] = useState<boolean>(false);
+	const [todo, setTodo] = useState<ITodoData>(JSON.parse(JSON.stringify(originalTodo)));
 	if (!isOpen) {
 		delete todo._id;
 		return;
@@ -69,43 +69,7 @@ export function Modal({
 		}
 	}
 
-	/*function dataChange(value, dataType, forceUpdate = false, recurring = false) {
-		return;
-		if (todo.recurring.isRecurring || recurring) {
-			// Gets real todo data since the current todo would be a generated version
-			let realTodo = getTodoByIdFromLocal(todo._id);
-			if (create) realTodo = todo;
-			if (!realTodo) return startNotice("error", "Todo not found");
-
-			if (dataType === "isRecurring") {
-				if (value && !realTodo.recurring.completionStatus) {
-					realTodo.recurring.completionStatus = [
-						{
-							status: "incomplete",
-							actualStart: "",
-							actualEnd: ""
-						}
-					];
-				}
-				if (todo.recurring.isRecurring !== value && !create) toggleModal();
-				todo.recurring.isRecurring = value;
-
-				if (!value) {
-					realTodo.proposedStartDate = realTodo.recurring.duration.start;
-					realTodo.proposedStartDate = new Date(
-						new Date(realTodo.recurring.duration.start).getTime() +
-						realTodo.recurring.timeTaken
-					).toISOString();
-				}
-			} else if (["frequencyAmount", "frequencyUnit", "duration", "timeTaken", "completionStatus"].includes(dataType)) {
-				if (realTodo.recurring[dataType] === value) return;
-				realTodo.recurring[dataType] = value;
-			}
-		}
-		setChange(!change);
-	} */
-
-	function betterDataChange(dataType: string, value, recurring = false): void {
+	function dataChange(dataType: string, value, recurring = false): void {
 		// Updates current todo.
 		// Also updates lastUpdated and sends a notice to user that data has been updated.
 		if (recurring) todo.recurring[dataType] = value;
@@ -124,10 +88,10 @@ export function Modal({
 			return startNotice("error", "All fields are required");
 		}
 
-		let realTodo = getTodoByIdFromLocal(todo._id);
+		let realTodo: ITodoData = getTodoByIdFromLocal(todo._id);
 
 		if (create) {
-			saveNewTodo(todo).then(fetchTodoList); // Grabs from API
+			saveNewTodo(todo).then(() => { fetchTodoList() }); // Grabs from API
 		} else if (todo.recurring.isRecurring || (realTodo && getTodoByIdFromLocal(todo._id).recurring.isRecurring)) {
 			if (!realTodo) return startNotice("error", "Todo not found");
 			realTodo = {
@@ -138,9 +102,9 @@ export function Modal({
 				subTasks: todo.subTasks,
 				description: todo.description
 			}
-			saveTodo(realTodo).then(fetchTodoList); // Grabs from API
+			saveTodo(realTodo).then(() => { fetchTodoList() }); // Grabs from API
 		} else {
-			saveTodo(todo).then(fetchTodoList); // Grabs from API
+			saveTodo(todo).then(() => { fetchTodoList() }); // Grabs from API
 		}
 		fetchTodoList(true); // Grabs from session storage
 
@@ -196,7 +160,7 @@ export function Modal({
 			todo.actualEndDate = "";
 		} else todo[buttonTextOpts[new_status][2]] = new Date().toISOString();
 
-		betterDataChange("status", new_status);
+		dataChange("status", new_status);
 		if (todo.recurring.isRecurring) {
 			// Got to update todo.recurring.completionStatus of current todo copy and the original.
 			const realTodo = getTodoByIdFromLocal(todo._id);
@@ -251,7 +215,7 @@ export function Modal({
 					todo={todo}
 					isOpen={recurringOpen}
 					toggleRecurring={toggleRecurring}
-					dataChange={betterDataChange}
+					dataChange={dataChange}
 					startNotice={startNotice}
 					askConfirmation={askConfirmation}
 				/>
@@ -281,7 +245,7 @@ export function Modal({
 					defaultValue={todo.title}
 					onBlur={(event) => {
 						if (event.target.value === "") return startNotice("error", "Invalid Title");
-						betterDataChange("title", event.target.value);
+						dataChange("title", event.target.value);
 					}}
 					className="title"
 				/>
@@ -291,7 +255,7 @@ export function Modal({
 						defaultValue={todo.type}
 						onBlur={(event) => {
 							if (event.target.value === "") return startNotice("error", "Invalid Type");
-							betterDataChange("type", event.target.value);
+							dataChange("type", event.target.value);
 						}}
 					/>
 				</p>
@@ -303,11 +267,11 @@ export function Modal({
 						onBlur={(event) => {
 							if (!checkPriorityValid(event.target.value))
 								return startNotice("error", "Invalid Priority Entry");
-							betterDataChange("priority", event.target.value);
+							dataChange("priority", event.target.value);
 						}}
 					/>
 				</p>
-				<Dates todo={todo} dataChange={betterDataChange} create={create} />
+				<Dates todo={todo} dataChange={dataChange} create={create} />
 				<h3 onClick={toggleRecurring} id="recurring-settings">
 					Recurring Settings
 				</h3>
@@ -355,7 +319,7 @@ export function Modal({
 				<textarea
 					defaultValue={todo.description}
 					onBlur={(event) => {
-						betterDataChange("description", event.target.value);
+						dataChange("description", event.target.value);
 					}}
 					id="description"
 				></textarea>

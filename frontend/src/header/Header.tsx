@@ -4,7 +4,7 @@ import { clickAnywhere } from "../utils";
 import { IUserInfo } from "../DataInterfaces";
 import { getUserInfo, logout } from "../ExternalServices";
 
-function NavItem({ name, active = false }): JSX.Element {
+function NavItem({ name, active = false }: { name: string, active: boolean }): JSX.Element {
 	return (
 		<li>
 			<a href="#" className={active ? "active" : null}>
@@ -21,14 +21,14 @@ function Header() : JSX.Element {
 	 * example, when the user scrolls down, it hides the header and search bar elements. When they scroll up again, it
 	 * shows these elements again.
 	 */
-	const [active] = useState("todo");
-	const [isOpen, setIsOpen] = useState(false);
-	const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+	const [active] = useState<string>("todo");
+	const [isOpen, setIsOpen] = useState<boolean>(false);
+	const [windowWidth, setWindowWidth] = useState<number>(window.innerWidth);
 
 	const [userInfo, setUserInfo] = useState<IUserInfo>(JSON.parse(sessionStorage.getItem("userInfo") ||
 		"{ \"googleId\": \"\", \"_id\": \"\", \"name\": \"\", \"email\": \"\", \"picture\": \"/assets/default-profile-picture.svg\" }"
 	));
-	const loggedIn = userInfo.googleId !== "";
+	const loggedIn: boolean = userInfo.googleId !== "";
 
 	function toggleHeader(header: HTMLElement, search_bar: HTMLElement, down_arrow: HTMLElement, show: boolean) {
 		header.classList.toggle("hide", !show);
@@ -40,9 +40,11 @@ function Header() : JSX.Element {
 
 	useEffect(() => {
 		// Get user info
-		getUserInfo().then((data) => {
-			setUserInfo(data);
-		});
+		try {
+			getUserInfo().then(setUserInfo);
+		} catch (error) {
+			// Do nothing, the same thing is being done in Main, but it notifies the user and logs to console.
+		}
 
 		// Hide header on scroll
 		let prevScrollpos: number = window.scrollY;

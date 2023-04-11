@@ -9,7 +9,7 @@ import ITodoData from "../DataInterfaces";
 
 interface IDatesProps {
 	todo: ITodoData;
-	dataChange;
+	dataChange(_dataType: string, _value, _recurring?: boolean): void;
 	create: boolean;
 }
 
@@ -22,16 +22,16 @@ function Dates({ todo, dataChange, create }: IDatesProps) {
 	 * todo: Object following DataInterfaces. Used for the dates.
 	 * dataChange: A function to be called when a date input field is blurred with the current info in the field.
 	 */
-	const [plannedStart, setPlannedStart] = useState(todo.proposedStartDate
+	const [plannedStart, setPlannedStart] = useState<Date | null>(todo.proposedStartDate
 		? new Date(todo.proposedStartDate)
 		: null
 	);
-	const [plannedEnd, setPlannedEnd] = useState(todo.proposedEndDate
+	const [plannedEnd, setPlannedEnd] = useState<Date | null>(todo.proposedEndDate
 		? new Date(todo.proposedEndDate)
 		: null
 	);
 
-	const plannedStartElement = todo.recurring.isRecurring
+	const plannedStartElement: string | JSX.Element = todo.recurring.isRecurring
 		? formatDate(todo.proposedStartDate)
 		: (<DateTimePicker
 			value={plannedStart}
@@ -41,7 +41,7 @@ function Dates({ todo, dataChange, create }: IDatesProps) {
 			}}
 			className="modal-proposedDates"
 		/>);
-	const plannedEndElement = todo.recurring.isRecurring
+	const plannedEndElement: string | JSX.Element = todo.recurring.isRecurring
 		? formatDate(todo.proposedEndDate)
 		: (<DateTimePicker
 			value={plannedEnd}

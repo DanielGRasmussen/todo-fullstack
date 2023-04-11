@@ -1,4 +1,4 @@
-import ITodoData from "./DataInterfaces";
+import ITodoData, { IUserInfo } from "./DataInterfaces";
 import axios from "axios";
 import { sleep } from "./utils";
 
@@ -28,8 +28,8 @@ export async function saveNewTodo(todoData: ITodoData): Promise<void> {
 	}
 	isExecuting = true; // Got to prevent a race condition
 
-	const sessionData = sessionStorage.getItem("todos");
-	let todos = [];
+	const sessionData: string = sessionStorage.getItem("todos");
+	let todos: ITodoData[] = [];
 	if (sessionData) {
 		try {
 			todos = JSON.parse(sessionData);
@@ -52,8 +52,8 @@ export async function saveTodo(todoData: ITodoData): Promise<void> {
 	}
 	isExecuting = true; // Got to prevent a race condition
 
-	const sessionData = sessionStorage.getItem("todos");
-	let todos = [];
+	const sessionData: string = sessionStorage.getItem("todos");
+	let todos: ITodoData[] = [];
 	if (sessionData) {
 		try {
 			todos = JSON.parse(sessionData);
@@ -78,8 +78,8 @@ export async function deleteTodoById(id: string): Promise<void> {
 	}
 	isExecuting = true; // Got to prevent a race condition
 
-	const sessionData = sessionStorage.getItem("todos");
-	let todos = [];
+	const sessionData: string = sessionStorage.getItem("todos");
+	let todos: ITodoData[] = [];
 	if (sessionData) {
 		try {
 			todos = JSON.parse(sessionData);
@@ -89,7 +89,7 @@ export async function deleteTodoById(id: string): Promise<void> {
 	}
 
 	// Find the index of the object in the array that matches the id and delete it
-	const todoIndex = todos.findIndex((t) => t._id === id);
+	const todoIndex: number = todos.findIndex((todo) => todo._id === id);
 	if (todoIndex !== -1) todos.splice(todoIndex, 1);
 	sessionStorage.setItem("todos", JSON.stringify(todos));
 
@@ -106,7 +106,7 @@ export async function getUserInfo(): Promise<{
 	picture: string;
 }> {
 	const response = await axios.get(`/api/user`, { maxRedirects: 0 });
-	let userInfo;
+	let userInfo: IUserInfo;
 	if (["http://localhost:3000/", "https://todo-fullstack-jppd.onrender.com/"].includes(response.request.responseURL))
 		userInfo = {
 			googleId: "",

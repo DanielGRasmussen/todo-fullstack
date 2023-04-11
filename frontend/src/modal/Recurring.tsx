@@ -12,10 +12,10 @@ import { millisecondsToMTime, MTimeToMilliseconds } from "../utils";
 interface IRecurringProps {
 	todo: ITodoData;
 	isOpen: boolean;
-	toggleRecurring: () => void;
-	dataChange;
-	startNotice;
-	askConfirmation;
+	toggleRecurring(): void;
+	dataChange(_dataType: string, _value, _recurring?: boolean): void;
+	startNotice(_noticeType: string, _noticeMessage: string): void;
+	askConfirmation(_noticeMessage: string, _confirmationNext: () => void): void;
 }
 
 export default function Recurring({
@@ -27,7 +27,7 @@ export default function Recurring({
 	askConfirmation
 }: IRecurringProps): JSX.Element {
 	if (!isOpen) return;
-	const [checked, setChecked] = useState(todo.recurring.isRecurring);
+	const [checked, setChecked] = useState<boolean>(todo.recurring.isRecurring);
 	const [recurringDates, setRecurringDates] = useState<[Date | null, Date | null]>([
 		todo.recurring.isRecurring ? new Date(todo.recurring.duration.start) : null,
 		todo.recurring.isRecurring ? new Date(todo.recurring.duration.end) : null
@@ -46,12 +46,12 @@ export default function Recurring({
 	const [frequencyAmount, setFrequencyAmount] = useState(
 		todo.recurring.isRecurring ? todo.recurring.frequencyAmount : undefined
 	);
-	const [frequencyUnit, setFrequencyUnit] = useState(todo.recurring.isRecurring ? todo.recurring.frequencyUnit : "");
-	const [timeTaken, setTimeTaken] = useState(
+	const [frequencyUnit, setFrequencyUnit] = useState<string>(todo.recurring.isRecurring ? todo.recurring.frequencyUnit : "");
+	const [timeTaken, setTimeTaken] = useState<number>(
 		todo.recurring.isRecurring ? todo.recurring.timeTaken / 60 / 1000 : undefined
 	);
 
-	function saveRecurring() {
+	function saveRecurring(): void {
 		const [startDate, endDate] = recurringDates;
 		if (!checked) {
 			if (!todo.recurring.isRecurring) return toggleRecurring();
@@ -64,13 +64,13 @@ export default function Recurring({
 		if (frequencyAmount === 0) {
 			return startNotice("error", "Frequency amount cannot be 0");
 		}
-		const timeOffset = MTimeToMilliseconds(timeOfDay) - MTimeToMilliseconds(time);
+		const timeOffset: number = MTimeToMilliseconds(timeOfDay) - MTimeToMilliseconds(time);
 		const duration = {
-			// Both fields because #1 is used for proposed start/end dates and #2 is so it does an extra task at end of date.
+			// Both fields because #1 is used for proposed start/end dates #2 it makes an extra task at end of date.
 			start: new Date(startDate.getTime() + timeOffset).toISOString(),
 			end: new Date(endDate.getTime() + timeOffset).toISOString()
 		};
-		const newTimeTaken = timeTaken * 1000 * 60;
+		const newTimeTaken: number = timeTaken * 1000 * 60;
 		// Update todo with proper data
 		dataChange("isRecurring", checked, true);
 		dataChange("frequencyAmount", frequencyAmount, true);

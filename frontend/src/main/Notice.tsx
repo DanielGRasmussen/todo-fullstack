@@ -6,7 +6,7 @@ interface INoticeProps {
 		type: string;
 		message: string;
 	};
-	hideNotice: () => void;
+	hideNotice(): void;
 	showNotice: boolean;
 }
 

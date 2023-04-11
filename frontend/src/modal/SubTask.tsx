@@ -6,10 +6,10 @@ import ITodoData from "../DataInterfaces";
 interface ISubTaskProps {
 	subtask: { name: string; link: boolean; id: string };
 	index: number;
-	modalTodo;
+	modalTodo: ITodoData;
 	setModalTodo: React.Dispatch<React.SetStateAction<ITodoData>>;
-	startNotice;
-	askConfirmation;
+	startNotice(_noticeType: string, _noticeMessage: string): void;
+	askConfirmation(_noticeMessage: string, _confirmationNext: () => void): void;
 	setAddingSubtask?;
 	newSubtask?: boolean;
 }
@@ -24,10 +24,10 @@ function SubTask({
 	setAddingSubtask,
 	newSubtask
 }: ISubTaskProps): JSX.Element {
-	const [editing, setEditing] = useState(newSubtask);
+	const [editing, setEditing] = useState<boolean>(newSubtask);
 
-	let title = subtask.name;
-	let subTaskTodo;
+	let title: string = subtask.name;
+	let subTaskTodo: ITodoData;
 	if (subtask.link) {
 		subTaskTodo = getTodoByIdFromLocal(subtask.id);
 		if (subTaskTodo) {
@@ -36,7 +36,7 @@ function SubTask({
 		}
 	}
 
-	function linkedClick(event) {
+	function linkedClick(event): void {
 		if (event.target.checked) {
 			return;
 		}
@@ -47,7 +47,7 @@ function SubTask({
 		deleteTodoById(subTaskTodo.id);
 	}
 
-	function editSubtask() {
+	function editSubtask(): void {
 		if (editing) {
 			const subtaskTitle: HTMLInputElement = document.getElementById(`subtaskTitle${index}`) as HTMLInputElement;
 			if (subtaskTitle.value.length === 0) return startNotice("error", "Subtask title cannot be empty.");
@@ -61,8 +61,11 @@ function SubTask({
 	}
 
 	function deleteSubtask() {
-		function next() {
-			if (subtask.link) return deleteTodoById(subtask.id);
+		function next(): void {
+			if (subtask.link) {
+				deleteTodoById(subtask.id);
+				return;
+			}
 			modalTodo.subTasks.splice(index, 1);
 		}
 

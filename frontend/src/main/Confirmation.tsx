@@ -4,9 +4,9 @@ import React from "react";
 interface IConfirmationProps {
 	confirmationInfo: {
 		message: string;
-		next: () => void;
+		next(): void;
 	};
-	hideConfirmation: () => void;
+	hideConfirmation(): void;
 	showConfirmation: boolean;
 }
 

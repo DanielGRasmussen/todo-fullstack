@@ -125,8 +125,9 @@ export function Modal({
 		}
 
 		let realTodo = getTodoByIdFromLocal(todo._id);
+
 		if (create) {
-			saveNewTodo(todo).then(fetchTodoList); // Grabs from session storage
+			saveNewTodo(todo).then(fetchTodoList); // Grabs from API
 		} else if (todo.recurring.isRecurring || (realTodo && getTodoByIdFromLocal(todo._id).recurring.isRecurring)) {
 			if (!realTodo) return startNotice("error", "Todo not found");
 			realTodo = {
@@ -137,10 +138,11 @@ export function Modal({
 				subTasks: todo.subTasks,
 				description: todo.description
 			}
-			saveTodo(realTodo).then(fetchTodoList); // Grabs from session storage
+			saveTodo(realTodo).then(fetchTodoList); // Grabs from API
 		} else {
-			saveTodo(todo).then(fetchTodoList); // Grabs from session storage
+			saveTodo(todo).then(fetchTodoList); // Grabs from API
 		}
+		fetchTodoList(true); // Grabs from session storage
 
 		startNotice("success", "Saving todo");
 		toggleModal(true);
@@ -160,11 +162,9 @@ export function Modal({
 				}
 			}
 			// Deletes linked subtasks
+			fetchTodoList(true);
 			for (const subtask of todo.subTasks) {
-				if (subtask.link) {
-					fetchTodoList(); // Error if this is gone.
-					deleteTodoById(subtask.id);
-				}
+				if (subtask.link) deleteTodoById(subtask.id);
 			}
 			deleteTodoById(todo._id).then(() => {
 				fetchTodoList();

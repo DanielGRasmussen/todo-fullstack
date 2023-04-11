@@ -86,29 +86,37 @@ function Main(): JSX.Element {
 		setIsOpen(true);
 	}
 
-	async function fetchTodoList(): Promise<void> {
+	async function fetchTodoList(local = false): Promise<void> {
 		try {
-			const fetchedList: ITodoData[] = await getToDoList();
+			let fetchedList: ITodoData[];
+			if (local) {
+				// Retrieve todo list from session storage
+				const sessionData = sessionStorage.getItem("todos");
+				if (sessionData) {
+					try {
+						fetchedList = JSON.parse(sessionData);
+					} catch (error) {
+						startNotice("error", "Failed to fetch todo list. Please try again later.");
+						if (process.env.ENVIRONMENT !== "production") console.error("Error parsing session data:", error);
+						fetchedList = [];
+					}
+				} else fetchedList = [];
+			} else fetchedList = await getToDoList(); // Get todo list from API
+
 			setTodoList(fetchedList);
 		} catch (error) {
-			if (error.response.status === 404) startNotice("error", "Something went wrong...");
-			else {
-				console.error(error);
-				startNotice("error", error.message);
-			}
+			startNotice("error", "Failed to fetch todo list. Please try again later.");
+			if (process.env.ENVIRONMENT !== "production") console.error(error);
 		}
 	}
-	try {
+
 	useEffect(() => {
 		fetchTodoList();
 		try {
 			getUserInfo().then(setUserInfo);
 		} catch (error) {
-			if (error.response.status === 404) startNotice("error", "Something went wrong...");
-			else {
-				console.log(error);
-				startNotice("error", error.message);
-			}
+			startNotice("error", "Failed to fetch user information. Please try again later.");
+			if (process.env.ENVIRONMENT !== "production" && error.request.status !== 404) console.error(error);
 		}
 	}, []);
 
@@ -156,13 +164,6 @@ function Main(): JSX.Element {
 			/>
 		</main>
 	);
-	} catch (error) {
-		if (error.response.status === 404) startNotice("error", "Something went wrong...");
-		else {
-			console.error(error);
-			startNotice("error", error.message);
-		}
-	}
 }
 
 export default Main;

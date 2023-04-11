@@ -40,7 +40,7 @@ export function Modal({
 		return;
 	}
 
-	function toggleModal() {
+	function toggleModal(saved = false) {
 		function next(): void {
 			document.getElementById("modal-overlay").classList.add("close");
 			document.querySelector("html").classList.remove("freeze");
@@ -50,9 +50,20 @@ export function Modal({
 			// Using an event listener is better and more maintainable but makes the modal reappear for a split second.
 		}
 		if (isOpen) {
-			/* if (originalTodo !== todo) askConfirmation("Are you sure you want to exit without saving?", next);
-			else next(); */
-			next();
+			if (
+				!saved &&
+				// Checks for differences between the two.
+				// Note: this does not check that all subtasks match up or recurring settings are the same.
+				(originalTodo.title !== todo.title ||
+				originalTodo.type !== todo.type ||
+				originalTodo.priority !== todo.priority ||
+				originalTodo.proposedStartDate !== todo.proposedStartDate ||
+				originalTodo.proposedEndDate !== todo.proposedEndDate ||
+				originalTodo.description !== todo.description ||
+				originalTodo.subTasks.length !== todo.subTasks.length ||
+				originalTodo.status !== todo.status)
+			) askConfirmation("Are you sure you want to exit without saving?", next);
+			else next();
 		} else {
 			setIsOpen(true);
 		}
@@ -128,12 +139,11 @@ export function Modal({
 			}
 			saveTodo(realTodo).then(fetchTodoList); // Grabs from session storage
 		} else {
-			saveTodo(todo);
-			fetchTodoList(); // Grabs from session storage
+			saveTodo(todo).then(fetchTodoList); // Grabs from session storage
 		}
 
 		startNotice("success", "Saving todo");
-		toggleModal();
+		toggleModal(true);
 	}
 
 	function deleteTodo() {
@@ -249,7 +259,7 @@ export function Modal({
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					viewBox="0 0 20 20"
-					onClick={toggleModal}
+					onClick={() => toggleModal} // This is because toggleModal takes a boolean parameter, don't need event.
 					id="close-modal"
 				>
 					<line x1="4" y1="4" x2="16" y2="16" stroke="black" />

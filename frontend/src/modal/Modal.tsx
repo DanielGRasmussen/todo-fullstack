@@ -38,6 +38,11 @@ export function Modal({
 	if (!todo.hasOwnProperty("_id") && originalTodo.hasOwnProperty("_id")) {
 		setTodo(JSON.parse(JSON.stringify(originalTodo)));
 		return;
+	} else if (!originalTodo.hasOwnProperty("_id") || (originalTodo._id.length === 0 && !create)) {
+		// Checks that the original todo has an id and that if it does it isn't empty. The default create todo has an empty id.
+		startNotice("error", "Still creating that task.");
+		setIsOpen(false);
+		return;
 	}
 
 	function toggleModal(saved = false) {
@@ -126,13 +131,11 @@ export function Modal({
 				}
 			}
 			// Deletes linked subtasks
-			fetchTodoList(true);
 			for (const subtask of todo.subTasks) {
 				if (subtask.link) deleteTodoById(subtask.id);
 			}
-			deleteTodoById(todo._id).then(() => {
-				fetchTodoList();
-			});
+			deleteTodoById(todo._id).then(() => { fetchTodoList() });
+			fetchTodoList(true);
 			startNotice("success", "Deleting Todo");
 			toggleModal();
 		}

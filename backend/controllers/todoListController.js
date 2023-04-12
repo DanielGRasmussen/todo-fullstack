@@ -98,6 +98,7 @@ exports.updateTodoItem = async function (req, res) {
 	try {
 		// validate data
 		let {
+			_id,
 			title,
 			description,
 			type,
@@ -130,6 +131,9 @@ exports.updateTodoItem = async function (req, res) {
 				}
 			}
 		}
+		if (!mongoose.Types.ObjectId.isValid(_id)) {
+			return res.status(400).json({ error: "Invalid todo id" });
+		}
 
 		const error = checks.find((check) => check.check);
 		if (error) {
@@ -150,6 +154,7 @@ exports.updateTodoItem = async function (req, res) {
 		// update the todo item with the new values
 		// update the user's todoList
 		user.todoList[todoItemIndex] = {
+			_id: _id,
 			title: title,
 			description: description,
 			type: type,

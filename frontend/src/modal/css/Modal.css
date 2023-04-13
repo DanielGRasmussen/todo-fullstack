@@ -32,7 +32,6 @@
 	position: relative;
 	animation: modalAppear 0.2s ease-in-out;
 	overflow-y: auto;
-	overflow-x: hidden;
 }
 
 @media screen and (min-width: 635px) {

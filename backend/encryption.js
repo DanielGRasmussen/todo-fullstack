@@ -1,6 +1,9 @@
 const crypto = require("crypto");
 
 exports.encrypt = function (text) {
+	// I know very very little about encryption. This is not intended to be very secure. 
+	// Maybe in the future I will research ways to improve it.
+	// Personally, I do not see the point in encrypting it if nearly all the info needed to decrypt it is stored with it.
 	const algorithm = "aes-256-cbc";
 
 	// generate a random salt & password

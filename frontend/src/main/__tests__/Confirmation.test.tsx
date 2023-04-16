@@ -24,7 +24,7 @@ describe("Confirmation", () => {
 		) as HTMLElement;
 
 		const yesButton = screen.getByRole("button", { name: "Yes" });
-		const cancelButton = screen.getByRole("button", { name: "Cancel" });
+		const cancelButton = screen.getByRole("button", { name: "No" });
 
 		expect(confirmationElement).toBeInTheDocument();
 		expect(yesButton).toBeInTheDocument();

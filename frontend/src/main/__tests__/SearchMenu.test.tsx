@@ -8,6 +8,8 @@ describe("SearchMenu", () => {
 	const setStatusFilter = jest.fn();
 	const setSortOrder = jest.fn();
 	const setFilters = jest.fn();
+	const setCurrentTimeframe = jest.fn();
+	const setSearchDates = jest.fn();
 
 	const props = {
 		searchQuery: "",
@@ -27,7 +29,11 @@ describe("SearchMenu", () => {
 			{ value: "filter2", label: "Filter 2" }
 		],
 		filters: [],
-		setFilters
+		setFilters,
+		currentTimeframe: { value: "today", label: "Today" },
+		setCurrentTimeframe: setCurrentTimeframe,
+		searchDates: [null, null],
+		setSearchDates: setSearchDates
 	};
 
 	it("should render the component", () => {

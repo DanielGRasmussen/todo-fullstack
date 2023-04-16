@@ -5,9 +5,25 @@ exports[`SortButton should render correctly 1`] = `
   class="ascending tooltip"
   id="sort-direction"
 >
-  <img
-    alt="Ascending order"
-    src="/assets/up_arrow.svg"
-  />
+  <svg
+    enable-background="new 0 0 50 150"
+    viewBox="0 0 50 150"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <g>
+      <line
+        stroke="#000"
+        stroke-miterlimit="10"
+        stroke-width="6"
+        x1="23.871"
+        x2="23.871"
+        y1="149"
+        y2="24.964"
+      />
+      <polygon
+        points="42.292 25.87 3.969 25.87 24.885 1.917"
+      />
+    </g>
+  </svg>
 </div>
 `;

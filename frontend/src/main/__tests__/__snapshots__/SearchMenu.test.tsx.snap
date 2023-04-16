@@ -245,23 +245,133 @@ exports[`SearchMenu should render the component 1`] = `
         Date range:
       </label>
       <div
-        class="react-datepicker-wrapper"
+        class="react-date-picker react-date-picker--closed react-date-picker--enabled"
+        id="search-datepicker"
       >
         <div
-          class="react-datepicker__input-container"
+          class="react-date-picker__wrapper"
         >
-          <span
-            aria-live="polite"
-            class="react-datepicker__aria-live"
-            role="alert"
-          />
-          <input
-            class=""
-            id="datepicker"
-            placeholder="Select date range"
-            type="text"
-            value=""
-          />
+          <div
+            class="react-date-picker__inputGroup"
+          >
+            <input
+              hidden=""
+              max="275760-09-12"
+              min="0001-01-01"
+              name="date"
+              style="visibility: hidden; position: absolute; z-index: -999;"
+              type="date"
+              value=""
+            />
+            <input
+              autocomplete="off"
+              class="react-date-picker__inputGroup__input react-date-picker__inputGroup__month"
+              data-input="true"
+              inputmode="numeric"
+              max="12"
+              min="1"
+              name="month"
+              placeholder="--"
+              type="number"
+              value=""
+            />
+            <span
+              class="react-date-picker__inputGroup__divider"
+            >
+              /
+            </span>
+            <input
+              autocomplete="off"
+              class="react-date-picker__inputGroup__input react-date-picker__inputGroup__day"
+              data-input="true"
+              inputmode="numeric"
+              max="31"
+              min="1"
+              name="day"
+              placeholder="--"
+              type="number"
+              value=""
+            />
+            <span
+              class="react-date-picker__inputGroup__divider"
+            >
+              /
+            </span>
+            <input
+              autocomplete="off"
+              class="react-date-picker__inputGroup__input react-date-picker__inputGroup__year"
+              data-input="true"
+              inputmode="numeric"
+              max="275760"
+              min="1"
+              name="year"
+              placeholder="----"
+              step="1"
+              type="number"
+              value=""
+            />
+          </div>
+          <button
+            class="react-date-picker__clear-button react-date-picker__button"
+            type="button"
+          >
+            <svg
+              class="react-date-picker__clear-button__icon react-date-picker__button__icon"
+              height="19"
+              stroke="black"
+              stroke-width="2"
+              viewBox="0 0 19 19"
+              width="19"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <line
+                x1="4"
+                x2="15"
+                y1="4"
+                y2="15"
+              />
+              <line
+                x1="15"
+                x2="4"
+                y1="4"
+                y2="15"
+              />
+            </svg>
+          </button>
+          <button
+            class="react-date-picker__calendar-button react-date-picker__button"
+            type="button"
+          >
+            <svg
+              class="react-date-picker__calendar-button__icon react-date-picker__button__icon"
+              height="19"
+              stroke="black"
+              stroke-width="2"
+              viewBox="0 0 19 19"
+              width="19"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect
+                fill="none"
+                height="15"
+                width="15"
+                x="2"
+                y="2"
+              />
+              <line
+                x1="6"
+                x2="6"
+                y1="0"
+                y2="4"
+              />
+              <line
+                x1="13"
+                x2="13"
+                y1="0"
+                y2="4"
+              />
+            </svg>
+          </button>
         </div>
       </div>
     </div>
@@ -294,14 +404,13 @@ exports[`SearchMenu should render the component 1`] = `
             class=" css-qsn7pb-ValueContainer"
           >
             <div
-              class=" css-1jqq78o-placeholder"
-              id="react-select-4-placeholder"
+              class=" css-1dimb5e-singleValue"
+              style="opacity: 1; transition: opacity 1ms;"
             >
-              Select...
+              Today
             </div>
             <input
               aria-autocomplete="list"
-              aria-describedby="react-select-4-placeholder"
               aria-expanded="false"
               aria-haspopup="true"
               aria-readonly="true"
@@ -469,10 +578,26 @@ exports[`SearchMenu should render the component 1`] = `
         class="ascending tooltip"
         id="sort-direction"
       >
-        <img
-          alt="Ascending order"
-          src="/assets/up_arrow.svg"
-        />
+        <svg
+          enable-background="new 0 0 50 150"
+          viewBox="0 0 50 150"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <g>
+            <line
+              stroke="#000"
+              stroke-miterlimit="10"
+              stroke-width="6"
+              x1="23.871"
+              x2="23.871"
+              y1="149"
+              y2="24.964"
+            />
+            <polygon
+              points="42.292 25.87 3.969 25.87 24.885 1.917"
+            />
+          </g>
+        </svg>
       </div>
     </div>
   </form>

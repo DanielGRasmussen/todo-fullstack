@@ -2,6 +2,8 @@
 This is a fullstack web application for a user to manage a todo list. The project includes a backend written in 
 JavaScript using the Express framework, and a frontend written in TypeScript using React.
 
+It is currently hosted [here](https://todo-fullstack-jppd.onrender.com/). Note: Load times are long because the hosting site (render) slows down on inactivity (should be ~30 seconds for every request.)
+
 ## Installation
 
 To install and run the project, you should have [Node.js](https://nodejs.org/) installed on your machine.
@@ -26,6 +28,7 @@ npm run server
 - Add, remove, and edit tasks.
 - Filter tasks various methods.
 - API documentation with Swagger
+- Not great encryption in the storage, this was made before I had a good idea on how to do this.
 
 ## Architecture
 This fullstack application is divided into two main parts - the frontend and the backend. You can find more details
